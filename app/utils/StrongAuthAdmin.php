@@ -8,7 +8,7 @@ use \Slim\Extras\Middleware\StrongAuth;
  * Redefinition of StrongAuth for admin role in user
  * @author Nicolas Van Labeke (https://github.com/vanch3d)
  *
- * the configuration array for each 'security.urls' path contains an extra parameter, 'admin', to 
+ * the configuration array for each 'security.urls' path contains an extra parameter, 'admin', to
  * restrict access to these routes to user that have admin rights
  */
 class StrongAuthAdmin extends StrongAuth
@@ -42,10 +42,10 @@ class StrongAuthAdmin extends StrongAuth
 		$config = $this->config;
 		$this->app->hook('slim.before.router', function () use ($app, $auth, $req, $config) {
 			$secured_urls = isset($config['security.urls']) && is_array($config['security.urls']) ? $config['security.urls'] : array();
-			
-			
 
-			
+
+
+
 			foreach ($secured_urls as $surl) {
 				$patternAsRegex = $surl['path'];
 				if (substr($surl['path'], -1) === '/') {
@@ -54,24 +54,24 @@ class StrongAuthAdmin extends StrongAuth
 				$patternAsRegex = '@^' . $patternAsRegex . '$@';
 
 				if (preg_match($patternAsRegex, $req->getPathInfo())) {
-					
+
 					// FIRST THING: if logged in, check for activation
 					if (isset($config['consent.url']) && $auth->loggedIn())
 					{
 						$user = $auth->getUser();
 						$isactive = $user['active']?: false;
 						$path = $req->getPathInfo() == $config['consent.url'];
-						
-					
+
+
 						if (!$isactive)
 						{
-							
+
 							$app->flashNow("error", "You need to sign the consent form to access these pages");
 							if (!$path) $app->redirect($app->request()->getRootUri() . $config['consent.url']);
 						}
 					}
-					
-					
+
+
 					if (!$auth->loggedIn()) {
 						// User is not logged in; redirect
 						if ($req->getPath() !== $config['login.url']) {
@@ -83,7 +83,7 @@ class StrongAuthAdmin extends StrongAuth
 						// User is logged in; check for admin rights and path priviledge
 						$user = $auth->getUser();
 						$isuseradmin = $user['isadmin']?: false;
-						$ispathadmin = $surl['admin']?: false;
+						$ispathadmin = isset($surl[ 'admin' ]) && $surl[ 'admin' ] ?: false;
 						if ($ispathadmin && !$isuseradmin)
 						{
 							// route is admin-only but user is not admon; redirect

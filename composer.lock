@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfac3d9293e2c75e73656cdd4e0bcbf0",
+    "content-hash": "3334650f70f4e2e8cf9f25e4d5f59828",
     "packages": [
         {
             "name": "Respect/Validation",
@@ -431,12 +431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silentworks/Strong.git",
-                "reference": "6b29c9a88255ac5e12261d4d06a43d320dd38e87"
+                "reference": "1af2dc2f49f14521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silentworks/Strong/zipball/6b29c9a88255ac5e12261d4d06a43d320dd38e87",
-                "reference": "6b29c9a88255ac5e12261d4d06a43d320dd38e87",
+                "url": "https://api.github.com/repos/silentworks/Strong/zipball/1af2dc2f49f14521",
+                "reference": "1af2dc2f49f14521",
                 "shasum": ""
             },
             "require": {
@@ -472,7 +472,7 @@
                 "extensions"
             ],
             "abandoned": true,
-            "time": "2014-04-21T10:00:41+00:00"
+            "time": "2012-12-31T10:57:13+00:00"
         },
         {
             "name": "twig/twig",
@@ -597,6 +597,8 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.5.9"
+    },
     "platform-dev": []
 }

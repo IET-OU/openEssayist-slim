@@ -47,8 +47,10 @@ composer test
 [gh]: https://github.com/SAFeSEA/openEssayist-slim "Original"
 [gh-iet]: https://github.com/IET-OU/openEssayist-slim "Fork"
 [gh-py]: https://github.com/SAFeSEA/pyEssayAnalyser "Python"
-[travis]:  https://travis-ci.org/SAFeSEA/openEssayist-slim
-[travis-icon]: https://api.travis-ci.org/SAFeSEA/openEssayist-slim.svg
+[travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
+[travis-icon]: https://travis-ci.org/IET-OU/openEssayist-slim.svg
+[travis-ss]:  https://travis-ci.org/SAFeSEA/openEssayist-slim "SafeSEA / openEssayist-slim"
+[travis-ss-icon]: https://api.travis-ci.org/SAFeSEA/openEssayist-slim.svg
     "Build status – Travis-CI (PHP)"
 
 [End]: //.
