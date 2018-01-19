@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
 {% block head %}
-	<title>{% block title %}{% endblock %} - openEssayist</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="Nicolas Van Labeke (IET - Open University)">
+  <title>{% block title %}{% endblock %} - openEssayist</title>
+
+  <meta name="description" content="Web frontend to the essay analyser and summariser.">
+  <meta name="copyright" content="Copyright © 2013-2018 The Open University. All rights reserved.">
+  <meta name="author" content="Nicolas Van Labeke (IET - Open University)">
 
 	<!-- Le styles -->
 	{#
@@ -20,9 +23,10 @@
 	#}
 	<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 	<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet">
-	<link href="{{ app_base }}/assets/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" />
+	{# <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet"> #}
+	<link href="{{ app_base }}/assets/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet">
 	<link href="{{ app_base }}/assets/openessayist/css/application.css" rel="stylesheet">
+	<link href="{{ app_base }}/assets/openessayist/css/app.stickyfooter.css" rel="stylesheet">
 	{% block injectCSS %}
 	{% endblock %}
 
@@ -32,42 +36,11 @@
   <![endif]-->
 
 	<!-- Le fav and touch icons -->
-	<link href="{{ app_base }}/assets/openessayist/img/favicon.ico" rel="shortcut icon" >
-	<style>
+	<link href="{{ app_base }}/assets/openessayist/img/favicon.ico" rel="shortcut icon">
+	{# <style>
 	/* Sticky footer styles
-      -------------------------------------------------- */
-	html,body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
-
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -40px;
-      }
-
-      /* Set the fixed height of the footer here */
-      #push {
-        height: 30px;
-      }
-
-      footer.footer {
-        height: 31px;
-      }
-
-      /* Custom page CSS
-      -------------------------------------------------- */
-      /* Not required for template or sticky footer method. */
-
-      .container .credit {
-        margin: 20px 0;
-      }
-
-</style>
+      ---- ... */
+</style> #}
 {% endblock %}
 </head>
 <body>
@@ -170,57 +143,21 @@
 	<script src="{{ app_base }}/assets/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
 	{#<script src="{{ app_base }}/assets/bootstrap-modal/js/bootstrap-modal.js"></script>#}
 	<script src="{{ app_base }}/assets/dotdotdot-1.6.3/jquery.dotdotdot.min.js"></script>
-	<script src="{{ app_base }}/assets/openessayist/js/openessayist.core.js"></script>
 
-	<script id="openessayist-init" type="text/javascript">
+  <!-- // Set the URL for the AJAX-based activity logging. -->
+  <script data-openessayist_log_url="{{ urlFor('ajax.log.activity') }}"></script>
+
+  <script src="{{ app_base }}/assets/openessayist/js/openessayist.core.js"></script>
+  <script src="{{ app_base }}/assets/openessayist/js/openessayist.init.js" id="openessayist-init"></script>
+
+	{# <script type="text/javascript">
 	$(document).ready(function() {
 		// Set the URL for the AJAX-based activity logging
 		openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
 
-
-
-		// Activate the Bootstrap's tooltips
-		if ($("[rel=tooltip]").length) {
-		        $("[rel=tooltip]").tooltip({container: 'body'});
-		    }
-
-		// fix for changing aria-expanded status on dropdown
-		 $(".btn[data-toggle='collapse']").on('click', function () {
-				 clp = $(this).hasClass("collapsed");
-				 console.log("collapse : " + clp);
-				 $(this).attr('aria-expanded',clp);
-		 });
-		 $("[data-toggle='dropdown']").on('click', function () {
-				 clp = $(this).parent(".dropdown").hasClass("open");
-				 console.log("collapse : " + clp);
-				 $(this).attr('aria-expanded',!clp);
-		 });
-
-		// Fix for preventing scrolling behind the overlay, when in modals.
-	    $(".modal").on('show', function () {
-	    	$('body').css('overflow', 'hidden');
-
-	    	// fix for setting focus on labels containing checkbox
-	    	$('.modal-body :input').focus(function() {
-	    		$(this).parent("label.checkbox").css('outline', 'thin dotted #333333');
-	    		$(this).parent("label.checkbox").css('outline-offset', '2px');
-
-		    });
-	    	$('.modal-body :input').blur(function() {
-	    		$(this).parents("label.checkbox").css('background-color', 'inherit');
-	    		$(this).parents("label.checkbox").css('outline', 'none');
-			});
-
-	    	$('input:text:visible:first').focus();
-
-
-
-	    });
-		$(".modal").on('hidden', function () {
-	    	$('body').css('overflow', 'auto');
-	    });
+		// ...
 	});
-	</script>
+	</script> #}
 	{% block injectJS %}
 	{% endblock %}
 

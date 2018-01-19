@@ -5,6 +5,12 @@
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  */
 
+header( 'X-test: 1' );
+
+error_reporting( E_ALL );
+ini_set( 'display_errors', true );
+
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use \Slim\Slim;

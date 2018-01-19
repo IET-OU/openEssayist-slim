@@ -1,0 +1,38 @@
+/*!
+  OpenEssayist styles | © The Open University (IET).
+*/
+
+/* From: base.html.twig - <style>*/
+
+html,body {
+      height: 100%;
+      /* The html and body elements cannot have any padding or margin. */
+    }
+
+    /* Wrapper for page content to push down footer */
+    #wrap {
+      min-height: 100%;
+      height: auto !important;
+      height: 100%;
+      /* Negative indent footer by it's height */
+      margin: 0 auto -40px;
+    }
+
+    /* Set the fixed height of the footer here */
+    #push {
+      height: 30px;
+    }
+
+    footer.footer {
+      height: 31px;
+    }
+
+    /* Custom page CSS
+    -------------------------------------------------- */
+    /* Not required for template or sticky footer method. */
+
+    .container .credit {
+      margin: 20px 0;
+    }
+
+/*</style>*/

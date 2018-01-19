@@ -2,10 +2,9 @@
   OpenEssayist javascript | © The Open University (IET).
 */
 
-var openEssayist = function(){
+var openEssayist = function () {
 
 	this._selfreport = null;
-
 
 };
 
@@ -15,7 +14,7 @@ openEssayist.LOG_URL = null;
  * @param msg
  * @returns {myClass.doSomething}
  */
-openEssayist.log4j = function(action,data) {
+openEssayist.log4j = function (action, data) {
     console.log(action);
 	$.ajax({
 		type : "POST",
@@ -91,11 +90,9 @@ openEssayist.showSRTool = function()
 
 
 
+window.jQuery(function ($) {
 
-
-
-
-$('#rd-comparisons img').click(function() {
+  $('#rd-comparisons img').click(function() {
     var thmb = this;
     var src = this.src;
     var versionName = this.getAttribute('data-version-name');
@@ -106,4 +103,6 @@ $('#rd-comparisons img').click(function() {
     	versionName = " - '" + versionName + "'";
     }
     $('.version-number-comparison').html(this.id + ' ' + versionName);
+  });
+
 });

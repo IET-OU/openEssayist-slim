@@ -1,0 +1,46 @@
+/*!
+  OpenEssayist styles | © The Open University (IET).
+*/
+
+/* From: site.twig - <style>*/
+
+.ui-pnotify .ui-pnotify-title {
+    margin-bottom: 0.4em;
+}
+
+.modal-backdrop, .modal-backdrop.fade.in {
+    background: none repeat scroll 0 0 #000;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+#ajax-modal > .modal-body
+{
+	padding-top:0px;
+}
+
+.modal-toolbar
+{
+	padding: 0 15px;
+}
+#editor { background-color: white;
+    border: 1px solid #CCCCCC;
+    border-collapse: separate;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.075) inset;
+    height: 250px;
+    max-height: 250px;
+    outline: medium none;
+    overflow: scroll;
+    padding: 4px;
+    }
+
+    /* This one is done through code, to show how it is done. Look down
+			at the stack_bottomright variable in the JavaScript below. */
+		.ui-pnotify.stack-bottomright {
+			/* These are just CSS default values to reset the pnotify CSS. */
+			right: auto;
+			top: auto;
+		}
+
+/*</style>*/
