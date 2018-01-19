@@ -33,6 +33,15 @@ abstract class Controller extends Application {
 		$this->UAParser = new \UAS\Parser("../.cache/.UPA/",null,false,false);
 	}
 
+	/** Output a HTTP header with debug information.
+	 * @param mixed $obj  Object (stdClass), array, string etc.
+	 */
+	public static function _debug( $obj ) {
+		static $count = 0;
+		header(sprintf( 'X-controller-%02d: %s', $count, json_encode( $obj )));
+		$count++;
+	}
+
 	/**
 	 * Parse the User Agent string and return a formatted array
 	 * @param string $ua
