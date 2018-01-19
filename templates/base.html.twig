@@ -145,7 +145,12 @@
 	<script src="{{ app_base }}/assets/dotdotdot-1.6.3/jquery.dotdotdot.min.js"></script>
 
   <!-- // Set the URL for the AJAX-based activity logging. -->
-  <script data-openessayist_log_url="{{ urlFor('ajax.log.activity') }}"></script>
+  <script
+    data-openessayist
+    data-user_isdemo="{{ auth.user.isdemo ? 'true' : 'false' }}"
+    data-profile_save_notes="{{ urlFor('profile.save.notes') }}"
+    data-log_url="{{ urlFor('ajax.log.activity') }}"
+    ></script>
 
   <script src="{{ app_base }}/assets/openessayist/js/openessayist.core.js"></script>
   <script src="{{ app_base }}/assets/openessayist/js/openessayist.init.js" id="openessayist-init"></script>

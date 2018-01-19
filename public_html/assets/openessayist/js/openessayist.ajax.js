@@ -6,25 +6,36 @@
 //<script id="ajax" type="text/javascript">
 
 window.jQuery(function ($) {
+	'use strict';
 
-var $modal = null;
-$('#btn-notepad').on('click', function(){
-	if ($modal==null)
+	var $conf = $('script[ data-openessayist ]');
+	var $editor = $('#editor');
+	var $button = $('#btn-notepad');
+	var $modal = null;
+
+	console.warn('Config:', $conf, $conf.data('user_isdemo'));
+
+$button.on('click', function(){
+	if ($modal === null)
 	{
 			$modal = $('#modal-notes');
+
 			$modal.on('hidden', function () {
-				{% if (auth.user.isdemo==0) %}
-    			var jqxhr = $.post("{{ urlFor('profile.save.notes') }}",
-    					$('#editor').html())
+				if (! $conf.data('user_isdemo')) {
+				//{% if (auth.user.isdemo==0) %}
+    			var jqxhr = $.post($conf.data('profile_save_notes'),
+    					$editor.html())
     				.done(function() {})
     				.fail(function() { ; })
     				.always(function() { });
-				{% endif %}
+				//{% endif %}
+			  }
 
-    		}).find('div#editor').load(
-					"{{ urlFor('profile.save.notes') }}", "",
-					function(){});
+    		}).find($editor).load(
+					$conf.data('profile_save_notes'), '',
+					function() {});
     }
+
 	$modal.modal({
 		maxHeight: "300px",
 		keyboard: false,

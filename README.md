@@ -23,7 +23,7 @@ composer redhat-install
 
 ```sh
 composer install
-composer patch       # Apply Diff to 'vendor/slim/extras'
+# composer patch     # NOT needed!
 composer copy-conf   # app/config.php
 composer copy-nginx  # Only on Redhat
 composer mkdir
