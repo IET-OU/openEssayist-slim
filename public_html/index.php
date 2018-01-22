@@ -50,11 +50,13 @@ $app = new \Slim\Slim(array(
 	'openEssayist.async' => false,
 	'view' => new TwigView,
 	'debug' => true,
-	'rd_save_path' => substr($_SERVER['SCRIPT_FILENAME'], 0, -21) .'public_html/assets/openessayist/img/rd/',
+	'rd_save_path' => __DIR__ . '/assets/openessayist/img/rd/',
+	// Was: 'rd_save_path' => substr($_SERVER['SCRIPT_FILENAME'], 0, -21) .'public_html/assets/openessayist/img/rd/',
     'log.level' => \Slim\Log::DEBUG,
     'log.enabled' => true,
     'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(array(
-        'path' => '../.logs',
+        'path' => __DIR__ . '/../.logs',
+        // Was: 'path' => '../.logs',
         'name_format' => 'y-m-d',
     	'message_format' => '%label% | %date% | %message%'
     ))
@@ -141,7 +143,7 @@ $config = array(
 				array('path' => '/me/.+'),
 				array('path' => '/group/'),
 				array('path' => '/group/.+'),
-				array('path' => '/admin/','admin'=> true),
+				array('path' => '/admin/', 'admin'=> true),
 				array('path' => '/admin/.+', 'admin' => true),
 		),
 );
