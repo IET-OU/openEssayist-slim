@@ -12,27 +12,33 @@
  */
 class OpenEssayistConfigurator extends Application {
 
+	protected $email;
+
 	/**
 	 *
 	 */
 	public function setupDB()
 	{
+		$this->email = $GLOBALS[ 'email' ];
+
+		self::_debug([ __METHOD__, $this->email ]);
+
 		// Create H817 group (based on H810 data file)
 		$grpU = $this->createGroup("H817");
 		// Create admin user within that group
-		$this->createUser(1,$grpU->id,true,"U",true);
+		$this->createUser(1, $grpU->id, true, "U", true);
 		$this->createBatchUsers('../app/accountsH817.csv', $grpU->id);
 
 		// Create Hertfordshire group (based on H810 data file)
 		$grpH = $this->createGroup("Hertfordshire");
 		// Create admin user within that group
-		$this->createUser(1,$grpH->id,true,"H",true);
+		$this->createUser(1, $grpH->id, true, "H", true);
 		$this->createBatchUsers('../app/accountsHerts.csv', $grpH->id);
 
 		// Create Dubai group (based on H810 data file)
 		$grpD = $this->createGroup("Dubai");
 		// Create admin user within that group
-		$this->createUser(1,$grpD->id,true,"D",true);
+		$this->createUser(1, $grpD->id, true, "D", true);
 		$this->createBatchUsers('../app/accountsDubai.csv', $grpD->id);
 
 		$nbi = 1;
@@ -139,7 +145,7 @@ EOF;
 
 
 		$iUser=1;
-		$grp = $this->createGroup("SAFeSEA","H810");
+		$grp = $this->createGroup("SAFeSEA", "H810");
 		// Create admin user within that group
 		$this->createUser($iUser,$grp->id,true,null,true);
 		// Create Safesea users
@@ -175,10 +181,7 @@ EOF;
 				//var_dump($e->getMessage());
 			}
 
-
 		}
-
-
 
 	}
 
@@ -188,7 +191,7 @@ EOF;
 
 		$u = Model::factory('Users')->create();
 		$u->name = "demo";
-		$u->email = "nicolas.vanlabeke@open.ac.uk";
+		$u->email = $this->email;
 		$u->username = $u->name;
 		$u->active = 1;
 		$u->isdemo = 1;
@@ -207,13 +210,13 @@ EOF;
 
 	}
 
-	private function createSafeseaUser($id,$gid)
+	private function createSafeseaUser($id, $gid)
 	{
 		$gs = Model::factory('Group')->find_many();
 
 		$u = Model::factory('Users')->create();
-		$u->name = "safesea".$id;
-		$u->email = "nicolas.vanlabeke@open.ac.uk";
+		$u->name = "safesea" . $id;
+		$u->email = $this->email;
 		$u->username = $u->name;
 		$u->password =  Strong\Strong::getInstance()->getProvider()->hashPassword("safesea".$id);
 		$u->ip_address = $this->app->request()->getIp();
@@ -229,18 +232,19 @@ EOF;
 
 	}
 
-	private function createUser($id,$gid,$isadmin=false,$adminID=null,$groupadmin=false)
+	private function createUser($id, $gid, $isadmin = false, $adminID = null, $groupadmin = false)
 	{
 		$gs = Model::factory('Group')->find_many();
 
 		$u = Model::factory('Users')->create();
-		$u->name = ($isadmin) ? "admin".$adminID : "user".$id;
-		$u->email = "nicolas.vanlabeke@open.ac.uk";
+		$u->name = ($isadmin) ? "admin" . $adminID : "user". $id;
+		$u->email = $this->email;
 		$u->username = $u->name;
-		if ($isadmin)
+		if ($isadmin) {
 			$u->password =  Strong\Strong::getInstance()->getProvider()->hashPassword("admin1");
-		else
+		} else {
 			$u->password =  Strong\Strong::getInstance()->getProvider()->hashPassword($u->name);
+		}
 		$u->ip_address = $this->app->request()->getIp();
 		$u->isadmin = ($isadmin)? 1:0;
 		$u->isgroup = ($groupadmin)? 1:0;
