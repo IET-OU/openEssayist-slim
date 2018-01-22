@@ -1,4 +1,10 @@
 <?php
+/**
+ * OpenEssayist-slim.
+ *
+ * @copyright Â© 2013-2018 The Open University. (Institute of Educational Technology)
+ */
+
 use Respect\Validation\Validator as v;
 
 /**
@@ -15,18 +21,18 @@ class HomeController extends Controller
 	{
 		$this->render('pages/welcome');
 	}
-	
+
 	public function about()
 	{
 		$this->render('pages/about');
 	}
-	
+
 	public function error(Exception $e)
 	{
 		$log = $this->app->getLog();
 		$log->error($e->getMessage());
-		
-		
+
+
 		$this->app->flashNow('error', $e->getMessage());
 		$this->render('pages/error',array(
 			'path' => $this->app->request()->headers(),
@@ -35,25 +41,22 @@ class HomeController extends Controller
 					'CODE'		=> $e->getCode(),
 					'LINE'		=> $e->getLine(),
 					'FILE'		=> $e->getFile()
-
 					)
 		));
-	
-	}	
-	
+	}
+
 	public function NotFound()
 	{
 		$req = $this->app->request();
 		$path = $req->getPathInfo();
 		$ref = $req->headers('REFERER');
 		//$log = $this->app->getLog();
-		
+
 		$this->app->flashNow('error', "404 Page Not Found : " . $path);
 		$this->render('pages/notfound',array(
 		));
-	
 	}
-	
+
 	public function testConfig()
 	{
 		$configres = array();
@@ -72,7 +75,7 @@ class HomeController extends Controller
 		$configres[] = array(
 				'time' => microtime(true)-$time_start,
 				'msg' =>  "Try creating openessayist database if not exist",
-				'code' => $code, 
+				'code' => $code,
 				'res' => $res);
 		try {
 			$config = "Try creating dfd database if not exist";
@@ -90,20 +93,20 @@ class HomeController extends Controller
 				  PRIMARY KEY (`id`),
 				  UNIQUE (`username`)
 				) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-			");		
+			");
 			$code = true;
-				
+
 		} catch (PDOException $e) {
 			$res = $e->getMessage();
 			$code = false;
-				
+
 		}
 		$configres[] = array(
 				'time' => microtime(true) - $time_start,
-				'msg' =>  "Try creating the users table if not exist", 
-				'code' => $code, 
+				'msg' =>  "Try creating the users table if not exist",
+				'code' => $code,
 				'res' => $res);
-				
+
 		try {
 			$code = false;
 			$u = Model::factory('Users')->create();
@@ -114,18 +117,18 @@ class HomeController extends Controller
 			$u->ip_address = $this->app->request()->getIp();
 			$u->isadmin = 1;
 			$res = null;//unset($res);
-				
+
 			$u->save();
 		}
 		catch (\PDOException  $e) {
 			$res = $e->getMessage();
 			$code = true;
-				
+
 		}
 		$configres[] = array(
 				'time' => microtime(true) - $time_start,
 								'msg' =>  "Use IDIORM to recreate an existing user",
-				'code' => $code, 
+				'code' => $code,
 				'res' => $res);
 
 		try {
@@ -137,7 +140,7 @@ class HomeController extends Controller
 			$u->ip_address = $this->app->request()->getIp();
 			$u->isadmin = 0;
 			$res = null;//unset($res);
-				
+
 			$ret = $u->save();
 			$res = "ID: " . $u->id();
 			$code = true;
@@ -149,15 +152,14 @@ class HomeController extends Controller
 		$configres[] = array(
 				'time' => microtime(true) - $time_start,
 								'msg' =>  "Use IDIORM to create a new user (" . $u->name . ")",
-				'code' => $code, 
+				'code' => $code,
 				'res' => $res);
 
 		/*try {
 			$u = Model::factory('Users')->find_one($u->id());
 			$ret = null;//unset($res);
-		
-			
-			$res =$u->delete(); 
+
+			$res =$u->delete();
 			$code = true;
 		}
 		catch (\PDOException  $e) {
@@ -170,11 +172,11 @@ class HomeController extends Controller
 				'res' => $res);
 		*/
 		try {
-		$request = Requests::get('http://localhost:8062/',
-								array(), 
+		$request = Requests::get($this->getAnalyserUrl(),
+								array(),
 								array('timeout' => 1));
 						$res = null;//unset($res);
-		
+
 			$res = $request->body;
 			$code = true;
 		}
@@ -185,14 +187,13 @@ class HomeController extends Controller
 		$configres[] = array(
 				'time' => microtime(true) - $time_start,
 								'msg' =>  "Use REQUESTS to send a GET to pyEssayAnaliser",
-				'code' => $code, 
+				'code' => $code,
 				'res' => $res);
-		
 
 		try {
-			
+
 			$data = <<<EOF
-The resource had some accessibility features that were achieved by keeping the document Microsoft® Office Word based,
+The resource had some accessibility features that were achieved by keeping the document Microsoftï¿½ Office Word based,
 thereby accessible for students using assistive technologies such as screen readers or voice controlled packages. I was then able
 to make the navigation of the text primarily through headings and styles. Headings can indicate sections and subsections in a
 long document and help any reader to understand different parts of the document and levels of importance. Students who use screen
@@ -200,16 +201,16 @@ reading software such as JAWS can use the Document Map to navigate, which in tur
 to move around the document. If I had used direct formatting, which unfortunately I did on some occasions, then although I could
 make the text have the same visual effect it would not appear in the document map and any screen reading software would not have
 used it as a navigation tool. An added feature is that as a Word document a blind student could run the document through a Braille
-embossing printer to give a Braille written document.			
+embossing printer to give a Braille written document.
 EOF;
-			$request = Requests::post('http://localhost:8062/api/analysis',
-					array(), 
+			$request = Requests::post($this->getAnalyserUrl('/api/analysis'),
+					array(),
 					array('text' => $data),
 					array('timeout' => 30));
 			$res = null;//unset($res);
-		
+
 			$res = $request->body;
-			
+
 			$code = $request->status_code == 200;
 		}
 		catch (Exception  $e) {
@@ -221,27 +222,24 @@ EOF;
 								'msg' =>  "Use REQUESTS to send a POST to pyEssayAnaliser",
 				'code' => $code,
 				'res' => $res);
-		
-		
-		
+
 		$this->render('pages/debug', array('configres' => $configres));
 	}
-	
-	
+
+
 	public function testRequest()
 	{
-		$request = Requests::get('http://localhost:8062/');
+		$request = Requests::get($this->analyserUrl());
 		$this->app->flash("info", $request->body);
 		$this->redirect('home');
 		$this->render('pages/welcome');
 		var_dump($request->status_code);
 		// int(200)
-	
+
 		var_dump($request->headers['content-type']);
 		// string(31) "application/json; charset=utf-8"
-	
+
 		var_dump($request->body);
 	}
-	
-	
+
 }

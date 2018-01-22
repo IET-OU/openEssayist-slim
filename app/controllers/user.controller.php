@@ -1,8 +1,14 @@
 <?php
+/**
+ * OpenEssayist-slim.
+ *
+ * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
+ */
+
 use Respect\Validation\Validator as v;
 
 /**
- * 
+ *
  * @author Nicolas Van Labeke (https://github.com/vanch3d)
  *
  */
@@ -28,11 +34,11 @@ class UserController extends Controller
 		if ($id) return $arr[$id];
 		else return $arr;
 	}
-	
+
 	public function GetAllKeywords($analysis,$userdata)
 	{
 		if (!$analysis) return null;
-		
+
 		// Get all ngrams in a single structure
 		$data = array_merge(array(),
 				$analysis->nvl_data->quadgrams,
@@ -40,16 +46,15 @@ class UserController extends Controller
 				$analysis->nvl_data->bigrams,
 				$analysis->nvl_data->keywords
 		);
-		
+
 		$allkw = array();
 		// Transform into associative array
 		foreach ($data as $ngram)
 		{
 			$id = join("",$ngram->ngram);
 			$allkw[$id] = $ngram;
-			
 		}
-		
+
 		// Get the user-defined keywords
 		// Get the groups
 		$groups = null;
@@ -58,7 +63,6 @@ class UserController extends Controller
 			$groups = $userdata->getGroups();
 		}
 
-		
 		if ($groups==null)
 		{
 			$kw = array();
@@ -70,16 +74,15 @@ class UserController extends Controller
 			$groups = array('category_all'=>
 					array('id' => 'category_all','keywords' => $kw));
 		}
-		
+
 		foreach ($groups as $gr)
 		{
-			
-			if (isset($gr['keywords']))
-				foreach ($gr['keywords'] as $keyw)
+			if (isset($gr['keywords'])) {
+				foreach ($gr['keywords'] as $keyw) {
 					$allkw[$keyw]->groupid = $gr['id'];
-					
+				}
+			}
 		}
-		
 
 		$ret=new stdClass();
 		$ret->allkw = $allkw;
@@ -88,7 +91,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function me()
 	{
@@ -99,7 +102,7 @@ class UserController extends Controller
 			$this->app->flash("error", "Cannot find the user data");
 			$this->redirect('me.home');
 		}
-		
+
 		/* @var $g Group */
 		$g = $u->group()->find_one();
 		if ($g===false)
@@ -107,11 +110,11 @@ class UserController extends Controller
 			$this->app->flash("error", "Cannot find the group data");
 			$this->redirect('me.home');
 		}
-		
+
 		$drafts = $u->drafts()->order_by_desc('id')->find_array();
 		$tasks = $g->tasks()->find_array();
 		$tasks2 = array();
-		
+
 		foreach ($tasks as $t)
 		{
 			$tasks2[$t['id']] = $t;
@@ -125,7 +128,6 @@ class UserController extends Controller
 			$d['task'] = $t['name'];
 			unset($d['analysis']);
 		}
-		
 
 		$this->render('user/dashboard',array(
 				'group' => $g->as_array(),
@@ -166,22 +168,22 @@ class UserController extends Controller
 				$this->redirect('me.tasks');
 			}
 			$t[] = $ap->as_array();
-			
+
 		}
 		foreach ($t as $key => &$task)
 		{
 			$d = $u->drafts()->where_equal('task_id',$task['id'])->order_by_desc('id')->find_array();
-			$task['draftcount'] = ($d)?count($d):0; 
-				
+			$task['draftcount'] = ($d)?count($d):0;
+
 		}
-		
+
 		$this->render('user/tasks',array(
 				'group' => $g->as_array(),
 				'tasks' => $t
 		));
 	}
 
-	
+
 	public function manageDraft($taskId)
 	{
 		/* @var $u Users */
@@ -198,7 +200,7 @@ class UserController extends Controller
 			$this->app->flash("error", "Cannot find the group data");
 			$this->redirect('me.home');
 		}
-		
+
 		/* @var $d Draft */
 		$ap = $g->tasks()->find_one($taskId);
 		$d = $u->drafts()->where_equal('task_id',$taskId)->order_by_desc('id')->find_array();
@@ -206,16 +208,15 @@ class UserController extends Controller
 		{
 			unset($draft['analysis']);
 		}
-		
+
 		$this->render('user/draft.action',array(
 				'group' => $g->as_array(),
 				'task' => $ap->as_array(),
 				'drafts' => $d
-
 		));
-		
+
 	}
-	
+
 	public function historyDraft($taskId)
 	{
 		/* @var $u Users */
@@ -232,36 +233,35 @@ class UserController extends Controller
 			$this->app->flash("error", "Cannot find the group data");
 			$this->redirect('me.home');
 		}
-		
+
 		/* @var $d Draft */
 		$ap = $g->tasks()->find_one($taskId);
-		
+
 		$d = $u->drafts()->where_equal('task_id',$taskId)->order_by_desc('id')->find_array();
-		
+
 		foreach ($d as $key => &$draft)
 		{
 			$analysis = json_decode($draft['analysis'],true);
 			$wordcount = $analysis['se_stats']['number_of_words'];
 			$draft['wordcount'] = $wordcount;
 			$k = $analysis['nvl_data'];
-			if (isset($k))
+			if (isset($k)) {
 				$draft['keywords'] = array_merge(array(),$k['keywords']);
-			
+			}
+
 			unset($draft['analysis']);
 			$gg = $this->timeSince(strtotime($draft['date']));
 			$draft['datesince'] = $gg;
 			$draft['version'] = count($d)-$key;
-				
+
 		}
-		
+
 		$this->render('user/draft.history',array(
 				'group' => $g->as_array(),
 				'task' => $ap->as_array(),
 				'drafts' => $d
-		
 		));
 	}
-	
 
 	/**
 	 *
@@ -286,7 +286,7 @@ class UserController extends Controller
 		}
 
 		$d = $u->drafts()->where_equal('task_id',$taskId)->order_by_desc('id')->find_array();
-		
+
 		foreach ($d as $key => &$draft)
 		{
 			$analysis = json_decode($draft['analysis'],true);
@@ -300,14 +300,14 @@ class UserController extends Controller
 			$gg = $this->timeSince(strtotime($draft['date']));
 			$draft['datesince'] = $gg;
 			$draft['version'] = count($d)-$key;
-			
+
 		}
 		/* @var $d Draft */
 		$ap = $g->tasks()->find_one($taskId);
-		
+
 		$actions = TutorController::getActivities();
-		
-			
+
+
 		$this->render('user/task.info',array(
 				'group' => $g->as_array(),
 				'task' => $ap->as_array(),
@@ -327,13 +327,15 @@ class UserController extends Controller
 		$req = $this->app->request();
 		$async = $this->app->config('openEssayist.async');
 
+		self::_debug([ 'm' => __METHOD__, 'taskId' => $taskId, 'isPost' => $req->isPost(), 'async' => $async ]);
+
 		/* @var $d Draft */
 		$ap = Model::factory('Task')->find_one($taskId);
 		$g = $ap->group()->find_one();
 
 		$formdata=null;
 		$status=200;
-		
+
 		if ($req && $req->isPost())
 		{
 			$post = $req->post();
@@ -344,12 +346,12 @@ class UserController extends Controller
 			else
 			{
 				$formdata["text"] = $post["text"];
-				$formdata["state"] = $post["state"];
+				// WAS: $formdata["state"] = $post["state"];
 				$formdata["name"] = $post["name"];
 				$formdata["version"] = $post["version"];
 				try {
-					$url = 'http://localhost:8062/api/analysis';
-					
+					$url = $this->getAnalyserUrl('/api/analysis');
+
 					$request = Requests::post($url,
 							array(),
 							array(
@@ -365,7 +367,7 @@ class UserController extends Controller
 									'timeout' => 300,
 									'blocking' => true
 					));
-					
+
 					if ($request->status_code === 200)
 					{
 						$json = $request->body;
@@ -378,57 +380,61 @@ class UserController extends Controller
 						$draft->task_id = $taskId;
 						$draft->version = $formdata["version"];
 						$draft->name = $formdata["name"];
-						
+
 						$draft->users_id = $this->user['id'];
-						$draft->date = date('Y-m-d H:i:s e');
-						
-						$ret = $draft->save();
+						$draft->date = date('Y-m-d H:i:s');  // No timezone ?!
+						// Was: $draft->date = date('Y-m-d H:i:s e');
+
+						$result = $draft->save();
 
 						// redirect to the "drafts review" page
 						$this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
 						$r= $this->app->urlFor("me.draft.action",array("idt" => $taskId));
-						
+
+						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result ]);
+
 						$this->redirect($r,false);
-						
 					}
-					else 
+					else
 					{	$json = $request->body;
 						$ret = json_decode($json,true);
-						
+
 						$status = 500;
 						$this->app->flashNow("error", "Problem with the analyser. Make sure you text is not empty. If it continues, please contact the admin.");
-					
+
+            self::_debug([ __METHOD__, 'error', $ret ]);
 					}
 				}
 				catch (Requests_Exception $e)
 				{
 					$status = 500;
-					$this->app->flashNow("error", "Cannot connect to the analyser. Try again later.");
-					//var_dump($e);die();
+					$this->app->flashNow("error", "Sorry. Cannot connect to the analyser. Try again later.");
+
+					self::_debug([ __METHOD__, 'Requests except', $e->getMessage() ]);
 				}
 				catch (\PDOException  $e)
 				{
 					$status = 500;
-					$this->app->flashNow("error", "Problem with the database. Try again later.");
-					//var_dump($e);die();
+					$this->app->flashNow("error", "Sorry. Problem with the database. Try again later.");
 
+					self::_debug([ __METHOD__, 'PDO except', $e->getMessage() ]);
 				}
 				catch (Exception $e)
 				{
 					$status = 500;
-					$this->app->flashNow("error", "Problem with the database. Try again later.");
-					//var_dump($e);die();
-				
+					$this->app->flashNow("error", "Sorry, we have a problem. Try again later.");
+
+					self::_debug([ __METHOD__, 'except', $e->getMessage() ]);
 				}
 			}
 		}
 		else {
 			$u = Model::factory('Users')->find_one($this->user['id']);
 			$d = $u->drafts()->where_equal('task_id',$taskId)->order_by_desc('id')->find_array();
-			
+
 			$formdata['version'] = count($d)+1;
 		}
-		
+
 		$this->render('user/draft.submit',array(
 				'task' => $ap->as_array(),
 				'group' => $g->as_array(),
@@ -437,7 +443,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * 
+	 *
 	 * @param unknown $ap
 	 * @param unknown $taskId
 	 * @param unknown $post
@@ -448,7 +454,9 @@ class UserController extends Controller
 
 		$req = $this->app->request();
 		$root = $req->getRootUri();
-		if ($root == '') $r = "http://localhost:8080".$r;
+		if ($root == '') {
+			$r = "http://localhost:8080".$r;
+		}
 		try {
 
 			$draft = Model::factory('Draft')->create();
@@ -473,6 +481,8 @@ class UserController extends Controller
 		}
 		catch (Requests_Exception $e)
 		{
+			self::_debug([ __METHOD__, $e->getMessage() ]);
+
 			$this->app->flashNow("info", "Analysis in progress....");
 		}
 		catch (Exception $e)
@@ -488,6 +498,8 @@ class UserController extends Controller
 
 	public function processDraft($taskId)
 	{
+		self::_debug(__METHOD__);
+
 		ignore_user_abort(true);
 		$log = $this->app->getLog();
 
@@ -502,17 +514,19 @@ class UserController extends Controller
 
 			/* @var $draft Draft */
 			$draft = Model::factory('Draft')->find_one($post['draft_id']);
-				
+
 			try {
 				$data = $draft->as_array();
 				$log->info(json_encode($data));
 				sleep(2);
 
-				$url = 'http://localhost:8062/api/analysis';
+				$url = $this->getAnalyserUrl('/api/analysis');
 				$request = Requests::post($url,
 						array(),
 						array('text' => $post["text"]),
 						array('timeout' => 100));
+
+				self::_debug([ __METHOD__, $url, $post[ 'text'], $request->status_code ]);
 
 				$log->error("==> " . $request->status_code);
 				if ($request->status_code === 200)
@@ -539,7 +553,7 @@ class UserController extends Controller
 				$draft->save();
 				//$draft->delete();
 			}
-				
+
 		}
 		//$this->redirect('me.home');
 		$log->info("STOP PROCESS");
@@ -595,7 +609,7 @@ class UserController extends Controller
 		$parasenttok = $dr->getParasenttok();
 		$analysis = $dr->getAnalysis();
 
-		
+
 		// extract structure tags
 		$tt= array();
 		$tt[]="#+s:i#";
@@ -603,55 +617,55 @@ class UserController extends Controller
 		$tt[]="#+s:c#";
 		$tt[]="#-s:t#";
 		foreach ($parasenttok as $index => &$par)
-		{	
+		{
 			$partag = null;
 			if (count($par ) > 1)
-			{	
+			{
 				$struct2 = array();
 				foreach ($par as $index2 => $sent)
 				{
 					$struct2[] = $sent['tag'];
 				}
-				
+
 				$alltags = array_unique($struct2);
-				
+
 				if (count($alltags)==1)
 					$partag = array_shift ($alltags );
-				else 
+				else
 				{
 					$gg = array_intersect($tt,$struct2);
-				
+
 					if (count($gg)==0)
 						$partag = "#-s:h#";//"#-s:h#";
 					else
 						$partag =  array_shift ($gg );
 				}
-			}	
+			}
 			else if (count($par ) != 0)
 			{
 				$partag = $par[0]['tag'];
 			}
-			if ($partag) $par['partag'] =$partag; 
-			
+			if ($partag) $par['partag'] =$partag;
+
 		}
-		
+
 		$tt = $dr->kwCategories()->find_one();
 		$mydata = $this->GetAllKeywords($analysis,$tt);
 
-		
+
 		$highlighjs = array();
-		
-		foreach ($mydata->groups as $key=>$group){
-			if (isset($group['keywords']))
-				foreach($group['keywords'] as $ref){
-					
+
+		foreach ($mydata->groups as $key=>$group) {
+			if (isset($group['keywords'])) {
+				foreach($group['keywords'] as $ref) {
+
 					$ngram = $mydata->allkw[$ref];
 					$ngram->ngramid =  $ref;
 					$highlighjs[$ref] = $ngram;
 				}
+			}
 		}
-		
-		
+
 		usort($highlighjs,function($a,$b)
 		{
 			return count($b->ngram)-count($a->ngram);
@@ -814,31 +828,31 @@ class UserController extends Controller
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		//$tt = $dr->kwCategories()->find_array();
 		$analysis = $dr->getAnalysis();
-		
+
 		/*$tt = $dr->kwCategories()->find_one();
 		$groups = array();
 		if ($tt!=false)
 		{
 			$groups = $tt->getGroups();
 		}
-		
+
 		$allkw = array_merge(array(),
 			$analysis['nvl_data']['quadgrams'],
 			$analysis['nvl_data']['trigrams'],
 			$analysis['nvl_data']['bigrams'],
 			$analysis['nvl_data']['keywords']
 		);*/
-		
+
 		$tt = $dr->kwCategories()->find_one();
 		$mydata = $this->GetAllKeywords($analysis,$tt);
-		
+
 		$alllema = (array)$analysis->ke_data->myarray_ke;
 		$allfreq = (array)$analysis->ke_data->scoresNfreqs;
 		$keylemma = (array)$analysis->ke_data->keylemmas;
-		
+
 		$allfreq2 = array();
 		foreach ($allfreq as $key=>$item)
 		{
@@ -853,7 +867,7 @@ class UserController extends Controller
 			if (!in_array($item[0],$keylemma))
 				$allfreq2[]= $item2;
 		}
-	
+
 		//$tmpl = array('drag'=>'drafts/action.keyword','table'=>'drafts/action.keyword.table');
 		//$this->render('drafts/action.keyword',array(
 		$this->render('drafts/action.keyword.aria',array(
@@ -865,17 +879,17 @@ class UserController extends Controller
 				'lemmas' => $allfreq2
 		));
 
-		
-		
+
+
 	}
-	
-	
+
+
 	private function getStructTargetData($draft,$dr,$tsk)
 	{
-		
+
 		$analysis = $dr->getAnalysis();
 		$text = $dr->getParasenttok();
-		
+
 		$breakdown = array();
 		foreach ($text as $index => &$par)
 		{
@@ -889,8 +903,8 @@ class UserController extends Controller
 				$breakdown[$tag] += $count;
 			}
 		}
-		
-		
+
+
 		$wc = $analysis->se_stats->number_of_words;
 		$tg = $tsk->wordcount;
 		$target= array(
@@ -899,11 +913,11 @@ class UserController extends Controller
 				'range' => array("low"=>intval ($tg*0.9),"high"=>intval($tg*1.1)),
 				'inlimit' => ($wc <= ($tg*1.1) && $wc >= ($tg*0.9))
 		);
-		
+
 		$distribution = array();
 		$bullet = array();
-		
-		
+
+
 		foreach ($breakdown as $id => $count)
 		{
 			$std = UserController::GetStructureData($id);
@@ -916,7 +930,7 @@ class UserController extends Controller
 			{
 				$tt['sliced'] = true;
 				$tt['selected'] = true;
-		
+
 			}
 			$distribution[] = $tt;
 			$bullet[] = array(
@@ -924,7 +938,7 @@ class UserController extends Controller
 					'name' => $std['name'],
 					'color' => $std['idx'],
 					'data'=> array($count));
-				
+
 		}
 		usort($distribution,function($a,$b)
 		{
@@ -933,42 +947,42 @@ class UserController extends Controller
 		usort($bullet,function($a,$b)
 		{
 			return ($a['color'])-($b['color']);
-		});		
-		
+		});
+
 		return array(
 				'breakdown' => 	$distribution,
 				'bullet' => 	$bullet,
 				'target' =>		$target
-		); 
+		);
 	}
-	
+
 	public function viewStructure($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
-		
+
+
 		$data = $this->getStructTargetData($draft,$dr,$tsk);
-		
+
 		$this->render('drafts/view.structure',array(
 				'helpontask' => 'view.structure',
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
 				'breakdown' => $data['breakdown']
-				
+
 
 		));
-		
+
 	}
-	
+
 	public function viewTarget($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
-		
+
+
 		$data = $this->getStructTargetData($draft,$dr,$tsk);
-			
+
 		$this->render('drafts/view.target',array(
 				'helpontask' => 'view.target',
 				'task' => $tsk->as_array(),
@@ -978,7 +992,7 @@ class UserController extends Controller
 				'target' =>$data['target']
 
 		));
-			
+
 	}
 
 	public function viewRainbow($draft)
@@ -988,14 +1002,14 @@ class UserController extends Controller
 
 		//Get Current Draft
 		$dr = $this->getDraft($draft);
-		
+
 		//Get Current Task
 		$tsk = $dr->task()->find_one();
 
 		//Get all drafts for this user for this task
 		$u = Model::factory('Users')->find_one($this->user['id']);
 		$drafts = $u->drafts()->where_equal('task_id',$tsk->id)->order_by_desc('id')->find_array();
-		
+
 		var_dump(count($drafts));
 		if (count($drafts) > 1) {
 			$output_comparisions = true;
@@ -1014,8 +1028,8 @@ class UserController extends Controller
 
 
 		//Set main rainbow diagram image name
-		$rd_filename = 'rd_'  .  $this->user['id']  .  '_'  .  $tsk->id  .  '_'  .  $dr->version .'.png'; 
-		
+		$rd_filename = 'rd_'  .  $this->user['id']  .  '_'  .  $tsk->id  .  '_'  .  $dr->version .'.png';
+
 		//var_dump($names);
 
 		$this->render('drafts/view.rainbow',array(
@@ -1041,26 +1055,26 @@ class UserController extends Controller
 		//$a = $env['PATH_INFO'];
 		//$this->app->etag('12345'.$draft);
 		//$this->app->expires('+1 week');
-		
-		
+
+
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis();
 		$text = $dr->getParasenttok();
-		
+
 		$struct = array(
 				$analysis->intro->i_first,
 				$analysis->intro->i_last,
 				$analysis->concl->c_first,
 				$analysis->concl->c_last);
-		
+
 		$tags = array();
 		$struct2 = array();
 		$count = array();
 		// Join the array into a single string and count words
 		foreach ($text as $index => &$par)
-		{	
+		{
 			$setag = array();
 			foreach ($par as $index2 => &$sent)
 			{
@@ -1075,27 +1089,27 @@ class UserController extends Controller
 			$count = array_merge($count,$count2);
 			//var_dump($struct2,$count);
 		}
-		
+
 		$limit= array();
 		$ticks= array();
 		$inc = 0;
-		foreach ($struct2 as $key=>$wcount) 
+		foreach ($struct2 as $key=>$wcount)
 		{
 			$item = array(
 					'from' => $inc,
 					'to' => $inc+$wcount,
 					'tag' => $tags[$key],
-				
+
 			);
 			$ticks[] = $inc;
 			$inc += $wcount;
 			$limit[] = $item;
 		}
-		
-		
+
+
 		$text = "" . join(" ", $text);
 		$count = array_map('strtolower', $count);
-		
+
 		$tt = $dr->kwCategories()->find_one();
 		$mydata = $this->GetAllKeywords($analysis,$tt);
 		usort($mydata->allkw,function($a,$b)
@@ -1109,14 +1123,14 @@ class UserController extends Controller
 				$analysis->nvl_data->keywords,
 				array()
 		);
-		
+
 		usort($allkw,function($a,$b)
 		{
 			return ($b->count)-($a->count);
-		});		
-		
+		});
 
-		
+
+
 		$tt = $dr->kwCategories()->find_one();
 		$groups = array();
 		if ($tt!=false)
@@ -1129,40 +1143,40 @@ class UserController extends Controller
 				$kw[] = $key;
 			$groups = array(array('id' => 'category_all','keywords' => $kw));
 		}*/
-		
+
 		$categories=array();
 		$series=array();
 		//$series2= array(
 		//			'name' => "TEST",
 		//			'data' => array()
 		//			);
-		
-		
+
+
 		$yaxis=0;
 		foreach ($mydata->allkw as  $key=>$kw)
-		{	
+		{
 			$cnt = $kw->count;
 			$src = $kw->source;
 			$ngram = $kw->ngram;
 			$score = $kw->score;
-			
+
 
 			$groupid = $kw->groupid;
 			$groupcolor = null;
 			$groupname = null;
-			
-			
+
+
 			//var_dump($ngram,$groupid);
 			$dispers=array();
 			if (count($ngram)>1)
-			{	
+			{
 				$temp = array();
 				// find occurences of all individal terms and merge indexes
 				foreach ($src as $infform)
-				{	
+				{
 					$ret = array_keys($count,strtolower($infform));
 					$temp = array_merge($temp,$ret);
-					
+
 				}
 				// sort indexes numerially
 				sort($temp);
@@ -1172,7 +1186,7 @@ class UserController extends Controller
 				$prev = -1000;
 				// find indexes that are consecutive (definition of ngram)
 				foreach ($temp as $key=>$val)
-				{ 	
+				{
 					$diff = $val-$prev;
 					if ($diff==1)
 					{
@@ -1189,7 +1203,7 @@ class UserController extends Controller
 					}
 					$prev = $val;
 				}
-				
+
 				// remove duplicates
 				//var_dump($res);
 				$res = array_unique($res);
@@ -1200,7 +1214,7 @@ class UserController extends Controller
 				$dispers = array_merge($dispers,$res);
 			}
 			else foreach ($src as $infform)
-			{	
+			{
 				$ret = array_keys($count,strtolower($infform));
 				$dispers = array_merge($dispers,$ret);
 			}
@@ -1214,38 +1228,38 @@ class UserController extends Controller
 			{
 				$series[$groupid] = array_merge($series[$groupid],$dispers);
 			}
-			else 
+			else
 			{
 				$series[$groupid] = $dispers;
 			}
 			//$series2['data'] = array_merge($series2['data'],$dispers);
 			$categories[] = "".join($ngram," ");
 		}
-		
+
 		$series3=array();
 		$series4=array();
-		
-		
+
+
 		$groups2 = array();
 		foreach ($mydata->groups as $key=>$gr)
 		{
 			$groups2[$gr['id']] = $gr;
 		}
-		
+
 		foreach ($series as $key=>$ser)
 		{
 			$gr = $groups2[$key];
 			$name = $gr['attr']['name'];
-			$name = ($name) ?: "Default Group"; 
+			$name = ($name) ?: "Default Group";
 			$color = $gr['attr']['color'];
 			$color = ($color) ?: "#880000";
-			
+
 			$series3[] = array(
 					'name' => $name,
 					'data' => $ser,
 					'color' =>$color
 			);
-			
+
 			foreach ($ser as $key2=>$data)
 			{
 				$series4[$data[1]]['index'] = $data[1];
@@ -1254,24 +1268,24 @@ class UserController extends Controller
 				//$series4[$data[1]]['data'][] = $data[0];
 				$series4[$data[1]]['data'][] = intval ($data[0] / $inc * 10);
 			}
-			
-			
-			
+
+
+
 		}
 		foreach ($series4 as &$data)
 		{
 			$count = array_count_values($data['data']);
 			$data['data'] = $count + array(0,0,0,0,0,0,0,0,0,0);
-			
+
 		}
-		
+
 		//$series2['data'] = array_slice($series2['data'],0, 1000);
-		
+
 		$tags = array();
 		foreach ($limit as $item)
 			if ($item['tag']!='#-s:h#')
 				$tags[$item['from']] = $item['tag'];
-		
+
 		$this->render('drafts/view.dispersion',array(
 				'helpontask' => 'view.dispersion',
 				'task' => $tsk->as_array(),
@@ -1282,7 +1296,7 @@ class UserController extends Controller
 				'tags' =>$tags,
 				'categories' => $categories,
 				'structure' => $limit
-		));		
+		));
 	}
 
 	public function viewCloud($draft)
@@ -1297,9 +1311,9 @@ class UserController extends Controller
 				$analysis->nvl_data->keywords,
 				array()
 		);
-		
-		
-		
+
+
+
 		$this->render('drafts/view.cloud',array(
 				'helpontask' => 'view.cloud',
 				'task' => $tsk->as_array(),
@@ -1307,7 +1321,7 @@ class UserController extends Controller
 				'keywords' => $allkw
 		));
 	}
-	
+
 	public function viewChord($draft)
 	{
 		$dr = $this->getDraft($draft);
@@ -1324,9 +1338,9 @@ class UserController extends Controller
 		$rank = $analysis->se_data->se_ranked;
 		foreach ($rank as &$p2222r)
 			$p2222r = $p2222r[1];
-			
+
 		$text = $dr->getParasenttok();
-		
+
 		$struct2 = array();
 		$count = array();
 		// Join the array into a single string and count words
@@ -1334,15 +1348,15 @@ class UserController extends Controller
 		{
 			foreach ($par as $index2 => $sent)
 			{
-		
+
 				$struct2[$sent['id']] = $sent['tag'];
 				$count[$sent['id']] = $sent['text'];
 			}
 		}
 
-		
-	
-	
+
+
+
 		$this->render('drafts/view.chord',array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
@@ -1351,7 +1365,7 @@ class UserController extends Controller
 				'rank' => $rank
 			));
 	}
-	
+
 	public function viewMatrix($draft)
 	{
 		$dr = $this->getDraft($draft);
@@ -1359,13 +1373,13 @@ class UserController extends Controller
 
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis['se_sample_graph'],true);
-		
+
 		$rank = $analysis['se_data']['se_ranked'];
 		foreach ($rank as &$p2222r)
 			$p2222r = $p2222r[1];
-			
+
 		$text = $dr->getParasenttok();
-		
+
 		$struct2 = array();
 		$count = array();
 		// Join the array into a single string and count words
@@ -1373,12 +1387,12 @@ class UserController extends Controller
 		{
 			foreach ($par as $index2 => $sent)
 			{
-				
+
 				$struct2[$sent['id']] = $sent['tag'];
 				$count[$sent['id']] = $sent['text'];
 			}
 		}
-		
+
 		$tt = array_unique($struct2);
 		$tt = array_flip($tt);
 		$tt = array_keys($tt);
@@ -1399,26 +1413,26 @@ class UserController extends Controller
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis['ke_sample_graph'],true);
-		
+
 		$this->render("drafts/view.graph",array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
 				'graph' => $gr
 		));
-		
+
 	}
-	
+
 	public function viewSeGraph($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis['se_sample_graph'],true);
-		
+
 		$gg = array();
 		$rr = $analysis['se_data']['se_ranked'];
 		foreach ($rr as $key => &$ranked)
@@ -1431,7 +1445,7 @@ class UserController extends Controller
 			if ($gg[$node[id]])
 				$node['rank'] = $gg[$node[id]]['rank'];
 		}
-		
+
 		$this->render("drafts/view.graph",array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
@@ -1443,10 +1457,10 @@ class UserController extends Controller
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis['se_sample_graph'],true);
-		
+
 		$gg = array();
 		$rr = $analysis['se_data']['se_ranked'];
 		foreach ($rr as $key => &$ranked)
@@ -1459,47 +1473,47 @@ class UserController extends Controller
 			if ($gg[$node[id]])
 				$node['rank'] = $gg[$node[id]]['rank'];
 		}
-		
+
 		$this->render("drafts/view.cytoscape",array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
 				'graph' => $gr
 		));
-		
+
 	}
-	
+
 	private function generateNetworkView($draft,$template)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis['se_sample_graph'],true);
-		
+
 		$this->render($template,array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
 				'graph' => $gr
 		));
-		
+
 	}
-	
+
 	public function viewLinksNetwork($draft)
 	{
 		$this->generateNetworkView($draft,"drafts/view.lnetwork");
 	}
-	
+
 	public function viewVivaGraph($draft)
 	{
 		$this->generateNetworkView($draft,"drafts/view.vivagraph");
-		
-	}	
-	
+
+	}
+
 	public function viewSigmaGraph($draft)
 	{
 		$this->generateNetworkView($draft,"drafts/view.sigma");
 	}
-	
+
 	public function viewVoronoiGraph($draft)
 	{
 		$this->generateNetworkView($draft,"drafts/view.voronoi");
@@ -1509,8 +1523,8 @@ class UserController extends Controller
 	{
 		$this->generateNetworkView($draft,"drafts/view.hive");
 	}
-	
-	
+
+
 	public function viewGraph($draft,$graph=null)
 	{
 		$graphlist = array(
@@ -1568,7 +1582,7 @@ class UserController extends Controller
 					$node['rank'] = $gg[$node[id]]['rank'];
 			}
 		}
-			
+
 		$this->render($path,array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
@@ -1584,7 +1598,7 @@ class UserController extends Controller
 		$log = $this->app->getLog();
 		if ($req && $req->isPost())
 		{
-			//$log->info("POST TO NOTES WITH USERID: " . $this->user['id']);	
+			//$log->info("POST TO NOTES WITH USERID: " . $this->user['id']);
 		}
 		else  if ($req && $req->isGet())
 		{
@@ -1593,7 +1607,7 @@ class UserController extends Controller
 		else {
 			//$log->info("UNKOWN ACCESS TO NOTES FROM USERID: " . $this->user['id']);
 		}
-		
+
 		/* @var $u Users */
 		$u = Model::factory('Users')->find_one($this->user['id']);
 		$notes = $u->Notes()->find_one();
@@ -1624,13 +1638,13 @@ class UserController extends Controller
 			$response->body($notes->notes);
 		}
 	}
-	
+
 	public function resetKeywords()
 	{
 		$req = $this->app->request();
 		$post = $req->post();
 		$draftid = $post['draft'];
-		
+
 		$dr = $this->getDraft($draftid);
 		$tt = $dr->kwCategories()->find_one();
 		if ($tt)
@@ -1641,11 +1655,11 @@ class UserController extends Controller
 		$response['Content-Type'] = 'application/json';
 		$response['X-Powered-By'] = 'openEssayist';
 		$response->status(200);
-		
+
 		//$response->body(json_encode($parasenttok));
 		$response->body(json_encode(array('result'=> 'done')));
 	}
-	
+
 	public function saveKeywords()
 	{
 		$req = $this->app->request();
@@ -1653,8 +1667,7 @@ class UserController extends Controller
 		//if ($req && $req->isPost())
 		$post = $req->post();
 		$draftid = $post['draft'];
-		
-		
+
 
 		$dr = $this->getDraft($draftid);
 		$tt = $dr->kwCategories()->find_one();
@@ -1666,7 +1679,7 @@ class UserController extends Controller
 			$cat->save();
 			$tt = $cat;
 			//var_dump( $tt->category );
-					
+
 		}
 		else
 		{
@@ -1679,27 +1692,27 @@ class UserController extends Controller
 		header("Content-Type: application/json");
 		echo json_encode($tt->category);
 		//echo json_encode(array());
-		
+
 	}
 
-	
+
 	public function getExhibitJSON($draftid)
 	{
 		$json = array('items'=> array());
 
 		$dr = $this->getDraft($draftid);
 		$tsk = $dr->task()->find_one();
-		
+
 		date_default_timezone_set('UTC');
-		
+
 		$date = new DateTime('0001-01-01');
 		$inc = $date;
 		//$data = $dr->as_array();
 		$parasenttok = $dr->getParasenttok();
 		$analysis = $dr->getAnalysis();
-		
-		$keylemmas =$analysis->ke_data->keylemmas; 
-		
+
+		$keylemmas =$analysis->ke_data->keylemmas;
+
 		foreach ($parasenttok as $key=>$tt)
 		{
 			$par = array(
@@ -1710,40 +1723,37 @@ class UserController extends Controller
 			);
 			foreach ($tt as $key=>$hh)
 			{
-				
 				$tt = array_intersect($keylemmas,$hh['lemma']);
-				
-				
+
 				$id = str_pad($hh['id'], 4, '0', STR_PAD_LEFT);
 				$sen = array(
 						'label' => 'sent'.$id,
 						'type' => 'sentence',
 						'tag' => $hh['tag'],
-						
+
 						'start' => $inc->format('Y-m-d'),
 						'text' => $hh['text'],
 						'keyword' => array_values($tt)//$hh['lemma'],
 				);
 				if ($hh['rank'])
 					$sen['rank'] = $hh['rank'];
-				
+
 				$par['tag']=$hh['tag'];
 				$par['contains'][]='sent'.$id;
 				$json['items'][]=$sen;
-				
+
 				$gg = count($tt);
 				$gg = "+".$gg." month +1 year";
-				
+
 				$inc->modify($gg);
-				
-				
+
 			}
 			$inc2 = clone $inc;
 			$inc2->modify('-1 week');
 			$par['end'] = $inc2->format('Y-m-d');
 			$json['items'][]=$par;
 		}
-		
+
 		$keywords = $analysis->nvl_data->keywords;
 		foreach ($keywords as $key=>$hh)
 			{
@@ -1752,13 +1762,10 @@ class UserController extends Controller
 						'type' => 'keyword',
 						'forms' =>  $hh->source,
 				);
-				
-				
+
 				$json['items'][]=$key;
 			}
-		
 
-		
 		$json['types']= array(
 				'paragraph' => array(
 						"label" => "Paragraph",
@@ -1775,43 +1782,41 @@ class UserController extends Controller
 				'keyword' 	=> array("valueType" => "item"),
 				'start' 	=> array("valueType" => "date"),
 				'rank' 		=> array("valueType" => "number")
-		);		
+		);
 		$response = $this->app->response();
 		$response['Content-Type'] = 'application/json';
 		$response['X-Powered-By'] = 'openEssayist';
 		$response->status(200);
-		
+
 		//$response->body(json_encode($parasenttok));
 		$response->body(json_encode($json));
-		
+
 	}
-	
+
 	public function viewExhibit($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
 
-	
 		$this->render('drafts/view.exhibit',array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array()
 		));
 	}
-	
-	
-	
+
+
+
 	public function ajaxGraph($draft,$graph)
 	{
-		
+
 		$config = array(
 				'graphse'=>'se_sample_graph',
 				'graphke'=>'ke_sample_graph'
 			);
-		
+
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-		
+
 		$analysis = $dr->getAnalysis(true);
 		$gr = json_decode($analysis[$config[$graph]],true);
 
@@ -1827,25 +1832,25 @@ class UserController extends Controller
 			}
 			$gr['parasenttok'] = $result;
 		}
-		
+
 		$response = $this->app->response();
 		$response['Content-Type'] = 'application/json;charset=UTF-8';
 		$response['X-Powered-By'] = 'openEssayist';
 		$response->status(200);
 		$response->body(json_encode($gr));
-		
+
 	}
-	
+
 	public function ajaxKeyword($draft)
 	{
 		$response = $this->app->response();
 		$response->status(200);
-		
+
 		$dr = $this->getDraft($draft,false);
 		if ($dr)
 		{
 			$tsk = $dr->task()->find_one();
-				
+
 			$tt = $dr->kwCategories()->find_one();
 			$analysis = $dr->getAnalysis();
 			$mydata = $this->GetAllKeywords($analysis,$tt);
@@ -1856,22 +1861,20 @@ class UserController extends Controller
 			$response->status(400);
 		}
 
-	
 		$response['Content-Type'] = 'application/json';
 		$response['X-Powered-By'] = 'openEssayist';
 		//$response->body(json_encode($mydata));
 		$response->body($this->indent(json_encode($mydata)));
-		
+
 	}
-	
+
 	public function viewGenerator($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
-	
-		
+
 		$parasenttok = $dr->getParasenttok();
-		
+
 		foreach ($parasenttok as &$par)
 		{
 			foreach ($par as &$sent)
@@ -1886,7 +1889,7 @@ class UserController extends Controller
 				$sent['text'] = join(" ", array_merge($sent['lemma'],$add));
 			}
 		}
-	
+
 		$this->render('drafts/view.generator',array(
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),

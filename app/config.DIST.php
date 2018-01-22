@@ -38,6 +38,14 @@ $db['H817']['database'] = 'openh817';
 $db['H817']['dbProvider'] = 'mysql';
 $db['H817']['logdir'] = __DIR__ . '/../log-h817';
 
+// Other configuration.
+$seedDatabase = false;
+$email = 'openessayist-techsupport@open.ac.uk'; // 'nicolas.vanlabeke@open.ac.uk'
+$analyserUrl = 'http://127.0.0.1:8062';
+
+
+// ------------------------------------------------------------------------
+// TODO: move!
 
 /**
  * Needed in the RHEL distribution of Apache/PHP for the use of date();

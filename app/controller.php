@@ -28,18 +28,10 @@ abstract class Controller extends Application {
 		//echo $this->auth ;
 		if ($this->auth->loggedIn()) {
 			$this->user = $this->auth->getUser();
-			//var_dump($this->user);
+
+			$this->debugInit(__METHOD__);
 		}
 		$this->UAParser = new \UAS\Parser("../.cache/.UPA/",null,false,false);
-	}
-
-	/** Output a HTTP header with debug information.
-	 * @param mixed $obj  Object (stdClass), array, string etc.
-	 */
-	public static function _debug( $obj ) {
-		static $count = 0;
-		header(sprintf( 'X-controller-%02d: %s', $count, json_encode( $obj )));
-		$count++;
 	}
 
 	/**
@@ -134,6 +126,10 @@ abstract class Controller extends Application {
 
 	public function render($template, $data = array(), $status = null)
 	{
+		$auth = $this->auth;
+
+		self::_debug([ __METHOD__, $template, get_class($auth), $auth->loggedIn(), $auth->getUser() ]);
+
 		$this->app->view()->appendData(array('auth' => $this->auth));
 		$this->app->render($template . EXT, $data, $status);
 	}
