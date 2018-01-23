@@ -6,6 +6,7 @@
  */
 
 use Respect\Validation\Validator as v;
+use IET_OU\OpenEssayist\Utils\AnalysisUtils as Analysis;
 
 /**
  *
@@ -14,81 +15,13 @@ use Respect\Validation\Validator as v;
  */
 class UserController extends Controller
 {
-	public static function GetStructureData($id=null)
+	/* Was: public static function GetStructureData($id=null)
 	{
-		$arr = array(
-			'#dummy#'	=> array('name'=>'Unrecognised','idx'=>'8'),
-			'#+s:c#'	=> array('name'=>'Conclusion','idx'=>'1'),
-			'#+s:d_i#'	=> array('name'=>'Discussion','idx'=>'2'),
-			'#+s:d#'	=> array('name'=>'Discussion','idx'=>'3'),
-			'#+s#'		=> array('name'=>'Discussion','idx'=>'3'),
-			'#+s:s#'	=> array('name'=>'Summary','idx'=>'4'),
-			'#+s:i#'	=> array('name'=>'Introduction','idx'=>'5'),
-			'#-s:t#'	=> array('name'=>'Title','idx'=>'6'),
-			'#+s:p#'	=> array('name'=>'Preface','idx'=>'7'),
-			'#-s:h#'	=> array('name'=>'Heading','idx'=>'8'),
-			'#-s:n#'	=> array('name'=>'Numerics','idx'=>'9'),
-			'#-s:q#'	=> array('name'=>'Assignment','idx'=>'10'),
-			'#-s:p#'	=> array('name'=>'Punctuation','idx'=>'11'),
-		);
-		if ($id) return $arr[$id];
-		else return $arr;
-	}
+	} */
 
-	public function GetAllKeywords($analysis,$userdata)
+	/* Was: public function GetAllKeywords($analysis,$userdata)
 	{
-		if (!$analysis) return null;
-
-		// Get all ngrams in a single structure
-		$data = array_merge(array(),
-				$analysis->nvl_data->quadgrams,
-				$analysis->nvl_data->trigrams,
-				$analysis->nvl_data->bigrams,
-				$analysis->nvl_data->keywords
-		);
-
-		$allkw = array();
-		// Transform into associative array
-		foreach ($data as $ngram)
-		{
-			$id = join("",$ngram->ngram);
-			$allkw[$id] = $ngram;
-		}
-
-		// Get the user-defined keywords
-		// Get the groups
-		$groups = null;
-		if ($userdata!=false)
-		{
-			$groups = $userdata->getGroups();
-		}
-
-		if ($groups==null)
-		{
-			$kw = array();
-			foreach ($allkw as $key=>$item)
-			{
-				//$item->groupid = 'category_all';
-				$kw[] = $key;
-			}
-			$groups = array('category_all'=>
-					array('id' => 'category_all','keywords' => $kw));
-		}
-
-		foreach ($groups as $gr)
-		{
-			if (isset($gr['keywords'])) {
-				foreach ($gr['keywords'] as $keyw) {
-					$allkw[$keyw]->groupid = $gr['id'];
-				}
-			}
-		}
-
-		$ret=new stdClass();
-		$ret->allkw = $allkw;
-		$ret->groups = $groups;
-		return $ret;
-	}
+	} */
 
 	/**
 	 *
@@ -346,27 +279,32 @@ class UserController extends Controller
 			else
 			{
 				$formdata["text"] = $post["text"];
-				// WAS: $formdata["state"] = $post["state"];
+				// Was: $formdata["state"] = $post["state"];
 				$formdata["name"] = $post["name"];
 				$formdata["version"] = $post["version"];
 				try {
 					$url = $this->getAnalyserUrl('/api/analysis');
 
+					$post_data = [
+							'text' 				=> $post["text"],
+							'module' 			=> $post["module"],
+							'task' 				=> $post["task"],
+							'task_id' 		=> $taskId,
+							'version_id' 	=> $post["version"],
+							'user_id' 		=> $this->user['id'],
+							'rd_save_path'=> $this->getSavePath(),
+					];
+
 					$request = Requests::post($url,
 							array(),
-							array(
-									'text' 				=> $post["text"],
-									'module' 			=> $post["module"],
-									'task' 				=> $post["task"],
-									'task_id' 		=> $taskId,
-									'version_id' 	=> $post["version"],
-									'user_id' 		=> $this->user['id'],
-									'rd_save_path'=> $this->getSavePath(),
-								),
+							$post_data,
 							array(
 									'timeout' => 300,
 									'blocking' => true
 					));
+
+					$post_data[ 'text' ] = substr( $post_data[ 'text' ], 0, 30 ) . ' [...]';
+					self::_debug([ __METHOD__, 'POST', $post_data ]);
 
 					if ($request->status_code === 200)
 					{
@@ -400,9 +338,9 @@ class UserController extends Controller
 						$ret = json_decode($json,true);
 
 						$status = 500;
-						$this->app->flashNow("error", "Problem with the analyser. Make sure you text is not empty. If it continues, please contact the admin.");
+						$this->app->flashNow("error", "Sorry. Problem with the analyser. Make sure you text is not empty. If it continues, please contact the admin.");
 
-            self::_debug([ __METHOD__, 'error', $ret ]);
+            self::_debug([ __METHOD__, 'error', 500.1, $ret ]);
 					}
 				}
 				catch (Requests_Exception $e)
@@ -410,21 +348,21 @@ class UserController extends Controller
 					$status = 500;
 					$this->app->flashNow("error", "Sorry. Cannot connect to the analyser. Try again later.");
 
-					self::_debug([ __METHOD__, 'Requests except', $e->getMessage() ]);
+					self::_debug([ __METHOD__, 'Requests except', 500.2, $e->getMessage() ]);
 				}
 				catch (\PDOException  $e)
 				{
 					$status = 500;
 					$this->app->flashNow("error", "Sorry. Problem with the database. Try again later.");
 
-					self::_debug([ __METHOD__, 'PDO except', $e->getMessage() ]);
+					self::_debug([ __METHOD__, 'PDO except', 500.3, $e->getMessage() ]);
 				}
 				catch (Exception $e)
 				{
 					$status = 500;
 					$this->app->flashNow("error", "Sorry, we have a problem. Try again later.");
 
-					self::_debug([ __METHOD__, 'except', $e->getMessage() ]);
+					self::_debug([ __METHOD__, 'except', 500.4, $e->getMessage() ]);
 				}
 			}
 		}
@@ -493,7 +431,6 @@ class UserController extends Controller
 				'task' => $ap->as_array(),
 				'text' => $post["text"]
 		));
-
 	}
 
 	public function processDraft($taskId)
@@ -650,7 +587,8 @@ class UserController extends Controller
 		}
 
 		$tt = $dr->kwCategories()->find_one();
-		$mydata = $this->GetAllKeywords($analysis,$tt);
+		$mydata = Analysis::GetAllKeywords($analysis, $tt);
+		// Was: $mydata = $this->GetAllKeywords($analysis,$tt);
 
 
 		$highlighjs = array();
@@ -847,7 +785,8 @@ class UserController extends Controller
 		);*/
 
 		$tt = $dr->kwCategories()->find_one();
-		$mydata = $this->GetAllKeywords($analysis,$tt);
+		$mydata = Analysis::GetAllKeywords($analysis, $tt);
+		// Was: $mydata = $this->GetAllKeywords($analysis,$tt);
 
 		$alllema = (array)$analysis->ke_data->myarray_ke;
 		$allfreq = (array)$analysis->ke_data->scoresNfreqs;
@@ -883,94 +822,23 @@ class UserController extends Controller
 
 	}
 
-
-	private function getStructTargetData($draft,$dr,$tsk)
+	/* Was: private function getStructTargetData($draft,$dr,$tsk)
 	{
-
-		$analysis = $dr->getAnalysis();
-		$text = $dr->getParasenttok();
-
-		$breakdown = array();
-		foreach ($text as $index => &$par)
-		{
-			foreach ($par as $index2 => $sent)
-			{
-				$tt = $sent['text'];
-				$tag = $sent['tag'];
-				$count = str_word_count($tt, 0);
-				if (!isset($breakdown[$tag]))
-					$breakdown[$tag] = 0;
-				$breakdown[$tag] += $count;
-			}
-		}
-
-
-		$wc = $analysis->se_stats->number_of_words;
-		$tg = $tsk->wordcount;
-		$target= array(
-				'target' => $tg,
-				'total' => $wc,
-				'range' => array("low"=>intval ($tg*0.9),"high"=>intval($tg*1.1)),
-				'inlimit' => ($wc <= ($tg*1.1) && $wc >= ($tg*0.9))
-		);
-
-		$distribution = array();
-		$bullet = array();
-
-
-		foreach ($breakdown as $id => $count)
-		{
-			$std = UserController::GetStructureData($id);
-			$tt = array(
-					'tag' => $id,
-					'name' => $std['name'],
-					'color' => $std['idx'],
-					'y'=>$count);
-			if (in_array($id, array('#+s:c#','#+s:i#')))
-			{
-				$tt['sliced'] = true;
-				$tt['selected'] = true;
-
-			}
-			$distribution[] = $tt;
-			$bullet[] = array(
-					'tag' => $id,
-					'name' => $std['name'],
-					'color' => $std['idx'],
-					'data'=> array($count));
-
-		}
-		usort($distribution,function($a,$b)
-		{
-			return ($b['color'])-($a['color']);
-		});
-		usort($bullet,function($a,$b)
-		{
-			return ($a['color'])-($b['color']);
-		});
-
-		return array(
-				'breakdown' => 	$distribution,
-				'bullet' => 	$bullet,
-				'target' =>		$target
-		);
-	}
+	} */
 
 	public function viewStructure($draft)
 	{
 		$dr = $this->getDraft($draft);
 		$tsk = $dr->task()->find_one();
 
-
-		$data = $this->getStructTargetData($draft,$dr,$tsk);
+		$data = Analysis::getStructTargetData($draft, $dr, $tsk);
+		// Was: $data = $this->getStructTargetData($draft,$dr,$tsk);
 
 		$this->render('drafts/view.structure',array(
 				'helpontask' => 'view.structure',
 				'task' => $tsk->as_array(),
 				'draft' => $dr->as_array(),
 				'breakdown' => $data['breakdown']
-
-
 		));
 
 	}
@@ -990,7 +858,6 @@ class UserController extends Controller
 				'breakdown' => $data['breakdown'],
 				'bullet' => $data['bullet'],
 				'target' =>$data['target']
-
 		));
 
 	}
@@ -1010,7 +877,7 @@ class UserController extends Controller
 		$u = Model::factory('Users')->find_one($this->user['id']);
 		$drafts = $u->drafts()->where_equal('task_id',$tsk->id)->order_by_desc('id')->find_array();
 
-		var_dump(count($drafts));
+		// var_dump(count($drafts));
 		if (count($drafts) > 1) {
 			$output_comparisions = true;
 		}
@@ -1099,7 +966,6 @@ class UserController extends Controller
 					'from' => $inc,
 					'to' => $inc+$wcount,
 					'tag' => $tags[$key],
-
 			);
 			$ticks[] = $inc;
 			$inc += $wcount;
@@ -1111,7 +977,8 @@ class UserController extends Controller
 		$count = array_map('strtolower', $count);
 
 		$tt = $dr->kwCategories()->find_one();
-		$mydata = $this->GetAllKeywords($analysis,$tt);
+		$mydata = Analysis::GetAllKeywords($analysis, $tt);
+		// Was: $mydata = $this->GetAllKeywords($analysis,$tt);
 		usort($mydata->allkw,function($a,$b)
 		{
 			return ($b->count)-($a->count);
@@ -1128,8 +995,6 @@ class UserController extends Controller
 		{
 			return ($b->count)-($a->count);
 		});
-
-
 
 		$tt = $dr->kwCategories()->find_one();
 		$groups = array();
@@ -1151,7 +1016,6 @@ class UserController extends Controller
 		//			'data' => array()
 		//			);
 
-
 		$yaxis=0;
 		foreach ($mydata->allkw as  $key=>$kw)
 		{
@@ -1164,7 +1028,6 @@ class UserController extends Controller
 			$groupid = $kw->groupid;
 			$groupcolor = null;
 			$groupname = null;
-
 
 			//var_dump($ngram,$groupid);
 			$dispers=array();
@@ -1853,7 +1716,8 @@ class UserController extends Controller
 
 			$tt = $dr->kwCategories()->find_one();
 			$analysis = $dr->getAnalysis();
-			$mydata = $this->GetAllKeywords($analysis,$tt);
+			$mydata = Analysis::GetAllKeywords($analysis, $tt);
+			// Was: $mydata = $this->GetAllKeywords($analysis,$tt);
 		}
 		else
 		{

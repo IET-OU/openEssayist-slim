@@ -21,6 +21,8 @@ use \Slim\Extras\Middleware\StrongAuthAdmin;
 
 require_once "../app/config.php";
 require_once "../app/application.php";
+
+require_once "../app/utils/AnalysisUtils.php";
 require_once "../app/utils/LoggerMiddleware.php";
 require_once "../app/utils/PDOAdmin.php";
 require_once "../app/utils/StrongAuthAdmin.php";
