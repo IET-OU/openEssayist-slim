@@ -17,4 +17,10 @@ extras/documentation
 *.sql.zip
 composer.phar
 
+.editorconfig
+node_modules/
+# package.json
+npm-debug.log
+openessayist-js
+
 # End.

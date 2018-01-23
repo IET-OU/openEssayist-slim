@@ -42,7 +42,10 @@
         "_X_NO_patch": "patch -ub --verbose vendor/slim/extras/Slim/Extras/Views/Twig.php app/_data/vendor-slim-extras-Views-Twig-php--render-function.diff",
         "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk",
         "copy-conf": "cp -n app/config.DIST.php app/config.php",
-        "test": "parallel-lint --exclude vendor ."
+        "test": [
+          "parallel-lint --exclude vendor .",
+          "npm test"
+        ]
     },
     "extra": {
         "//": [
