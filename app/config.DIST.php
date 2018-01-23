@@ -42,7 +42,7 @@ $db['H817']['logdir'] = __DIR__ . '/../log-h817';
 $seedDatabase = false;
 $email = 'openessayist-techsupport@open.ac.uk'; // 'nicolas.vanlabeke@open.ac.uk'
 $analyserUrl = 'http://127.0.0.1:8062';
-
+$rdSavePath = __DIR__ . '/../_user_data/images/';
 
 // ------------------------------------------------------------------------
 // TODO: move!

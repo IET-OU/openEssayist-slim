@@ -361,7 +361,7 @@ class UserController extends Controller
 									'task_id' 		=> $taskId,
 									'version_id' 	=> $post["version"],
 									'user_id' 		=> $this->user['id'],
-									'rd_save_path'=> $this->app->config('rd_save_path')
+									'rd_save_path'=> $this->getSavePath(),
 								),
 							array(
 									'timeout' => 300,

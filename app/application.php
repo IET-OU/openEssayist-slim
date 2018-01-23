@@ -216,10 +216,14 @@ class Application {
 		if (! self::$once) {
 		//if (! $shown) {
 			$auth = $this->auth;
-			self::_debug([ __METHOD__, $caller, get_class( $auth ), $auth->getUser(), $this->getAnalyserUrl() ]);
+			self::_debug([ __METHOD__, $caller, get_class( $auth ), $auth->getUser(), $this->getAnalyserUrl(), $this->getSavePath() ]);
 		}
 		self::$once = true;
 		//$shown = true;
+	}
+
+  protected function getSavePath() {
+		return $this->app->config('rd_save_path');
 	}
 
   /**
