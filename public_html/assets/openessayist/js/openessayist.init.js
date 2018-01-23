@@ -8,10 +8,11 @@
 
 window.jQuery(function ($) {
 
-  // TODO:
   // Set the URL for the AJAX-based activity logging
-  openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
+  // Was: openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
+  window.openEssayist.config = $('script[ data-openessayist ]').data();
 
+  console.warn('openEssayist config:', openEssayist.config);
 
   // Activate the Bootstrap's tooltips
   if ($("[rel=tooltip]").length) {

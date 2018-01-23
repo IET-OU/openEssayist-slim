@@ -15,11 +15,12 @@ openEssayist.LOG_URL = null;
  * @returns {myClass.doSomething}
  */
 openEssayist.log4j = function (action, data) {
-    console.log(action);
+    console.warn('log4j:', action, data);
+
 	$.ajax({
 		type : "POST",
 		method: "post",
-		url : openEssayist.LOG_URL, // URL and function to call
+		url : openEssayist.config.log_url, // URL and function to call
 		data : {
 				"action": action,
 				"data" : data
