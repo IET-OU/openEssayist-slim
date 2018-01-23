@@ -1099,9 +1099,8 @@ class UserController extends Controller
 			$categories[] = "".join($ngram," ");
 		}
 
-		$series3=array();
-		$series4=array();
-
+		$series3 = array();
+		$series4 = array();
 
 		$groups2 = array();
 		foreach ($mydata->groups as $key=>$gr)
@@ -1132,8 +1131,6 @@ class UserController extends Controller
 				$series4[$data[1]]['data'][] = intval ($data[0] / $inc * 10);
 			}
 
-
-
 		}
 		foreach ($series4 as &$data)
 		{
@@ -1145,9 +1142,11 @@ class UserController extends Controller
 		//$series2['data'] = array_slice($series2['data'],0, 1000);
 
 		$tags = array();
-		foreach ($limit as $item)
-			if ($item['tag']!='#-s:h#')
+		foreach ($limit as $item) {
+			if ($item['tag']!='#-s:h#') {
 				$tags[$item['from']] = $item['tag'];
+			}
+		}
 
 		$this->render('drafts/view.dispersion',array(
 				'helpontask' => 'view.dispersion',
@@ -1174,8 +1173,6 @@ class UserController extends Controller
 				$analysis->nvl_data->keywords,
 				array()
 		);
-
-
 
 		$this->render('drafts/view.cloud',array(
 				'helpontask' => 'view.cloud',
@@ -1211,14 +1208,10 @@ class UserController extends Controller
 		{
 			foreach ($par as $index2 => $sent)
 			{
-
 				$struct2[$sent['id']] = $sent['tag'];
 				$count[$sent['id']] = $sent['text'];
 			}
 		}
-
-
-
 
 		$this->render('drafts/view.chord',array(
 				'task' => $tsk->as_array(),

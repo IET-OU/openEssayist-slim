@@ -1,4 +1,4 @@
-<?php namespace IET_OU\openEssayist\Utils;
+<?php namespace IET_OU\OpenEssayist\Utils;
 
 /**
  * OpenEssayist-slim.
@@ -34,8 +34,8 @@ class AnalysisUtils {
 
   /**
    * @param object $analysis.
-   * @param object $userdata KWCategory model.
-   * @return object StdClass object containing 'allkw' and 'groups' properties.
+   * @param object $userdata  KWCategory model.
+   * @return object  StdClass object containing 'allkw' and 'groups' properties.
    */
   public static function GetAllKeywords($analysis, $userdata)
   {
@@ -86,7 +86,7 @@ class AnalysisUtils {
       }
     }
 
-    $ret = new stdClass();
+    $ret = new \stdClass();
     $ret->allkw = $allkw;
     $ret->groups = $groups;
 
@@ -142,6 +142,7 @@ class AnalysisUtils {
           'name' => $std['name'],
           'color' => $std['idx'],
           'y'=>$count);
+
       if (in_array($id, array('#+s:c#','#+s:i#')))
       {
         $tt['sliced'] = true;
