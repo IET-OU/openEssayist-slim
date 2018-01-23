@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Rainbow Diagram{% endblock %} 
-{% block subheader %}Your Draft : Rainbow Diagram{% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Rainbow Diagram{% endblock %}
+{% block subheader %}Your Draft : Rainbow Diagram{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -29,14 +29,15 @@
 					<div class="row-fluid">
 							<div class="span6">
 								{% if rd_filename and rd_filename != 'empty' %}
-										<img src="{{img ~ 'rd/' ~ rd_filename}}" class="rd-original">
+										<img src="{{ user_img ~ rd_filename }}" class="rd-original">
+										{# <img src="{{img ~ 'rd/' ~ rd_filename}}" class="rd-original"> #}
 								{% else %}
 										<img src="{{img ~ 'rd/no-image.png'}}" class="rd-no-image">
 								{% endif %}
 								<div>
 									<span class="label label-info">
 										Rainbow Diagram for {{task.name}}
-									</span> 
+									</span>
 									<span class="badge badge-info version-number-original">
 										<strong>Version {{draft.version}} - '{{draft.name}}'</strong>
 									</span>
@@ -47,7 +48,7 @@
 										<!--<img src="{{img ~ 'rd/' ~ rd_filename}}" class="rd-comparison-image">-->
 									{% if rd_filenames[1] != 'empty' %}
 											<img src="{{img ~ 'rd/' ~ rd_filenames[1]}}" class="rd-comparison-image thumbnailz" id="{{versions[1]}}">
-									<div><span class="label label-success">Rainbow Diagram for {{task.name}} <strong></span>  <span class="badge badge-success">Version <span class="version-number-comparison">{{versions[1]}} - '{{names[1]}}'</span></strong></span></div>											
+									<div><span class="label label-success">Rainbow Diagram for {{task.name}} <strong></span>  <span class="badge badge-success">Version <span class="version-number-comparison">{{versions[1]}} - '{{names[1]}}'</span></strong></span></div>
 									{% else %}
 											<!--<img src="{{img ~ 'rd/no-image.png'}}" class="rd-no-image rd-comparison-image" id="{{versions[1]}}">-->
 									{% endif %}
@@ -65,7 +66,7 @@
 				{% for current_row in 1..output_row_total %}
 					<div class="row-fluid">
 
-						
+
 
 						<!-- Output 6 pictures per row -->
 						{% for picture_in_row in 0..5 %}
@@ -74,7 +75,7 @@
 								{% set rd_element_position = ((current_row-1) * 6) + picture_in_row %}
 								{% if ((rd_filenames[rd_element_position] != '')) %}
 
-									
+
 									{% if rd_filenames[rd_element_position] != 'empty' %}
 											<!-- Version number -->
 											<span class="label label-default"><strong>Version</strong> {{versions[rd_element_position]}} </span>
@@ -89,7 +90,7 @@
 			        </div>
 			    	{% endfor %}
 					</div>
-						
+
 					<hr>
 
 				{% endfor %}
@@ -99,7 +100,7 @@
 			</div>
 
 </div>
-			
+
 </div>
 
 {% endblock %}

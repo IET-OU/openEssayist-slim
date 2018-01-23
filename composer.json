@@ -37,8 +37,9 @@
     "scripts": {
         "redhat-install": "yum install -y php-mcrypt php-zip patch",
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
-        "mkdir": [ "mkdir ./.cache", "mkdir ./.logs" ],
+        "mkdir": [ "mkdir ./.cache", "mkdir ./.logs", "mkdir -p _user_data/images" ],
         "chown": [ "chown -R nginx:nginx ./.cache", "chown -R nginx:nginx ./.logs" ],
+        "link":  [ "cd public_html", "ln -s ../_user_data/images user-images" ],
         "_X_NO_patch": "patch -ub --verbose vendor/slim/extras/Slim/Extras/Views/Twig.php app/_data/vendor-slim-extras-Views-Twig-php--render-function.diff",
         "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk",
         "copy-conf": "cp -n app/config.DIST.php app/config.php",

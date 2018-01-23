@@ -123,7 +123,8 @@ $app->hook('slim.before.dispatch', function() use ($app) {
 			'app_base' 	=> $app->request()->getRootUri(),
 			'assets' 		=> $app->request()->getRootUri() . '/assets/openessayist/',
 			'img' 		  => $app->request()->getRootUri() . '/assets/openessayist/img/',
-			'js' 				=> $app->request()->getRootUri() . '/assets/openessayist/js/'
+			'js' 				=> $app->request()->getRootUri() . '/assets/openessayist/js/',
+			'user_img'	=> $app->request()->getRootUri() . '/user-images/',
 	));
 });
 
