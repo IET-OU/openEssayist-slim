@@ -32,6 +32,8 @@ abstract class Controller extends Application {
 			$this->debugInit(__METHOD__);
 		}
 		$this->UAParser = new \UAS\Parser("../.cache/.UPA/",null,false,false);
+
+		header( 'X-UA-Compatible: IE=edge' );
 	}
 
 	/**

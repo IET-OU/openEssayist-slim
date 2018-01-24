@@ -37,6 +37,7 @@ require_once "../app/controllers/user.controller.php";
 require_once "../app/controllers/demo.controller.php";
 require_once "../app/controllers/tutor.controller.php";
 require_once "../app/controllers/group.controller.php";
+require_once "../app/controllers/uptime.controller.php";
 
 // Models
 require_once "../app/models/users.model.php";
@@ -169,6 +170,7 @@ $userCtrl = new UserController();
 $demoCtrl = new DemoController();
 $tutorCtrl = new TutorController();
 $groupCtrl = new GroupController();
+$uptimeCtrl = new UptimeController();
 
 // Define the routes
 $c->app->get('/', array($appController, 'index'))->name('home');
@@ -269,6 +271,8 @@ $c->app->get('/group/task/:taskid', array($groupCtrl, 'editTask'))
 				->via('GET', 'POST')
 				->name('group.task.edit');
 $c->app->get('/group/task/new', array($groupCtrl, 'newTask'))->via('GET', 'POST')->name('group.task.new');
+
+$c->app->get('/uptime', [ $uptimeCtrl, 'backend' ])->name('uptime.backend');
 
 $c->app->error(array($appController, 'error'));
 $c->app->notFound(array($appController, 'NotFound'));
