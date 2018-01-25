@@ -44,6 +44,38 @@ $email = 'openessayist-techsupport@open.ac.uk'; // 'nicolas.vanlabeke@open.ac.uk
 $analyserUrl = 'http://127.0.0.1:8062';
 $rdSavePath = __DIR__ . '/../_user_data/images/';
 
+
+$openessayist_config = [
+	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
+	'users' => [
+		'admin' => (object) [
+			'username' => 'admin',
+			'password' => '** EDIT ME **',
+			'email'  => $email,
+			'name' => 'Admin 01',
+			'isadmin' => true,
+			'auth_type' => 'seed',
+		],
+	],
+
+	'groups' => [
+		'default' => (object) [
+			'name' => 'default',
+			'code' => 'H810',
+			'description' => 'A default group.',
+		]
+	],
+
+	'tasks' => [
+		'task-01' => (object) [
+			'name' => 'Task 01',
+			'code' => 'H810',
+			'assignment' => 'A default assignment.', // Open by default.
+		]
+	]
+];
+
+
 // ------------------------------------------------------------------------
 // TODO: move!
 
@@ -61,8 +93,13 @@ try {
 
 	$dbh = new PDO("mysql:host=$host", $root, $root_password);
 
-	$dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
-	or die(print_r($dbh->errorInfo(), true));
+	if (defined( 'CLI' )) {
+		// $GLOBALS[ 'openessayist_dbh' ] = $dbh;
+		// $GLOBALS[ 'openessayist_database' ] = $database;
+	}
+
+	// Was:  $dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
+	// Was:  or die(print_r($dbh->errorInfo(), true));
 
 } catch (PDOException $e) {
 	die("DB ERROR: ". $e->getMessage());

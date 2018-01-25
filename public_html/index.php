@@ -48,6 +48,10 @@ define('APPLICATION', 'openEssayist');
 define('VERSION', '2.7 beta');
 define('EXT', '.twig');
 
+if (! application::databaseExists()) {
+	exit;
+}
+
 // Create main Slim application
 $app = new \Slim\Slim(array(
 	'openEssayist.async' => false,

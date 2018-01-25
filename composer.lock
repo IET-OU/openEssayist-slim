@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "62264ac52101d38a991403135ca06268",
+    "content-hash": "bcb625273e8fe45b8f8df9e2033bc8de",
     "packages": [
         {
             "name": "Respect/Validation",
@@ -540,6 +540,47 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "clio/clio",
+            "version": "0.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nramenta/clio.git",
+                "reference": "6a9f600b73fa213e817d5c1e67a4641aecd156ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nramenta/clio/zipball/6a9f600b73fa213e817d5c1e67a4641aecd156ef",
+                "reference": "6a9f600b73fa213e817d5c1e67a4641aecd156ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Clio": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nofriandi Ramenta",
+                    "email": "nramenta@gmail.com"
+                }
+            ],
+            "description": "Lightweight utility and helper classes for CLI applications",
+            "keywords": [
+                "cli",
+                "console",
+                "daemon"
+            ],
+            "time": "2014-06-22T14:49:41+00:00"
+        },
         {
             "name": "jakub-onderka/php-parallel-lint",
             "version": "v0.9.2",

@@ -6,6 +6,8 @@
  * @author Nicolas Van Labeke (https://github.com/vanch3d)
  */
 
+if (! defined( 'CLI' )) { define( 'CLI', false ); }
+
 class Application {
 
 	/**
@@ -24,10 +26,76 @@ class Application {
 	{
 		$this->app = !empty($slim) ? $slim : \Slim\Slim::getInstance();
 		if (!empty($slim)) {
-			$this->setup();
+			if (! self::userTableExists()) { // Was: 'blah'
+				exit;
+			}
+
+		  // Was: $this->setup();
 		}
 	}
 
+  public static function databaseExists()
+	{
+		try {
+			$_db = ORM::get_db();
+		}
+		catch (\PDOException $ex) {
+			if (CLI) {
+				echo "Database warning. Database does not exist.\n";
+			} else {
+				echo "<title>Database error</title> <style>body{font:1em sans-serif}</style> <p>Database Error. <p>Database does not exist.</p> <small>";
+			}
+			echo $ex->getMessage() . PHP_EOL;
+			return false;
+		}
+		return true;
+	}
+
+	public static function userTableExists( $table = 'users' )
+	{
+		try {
+			$user = ORM::for_table( $table )
+					->where_equal( 'username' , 'admin' )
+					->find_one();
+		}
+		catch (\PDOException $ex) {
+			if (CLI) {
+				echo "Database warning. Table '$table' does NOT exist, or is NOT seeded.\n";
+			} else {
+				echo "<title>Database error</title> <style>body{font:1em sans-serif}</style> <p>Database Error. <p>Table '$table' does NOT exist, or is NOT seeded.</p> <small>";
+			}
+			echo $ex->getMessage();
+
+			// $this->app->flashKeep('error', 'Database error');
+			// $this->app->error();
+			return false;
+		}
+		self::_debug([ __METHOD__, "DB OK. Table '$table' DOES exist." ]);
+		if (CLI) {
+			echo "Database OK. Table '$table' does exist.\n";
+		} else {
+			echo "<!-- // DB OK. Table '$table' does exist. -->";
+		}
+
+		return true;
+	}
+
+	public static function config( $key, $var = 'openessayist_config' )
+	{
+		switch ($var) {
+			case 'db':
+				$grp = $GLOBALS[ 'activeGroup' ];
+				return isset($GLOBALS[ 'db' ][ $grp ][ $key ]) ? $GLOBALS[ 'db' ][ $grp ][ $key ] : null;
+				break;
+			case 'openessayist_config':
+				return isset($GLOBALS[ $var ][ $key ]) ? $GLOBALS[ $var ][ $key ] : null;
+				break;
+		}
+		return false;
+	}
+
+	/** LEGACY.
+	 */
 	public function setup($reset = false)
 	{
 		$seed_db = $GLOBALS[ 'seedDatabase' ];
@@ -46,124 +114,7 @@ class Application {
 		// check DB
 		$this->db = ORM::get_db();
 
-		if ($reset)
-		{
-			$this->db->exec('DROP DATABASE `openessayist`');
-			$this->db->exec('CREATE DATABASE `openessayist`');
-		}
-
-		// Create Users Table
-		try {
-			$ret = $this->db->exec("
-				CREATE TABLE `users` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `username` varchar(120) DEFAULT NULL,
-				  `password` varchar(255) NOT NULL,
-				  `name` varchar(180) DEFAULT NULL,
-				  `email` varchar(220) DEFAULT NULL,
-				  `ip_address` varchar(16) NOT NULL,
-				  `group_id` int(11) NOT NULL,
-				  `active` int(11) DEFAULT '0',
-				  `isadmin` int(11) DEFAULT '0',
-				  `isgroup` int(11) DEFAULT '0',
-				  `isdemo` int(11) DEFAULT '0',
-				  PRIMARY KEY (`id`),
-				  UNIQUE (`username`)
-				) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-			");
-		}
-		catch (\PDOException $e)
-		{
-			// Table exists, assume all the rest is fine
-			return;
-		}
-
-		// Group Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `group` (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `name` varchar(120) DEFAULT NULL,
-			  `code` varchar(120) DEFAULT NULL,
-			  `url` varchar(255) DEFAULT NULL,
-			  `email` varchar(220) DEFAULT NULL,
-			  `description` TEXT,
-			  PRIMARY KEY (`id`),
-			  UNIQUE (`name`)
-			) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-
-		// Task Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `task` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`name` varchar(120) DEFAULT NULL,
-			    `code` varchar(120) DEFAULT NULL,
-				`assignment` TEXT,
-				`deadline` DATE,
-				`wordcount` int(11) DEFAULT '0',
-				`isopen` int(11) DEFAULT '0',
-				`group_id` int(11) NOT NULL,
-				PRIMARY KEY (`id`)
-			)  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-		//var_dump("Table 'task' created");
-
-		// Draft Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `draft` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`task_id` int(11) NOT NULL,
-				`users_id` int(11) NOT NULL,
-				`type` int(11) DEFAULT '0',
-				`processed` int(11) DEFAULT '1',
-				`version` int(11) NOT NULL DEFAULT '1',
-				`name` varchar(120) DEFAULT NULL,
-				`analysis` LONGBLOB,
-				`date` DATETIME,
-				PRIMARY KEY (`id`)
-			)  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-
-		// Draft Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `kwcategory` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`draft_id` int(11) NOT NULL,
-				`category` LONGBLOB,
-				PRIMARY KEY (`id`)
-			)  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-
-		// Notes Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `note` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`users_id` int(11) NOT NULL,
-				`notes` LONGBLOB,
-				PRIMARY KEY (`id`)
-			)  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-
-		// Feedback Table
-		$this->db->exec("
-			CREATE TABLE IF NOT EXISTS `feedback` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`users_id` int(11) NOT NULL,
-			    `referer` varchar(255) DEFAULT NULL,
-				`text` TEXT,
-				`date` DATETIME,
-				PRIMARY KEY (`id`)
-			)  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-		");
-
-		$exist = file_exists('../app/localconfig.php');
-		if ($exist && $seed_db)
-		{
-			//$log->debug("LOCAL SETUP INVOKED");
-			include '../app/localconfig.php';
-			$conf = new OpenEssayistConfigurator();
-			$conf->setupDB();
-		}
+    // ...
 	}
 
 	protected function csv_to_array($input, $delimiter=',',$header=null)

@@ -134,7 +134,7 @@ CREATE TABLE `task` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(60) DEFAULT NULL COMMENT 'Reduced from varchar(120).'
+  `username` varchar(60) DEFAULT NULL COMMENT 'Reduced from varchar(120).',
   `password` varchar(64) NOT NULL COMMENT 'Reduced from varchar(255).',
   `name` varchar(180) DEFAULT NULL COMMENT 'Full name / display name',
   `email` varchar(120) DEFAULT NULL COMMENT 'Reduced from varchar(220).',
@@ -144,8 +144,8 @@ CREATE TABLE `users` (
   `isadmin` int(11) DEFAULT '0',
   `isgroup` int(11) DEFAULT '0',
   `isdemo` int(11) DEFAULT '0',
-  `authtype` varchar(32) DEFAULT NULL COMMENT 'Examples, "ou-sams" ...'
-  `lastvisit` datetime DEFAULT NULL COMMENT 'Added last visit date-time.',
+  `auth_type` varchar(32) DEFAULT NULL COMMENT 'Examples, "ou-sams" ...',
+  `last_visit` datetime DEFAULT NULL COMMENT 'Added last visit date-time.',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)

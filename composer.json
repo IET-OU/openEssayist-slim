@@ -14,11 +14,11 @@
     ],
     "prefer-stable": true,
     "minimum-stability": "dev",
-    "autoload": { },
+    "autoload": {
+      "X-classmap": [ "app/" ]
+    },
     "require": {
         "php": ">=5.5.9",
-        "ext-zip": "*",
-        "ext-mycrypt": "*",
         "slim/slim": "2.2.*",
         "slim/extras": "^2.0.3",
         "slim/strong": "dev-develop#1af2dc2f49f14521",
@@ -29,12 +29,16 @@
         "rmccue/requests": "^1.7.0"
     },
     "require-dev": {
+        "clio/clio": "^0.1.8",
         "jakub-onderka/php-parallel-lint": "^0.9.2"
     },
     "suggest": {
+        "ext-zip": "*",
+        "ext-mycrypt": "*",
         "slim/extras": "dev-develop#5bceb36"
     },
     "scripts": {
+        "cli-help": "app/cli.php --help",
         "redhat-install": "yum install -y php-mcrypt php-zip patch",
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
         "mkdir": [ "mkdir ./.cache", "mkdir ./.logs", "mkdir -p _user_data/images" ],
@@ -43,6 +47,10 @@
         "_X_NO_patch": "patch -ub --verbose vendor/slim/extras/Slim/Extras/Views/Twig.php app/_data/vendor-slim-extras-Views-Twig-php--render-function.diff",
         "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk",
         "copy-conf": "cp -n app/config.DIST.php app/config.php",
+        "_X_pip-install": "pip install git+https://github.com/google/mysql-tools.git@02d1854273#egg=mysql-tools",
+        "_X_install-mysql-lint": "git clone --depth=4 https://github.com/google/mysql-tools",
+        "mysql-lint": "PYTHONPATH=$PYTHONPATH:$(pwd)/mysql-tools/parser_lib; python mysql-tools/validate.py  FILE.sql",
+        "npm-install": "npm i db-linter # Markdown generator.",
         "test": [
           "parallel-lint --exclude vendor .",
           "npm test"
