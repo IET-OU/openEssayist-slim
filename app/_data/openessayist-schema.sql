@@ -19,7 +19,7 @@
 -- Table structure for table `draft`
 --
 
-DROP TABLE IF EXISTS `draft`;
+-- DROP TABLE IF EXISTS `draft`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `draft` (
@@ -30,17 +30,18 @@ CREATE TABLE `draft` (
   `processed` int(11) DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `name` varchar(120) DEFAULT NULL,
-  `analysis` longblob,
-  `date` datetime DEFAULT NULL,
+  `analysis` longblob COMMENT 'Large JSON object!',
+  `date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation date. Changed "DEFAULT".',
+  `modified` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT 'Add a modified date.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `feedback`
 --
 
-DROP TABLE IF EXISTS `feedback`;
+-- DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `feedback` (
@@ -50,14 +51,14 @@ CREATE TABLE `feedback` (
   `text` text,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `group`
 --
 
-DROP TABLE IF EXISTS `group`;
+-- DROP TABLE IF EXISTS `group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `group` (
@@ -69,14 +70,14 @@ CREATE TABLE `group` (
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `kwcategory`
 --
 
-DROP TABLE IF EXISTS `kwcategory`;
+-- DROP TABLE IF EXISTS `kwcategory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kwcategory` (
@@ -84,29 +85,30 @@ CREATE TABLE `kwcategory` (
   `draft_id` int(11) NOT NULL,
   `category` longblob,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `note`
 --
 
-DROP TABLE IF EXISTS `note`;
+-- DROP TABLE IF EXISTS `note`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `note` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `users_id` int(11) NOT NULL,
   `notes` longblob,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `task`
 --
 
-DROP TABLE IF EXISTS `task`;
+-- DROP TABLE IF EXISTS `task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task` (
@@ -118,32 +120,36 @@ CREATE TABLE `task` (
   `wordcount` int(11) DEFAULT '0',
   `isopen` int(11) DEFAULT '0',
   `group_id` int(11) NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
+-- DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(120) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `name` varchar(180) DEFAULT NULL,
-  `email` varchar(220) DEFAULT NULL,
+  `username` varchar(60) DEFAULT NULL COMMENT 'Reduced from varchar(120).'
+  `password` varchar(64) NOT NULL COMMENT 'Reduced from varchar(255).',
+  `name` varchar(180) DEFAULT NULL COMMENT 'Full name / display name',
+  `email` varchar(120) DEFAULT NULL COMMENT 'Reduced from varchar(220).',
   `ip_address` varchar(16) NOT NULL,
   `group_id` int(11) NOT NULL,
   `active` int(11) DEFAULT '0',
   `isadmin` int(11) DEFAULT '0',
   `isgroup` int(11) DEFAULT '0',
   `isdemo` int(11) DEFAULT '0',
+  `authtype` varchar(32) DEFAULT NULL COMMENT 'Examples, "ou-sams" ...'
+  `lastvisit` datetime DEFAULT NULL COMMENT 'Added last visit date-time.',
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
