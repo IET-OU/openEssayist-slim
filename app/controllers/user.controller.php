@@ -152,6 +152,8 @@ class UserController extends Controller
 
 	public function historyDraft($taskId)
 	{
+		self::_debug(__METHOD__);
+
 		/* @var $u Users */
 		$u = Model::factory('Users')->find_one($this->user['id']);
 		if ($u===false)
@@ -159,6 +161,7 @@ class UserController extends Controller
 			$this->app->flash("error", "Cannot find the user data");
 			$this->redirect('me.home');
 		}
+
 		/* @var $g Group */
 		$g = $u->group()->find_one();
 		if ($g===false)
@@ -189,10 +192,12 @@ class UserController extends Controller
 
 		}
 
+		self::_debug([ __METHOD__, $g->as_array(), $ap->as_array(), gettype( $d ), count( $d ) ]);
+
 		$this->render('user/draft.history',array(
 				'group' => $g->as_array(),
 				'task' => $ap->as_array(),
-				'drafts' => $d
+				'drafts' => $d   // Render of 'drafts' causes a problem on Nick's dev mac ?!
 		));
 	}
 
@@ -257,6 +262,8 @@ class UserController extends Controller
 	 */
 	public function submitDraft($taskId)
 	{
+		set_time_limit( 5 * 60 ); // Default: 30 seconds.
+
 		$req = $this->app->request();
 		$async = $this->app->config('openEssayist.async');
 
@@ -281,7 +288,8 @@ class UserController extends Controller
 				$formdata["text"] = $post["text"];
 				// Was: $formdata["state"] = $post["state"];
 				$formdata["name"] = $post["name"];
-				$formdata["version"] = $post["version"];
+				$versionId = $formdata["version"] = $post["version"];
+
 				try {
 					$url = $this->getAnalyserUrl('/api/analysis');
 
@@ -295,13 +303,23 @@ class UserController extends Controller
 							'rd_save_path'=> $this->getSavePath(),
 					];
 
+          $log = $this->app->getLog();
+					$log->debug(__METHOD__ . ":start - $taskId,$versionId - " . date('c'));
+
+					$time_start = time();
+
 					$request = Requests::post($url,
 							array(),
 							$post_data,
 							array(
-									'timeout' => 300,
+									'timeout' => 5 * 60, // Was: 300.
 									'blocking' => true
 					));
+
+					$time_end = time();
+
+					$duration = $time_end - $time_start;
+					$log->debug(__METHOD__ . ":end - $taskId,$versionId - seconds:$duration");
 
 					$post_data[ 'text' ] = substr( $post_data[ 'text' ], 0, 30 ) . ' [...]';
 					self::_debug([ __METHOD__, 'POST', $post_data ]);
@@ -318,10 +336,13 @@ class UserController extends Controller
 						$draft->task_id = $taskId;
 						$draft->version = $formdata["version"];
 						$draft->name = $formdata["name"];
-
 						$draft->users_id = $this->user['id'];
 						$draft->date = date('Y-m-d H:i:s');  // No timezone ?!
 						// Was: $draft->date = date('Y-m-d H:i:s e');
+
+						$draft->text = $formdata[ 'text' ]; // The original text.
+						$draft->tstart = $time_start;
+						$draft->tend = $time_end;
 
 						$result = $draft->save();
 
@@ -329,7 +350,7 @@ class UserController extends Controller
 						$this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
 						$r= $this->app->urlFor("me.draft.action",array("idt" => $taskId));
 
-						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result ]);
+						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'dur' => $duration ]);
 
 						$this->redirect($r,false);
 					}

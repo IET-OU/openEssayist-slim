@@ -31,6 +31,9 @@ CREATE TABLE `draft` (
   `version` int(11) NOT NULL DEFAULT '1',
   `name` varchar(120) DEFAULT NULL,
   `analysis` longblob COMMENT 'Large JSON object!',
+  `text` text COMMENT 'Added. The original draft text.',
+  `tstart` int(11) DEFAULT NULL COMMENT 'Added. Time-start.',
+  `tend`   int(11) DEFAULT NULL COMMENT 'Added. Time-end.',
   `date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation date. Changed "DEFAULT".',
   `modified` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT 'Add a modified date.',
   PRIMARY KEY (`id`)
