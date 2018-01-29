@@ -295,8 +295,8 @@ class UserController extends Controller
 
 					$post_data = [
 							'text' 				=> $post["text"],
-							'module' 			=> $post["module"],
-							'task' 				=> $post["task"],
+							'module' 			=> $post["module"],  // 'module' = 'group.code' = 'H810'.
+							'task' 				=> $post["task"],    // 'task' = 'task.code' = 'TMA01'.
 							'task_id' 		=> $taskId,
 							'version_id' 	=> $post["version"],
 							'user_id' 		=> $this->user['id'],
@@ -350,7 +350,7 @@ class UserController extends Controller
 						$this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
 						$r= $this->app->urlFor("me.draft.action",array("idt" => $taskId));
 
-						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'dur' => $duration ]);
+						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'duration_sec' => $duration ]);
 
 						$this->redirect($r,false);
 					}

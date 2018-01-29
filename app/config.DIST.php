@@ -60,8 +60,8 @@ $openessayist_config = [
 
 	'groups' => [
 		'default' => (object) [
-			'name' => 'default',
-			'code' => 'H810',
+			'name' => 'Default',
+			'code' => 'H810',  // Must be 'H810', or 'VSO'.
 			'description' => 'A default group.',
 		]
 	],
@@ -69,7 +69,7 @@ $openessayist_config = [
 	'tasks' => [
 		'task-01' => (object) [
 			'name' => 'Task 01',
-			'code' => 'H810',
+			'code' => 'TMA01',  // Must be 'TMA01 or ICS'.
 			'assignment' => 'A default assignment.', // Open by default.
 		]
 	]
