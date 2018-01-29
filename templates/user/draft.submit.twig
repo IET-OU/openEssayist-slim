@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} New draft... {% endblock %} 
-{% block subheader %}Analyse a new draft for {{ task.name }}{% endblock %} 
+{% block title %}{{ task.name }} New draft... {% endblock %}
+{% block subheader %}Analyse a new draft for {{ task.name }}{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -19,11 +19,11 @@
 	<span class="icon-stack span2 icon-2x" style="color:black;" title="{{ task.isopen? "Assignment is open" : "Assignment is closed" }}">
 		<i class="{{ task.isopen? "icon-circle  icon-stack-base" : "icon-ban-circle icon-stack-base text-error  icon-flip-vertical " }}"></i>
 	  	<i class="{{ task.isopen? "icon-pencil icon-light" : "icon-pencil" }}"></i>
-	</span>	
-		
+	</span>
+
 	<div class="span10">
 		<h2>This assignment is closed.</h2>
-		<p>You can still explore its content, including all the drafts you wrote and their analysis, 
+		<p>You can still explore its content, including all the drafts you wrote and their analysis,
 			but you will not be able to change any of their content.</p>
 	</div>
 </div></div>
@@ -37,10 +37,10 @@
 		<div class="widget-header">
 			<h2>Analyse a new draft</h2>
 		</div> <!-- /widget-header -->
-					
+
 	<div class="widget-content">
 
-<form name="post_essay" id="post_essay" method="post" class="form-horizontal">
+<form name="post_essay" id="post_essay" method="post" accept-charset="utf-8" class="form-horizontal">
 
 
 <fieldset>
@@ -48,18 +48,18 @@
 <div class="control-group">
 	<label for="text" class="control-label">Text</label>
 	<div class="controls">
-		<textarea class="boxborder" rows="15" 
+		<textarea class="boxborder" rows="15"
 			aria-describedby="help-text"
 			name="text" id="text" placeholder="paste the text of your essay"
 			required="required" {{ not(task.isopen) ? "readonly"}}>{{ form.text }}</textarea>
 
 		<span class="help-block" id="help-text">
-			Copy and paste the complete text of your essay in this box.
-			Don't worry about style, fonts, pictures, etc. 
+			XX Copy and paste the complete text of your essay in this box.
+			Don't worry about style, fonts, pictures, etc.
 			Only the raw text will be copied and analysed by the system.
 		</span>
-			
-			
+
+
 	</div>
 </div>
 
@@ -69,8 +69,8 @@
 		<input type="text" name="name" id="draft-name" class="input-xxlarge"
 			aria-describedby="help-name"
 			placeholder="The name for this draft" value="{{ form.name }}" {{ not(task.isopen) ? "readonly"}}>
-		<span id="help-name" class="help-block">Optionally, you can give a name or a description for this draft. 
-			With or without it, this draft will be identified by the system as 
+		<span id="help-name" class="help-block">Optionally, you can give a name or a description for this draft.
+			With or without it, this draft will be identified by the system as
 			<span class="label label-success"><b>Version {{ form.version }}</b></span>
 			.</span>
 	</div>
@@ -93,7 +93,7 @@
 		</label>
 		<span class="help-block">Indicate if you think your draft is at an early stage (initial sketch, first attempt, ...),
 		close to its final form (just before submitting to the tutors) or somewhere in-between.</span>
-		
+
 	</div>
 </div>#}
 <div class="control-group">
@@ -109,21 +109,21 @@
 
 {% if task.isopen %}
 <div class="form-actions">
-	<button class="btn btn-primary" id="submit_essay" type="submit" name="action" value="Submit">Analyse</button> 
+	<button class="btn btn-primary" id="submit_essay" type="submit" name="action" value="Submit">Analyse</button>
 </div>
-{% endif %}								
+{% endif %}
 </form>
-	
+
 	</div> <!-- /widget-content -->
 </div><!-- /widget -->
-	
+
 </div>
 
 
 </div>
 
 {% endblock %}
- 
+
 {% block injectJS %}
 	{{ parent() }}
 <script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
@@ -152,11 +152,11 @@ $(document).ready(function() {
 				msg = "it will take up to one minute ...";
 			else
 				msg = "it will take one or two minutes ...";
-				
+
 			$.blockUI({ message: '<div class="ajax alert alert-info">Starting Analysis. Please wait, ' + msg + '</div>' });
 			form.submit();
-			
-			 }, 
+
+			 },
 		highlight: function(element) {
 				 $(element).closest('.control-group').not(".help-block").removeClass('success').addClass('error');
 			 },
@@ -165,7 +165,7 @@ $(document).ready(function() {
 			 .text('OK!').addClass('valid')
 			 .closest('.control-group').not(".help-block").removeClass('error').addClass('success');
 		}
-		 
+
 	});
 
 });
@@ -185,8 +185,8 @@ label.error {
     padding: 2px 8px;
     margin-top: 2px;
 }
-	
-	
+
+
 	.boxborder {
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;

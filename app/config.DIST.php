@@ -105,7 +105,10 @@ try {
 	die("DB ERROR: ". $e->getMessage());
 }
 
-$providerString = sprintf('mysql:host=%s;dbname=%s', $db[$activeGroup]['hostname'], $db[$activeGroup]['database']);
+$providerString = sprintf('mysql:host=%s;dbname=%s;charset=utf8', $db[$activeGroup]['hostname'], $db[$activeGroup]['database']);
 ORM::configure($providerString);
 ORM::configure('username', $db[$activeGroup]['username']);
 ORM::configure('password', $db[$activeGroup]['password']);
+ORM::configure('driver_options', [ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'" ]);
+
+// End.
