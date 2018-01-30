@@ -22,11 +22,13 @@ composer redhat-install
 ## Install .. Test
 
 ```sh
+composer copy-dotenv # OU only (edit .env)
+
 composer install
-# composer patch     # NOT needed!
 composer copy-conf   # app/config.php
 composer copy-nginx  # Only on Redhat
 composer mkdir
+composer link
 composer chown       # Only on Redhat 7.
 
 composer test

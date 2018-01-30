@@ -4,7 +4,7 @@ language: php
 php: 7.0
 
 git:
-  depth: 8
+  depth: 5
 
 before_install:
   - nvm install v8.1
@@ -15,6 +15,7 @@ install:
   - npm install
 
 before_script:
+  - composer copy-dotenv
   - composer copy-conf
   - composer mkdir
   #- composer chown  # chown: invalid user: ‘nginx:nginx’
@@ -25,5 +26,6 @@ script: composer test
 after_script:
   - composer validate
   - ls -alh
+  - git status
 
 # End.

@@ -46,7 +46,7 @@ $rdSavePath = __DIR__ . '/../_user_data/images/';
 
 
 $openessayist_config = [
-	'sams_enable' => false,
+	'sams_enable' => false,  // Only enable for Open University.
 	'sams_password' => '** EDIT ME **',
 	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
@@ -97,11 +97,6 @@ try {
 	$database= $db[$activeGroup]['database'];
 
 	$dbh = new PDO("mysql:host=$host;charset=utf8", $root, $root_password);
-
-	if (defined( 'CLI' )) {
-		// $GLOBALS[ 'openessayist_dbh' ] = $dbh;
-		// $GLOBALS[ 'openessayist_database' ] = $database;
-	}
 
 	// Was:  $dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
 	// Was:  or die(print_r($dbh->errorInfo(), true));
