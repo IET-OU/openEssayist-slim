@@ -25,4 +25,9 @@ openessayist-js
 
 public_html/user-images
 
+mysql-tools/
+
+auth.json
+.env
+
 # End.

@@ -212,6 +212,8 @@ class LoginController extends Controller {
 	{
 		$group_id = $this->app->request()->get('group');
 
+		$group_id = null === $group_id ? Application::config('sams_group_id') : $group_id;
+
 		if (is_numeric($group_id)) {
 			$group = Model::factory('Group')->where('id', $group_id)->find_one();
 		} else {

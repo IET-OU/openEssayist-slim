@@ -40,7 +40,7 @@ $db['H817']['logdir'] = __DIR__ . '/../log-h817';
 
 // Other configuration.
 $seedDatabase = false;
-$email = 'openessayist-techsupport@open.ac.uk'; // 'nicolas.vanlabeke@open.ac.uk'
+$email = 'openessayist-techsupport@open.ac.uk'; // Was: 'nicolas.vanlabeke@open.ac.uk'
 $analyserUrl = 'http://127.0.0.1:8062';
 $rdSavePath = __DIR__ . '/../_user_data/images/';
 
@@ -48,6 +48,7 @@ $rdSavePath = __DIR__ . '/../_user_data/images/';
 $openessayist_config = [
 	'sams_enable' => false,
 	'sams_password' => '** EDIT ME **',
+	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
 
 	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
