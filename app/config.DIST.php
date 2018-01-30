@@ -46,6 +46,10 @@ $rdSavePath = __DIR__ . '/../_user_data/images/';
 
 
 $openessayist_config = [
+	'sams_enable' => false,
+	'sams_password' => '** EDIT ME **',
+	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
+
 	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
 	'users' => [
 		'admin' => (object) [
@@ -91,7 +95,7 @@ try {
 	$root_password= $db[$activeGroup]['password'];
 	$database= $db[$activeGroup]['database'];
 
-	$dbh = new PDO("mysql:host=$host", $root, $root_password);
+	$dbh = new PDO("mysql:host=$host;charset=utf8", $root, $root_password);
 
 	if (defined( 'CLI' )) {
 		// $GLOBALS[ 'openessayist_dbh' ] = $dbh;
