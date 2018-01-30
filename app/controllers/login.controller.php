@@ -6,6 +6,7 @@
  */
 
 use Respect\Validation\Validator as v;
+use IET_OU\SamsCAuth\SamsCAuth;
 
 /**
  * Controller for the login operations
@@ -69,7 +70,7 @@ class LoginController extends Controller {
 						'%message%'
 				), array(
 						TutorController::ACTION_LOGIN,
-						$user['username']?:"anon",
+						$user['username'] ?: "anon",
 						$req->getIp(),
 						json_encode(array('user_agent'=> $useragent))
 				), $tmpl);
@@ -121,7 +122,6 @@ class LoginController extends Controller {
 		$this->render('pages/login');*/
 	}
 
-
 	/**
 	 * @route "logout"
 	 */
@@ -131,5 +131,122 @@ class LoginController extends Controller {
 		$this->auth->logout(true);
 		$this->redirect('home');
 	}
+
+	/** @route "samslogin"
+	*/
+	public function samsLogin()
+	{
+		$this->checkSamsAuthEnabled();
+
+		$this->handleAlreadyLoggedIn();
+
+		$group_id = $this->getValidGroupIdSams();
+
+		$sams = new IET_OU\SamsCAuth\SamsCAuth();
+		$result = $sams->authenticate();
+
+		if ($sams->hasIdentity()) {
+			$try_login = $sams->getIdentity()->login;
+
+			self::_debug([ __METHOD__, 'hasIdentity', $try_login ]);
+
+			// $u = Model::factory('Users')->find_one($this->user['id']);
+			$try_user = Model::factory('Users')->where('username', $try_login)->find_one();
+
+			if ($try_user) {
+				self::_debug([ __METHOD__, 'already exists' ]);
+				$this->loginRedirectSams($sams->getIdentity()->login);
+			} else {
+				// Use does not exist. Create. Login. Redirect ...
+
+				$this->createUserSams($sams->getIdentity(), $group_id);
+
+				$this->loginRedirectSams($sams->getIdentity()->login);
+			}
+		} else {
+			self::_debug([ __METHOD__, 'NO identity. Redirecting.' ]);
+			$sams->redirectLogin(self::getCurrentUrl());
+		}
+	}
+
+	protected function loginRedirectSams($username)
+	{
+		if ($this->auth->login($username, Application::config( 'sams_password' ))) {
+			self::_debug([ __METHOD__, 'Login OK. Redirecting.' ]);
+			$this->redirect('me.home');
+		} else {
+			$this->app->error(new \Exception('Problem logging in (SAMS auth).'));
+		}
+	}
+
+	protected function createUserSams($samsResult, $groupId = 1)
+	{
+		$log = $this->app->getLog();
+		$admin_oucu_list = Application::config( 'admin_oucu_list' );
+
+		$usr = Model::factory('Users')->create();
+
+		$usr->username = $samsResult->login;
+		$usr->name = $samsResult->name;  // Display name.
+		$usr->password = Strong\Strong::getInstance()->getProvider()->hashPassword(Application::config( 'sams_password' ));
+		$usr->email = $samsResult->email;
+		$usr->ip_address = $this->app->request()->getIp();  //filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+		$usr->group_id = $groupId;  //TODO;
+		$usr->active = true;
+		$usr->isadmin = in_array( $samsResult->login, $admin_oucu_list );
+		$usr->isgroup = false;
+		$usr->isdemo = false;
+		$usr->auth_type = 'ousams';
+
+		try {
+			$result = $usr->save();
+			$log->debug(__METHOD__ . ":success - " . json_encode( $result ));
+			self::_debug([ __METHOD__, 'ok', $result ]);
+		} catch (\Exception $ex) {
+			$log->error(__METHOD__ . ":error - " . $ex->getMessage());
+			self::_debug([ __METHOD__, 'error', $ex->getMessage() ]);
+		}
+	}
+
+	protected function getValidGroupIdSams()
+	{
+		$group_id = $this->app->request()->get('group');
+
+		if (is_numeric($group_id)) {
+			$group = Model::factory('Group')->where('id', $group_id)->find_one();
+		} else {
+			$group = Model::factory('Group')->where('name', $group_id)->find_one();
+		}
+
+		self::_debug([ __METHOD__, $group_id, $group ]);
+
+		if (! $group) {
+			$this->app->error(new \Exception("Error. Invalid group ID: $group_id"));
+		}
+		return $group->id; // get('id');
+	}
+
+	protected function checkSamsAuthEnabled()
+	{
+		if (! Application::config('sams_enable')) {
+			self::_debug([ __METHOD__, 'sams auth disabled.' ]);
+			$this->app->notFound();
+		}
+	}
+
+	protected function handleAlreadyLoggedIn()
+	{
+		$is_logged_in = isset($_SESSION[ 'auth_user' ]);
+		if ($is_logged_in) {
+			self::_debug([ __METHOD__, 'logged in', $_SESSION[ 'auth_user' ] ]);
+			$this->redirect('me.home');
+		}
+	}
+
+	protected static function getCurrentUrl()
+	{
+		return 'http://' . filter_input(INPUT_SERVER, 'HTTP_HOST') . filter_input(INPUT_SERVER, 'REQUEST_URI');
+	}
+
 
 }

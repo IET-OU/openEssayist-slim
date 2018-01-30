@@ -182,6 +182,7 @@ $c->app->get('/about', array($appController, 'about'))->name('about');
 //$c->app->get('/config', array($appController, 'testConfig'))->name('config');
 $c->app->get('/login', array($loginController, 'index'))->via('GET', 'POST')->name('login');
 $c->app->get('/logout', array($loginController, 'logout'))->name('logout');
+$c->app->get('/samslogin', array($loginController, 'samsLogin'))->via('GET', 'POST')->name('samslogin');
 
 $c->app->get('/me/', array($userCtrl, 'me'))->name('me.home');
 $c->app->get('/me/consent', array($loginController, 'consent'))->via('GET', 'POST')->name('consent');
