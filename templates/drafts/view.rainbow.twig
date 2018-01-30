@@ -47,7 +47,8 @@
 									{% if output_comparisions %}
 										<!--<img src="{{img ~ 'rd/' ~ rd_filename}}" class="rd-comparison-image">-->
 									{% if rd_filenames[1] != 'empty' %}
-											<img src="{{img ~ 'rd/' ~ rd_filenames[1]}}" class="rd-comparison-image thumbnailz" id="{{versions[1]}}">
+											<img src="{{ user_img ~ rd_filenames[1]}}" class="rd-comparison-image thumbnailz" id="{{versions[1]}}">
+											{# <img src="{{img ~ 'rd/' ~ rd_filenames[1]}}" class="rd-comparison-image thumbnailz" id="{{versions[1]}}"> #}
 									<div><span class="label label-success">Rainbow Diagram for {{task.name}} <strong></span>  <span class="badge badge-success">Version <span class="version-number-comparison">{{versions[1]}} - '{{names[1]}}'</span></strong></span></div>
 									{% else %}
 											<!--<img src="{{img ~ 'rd/no-image.png'}}" class="rd-no-image rd-comparison-image" id="{{versions[1]}}">-->
@@ -80,7 +81,8 @@
 											<!-- Version number -->
 											<span class="label label-default"><strong>Version</strong> {{versions[rd_element_position]}} </span>
 											<!-- Display Rainbow Diagram for version -->
-											<img src="{{img ~ 'rd/' ~ rd_filenames[rd_element_position]}}" class="rd thumbnail" data-version-name="{{names[rd_element_position]}}" id="{{versions[rd_element_position]}}">
+											<img src="{{ user_img ~ rd_filenames[rd_element_position]}}" class="rd thumbnail" data-version-name="{{names[rd_element_position]}}" id="{{versions[rd_element_position]}}">
+											{# <img src="{{img ~ 'rd/' ~ rd_filenames[rd_element_position]}}" class="rd thumbnail" data-version-name="{{names[rd_element_position]}}" id="{{versions[rd_element_position]}}"> #}
 									{% else %}
 											<!--<img src="{{img ~ 'rd/no-image.png'}}" class="rd-no-image" data-version-name="{{names[rd_element_position]}}" id="{{versions[rd_element_position]}}">-->
 									{% endif %}
