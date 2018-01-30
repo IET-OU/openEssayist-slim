@@ -150,7 +150,6 @@ class LoginController extends Controller {
 
 			self::_debug([ __METHOD__, 'hasIdentity', $try_login ]);
 
-			// $u = Model::factory('Users')->find_one($this->user['id']);
 			$try_user = Model::factory('Users')->where('username', $try_login)->find_one();
 
 			if ($try_user) {
@@ -182,6 +181,7 @@ class LoginController extends Controller {
 	protected function createUserSams($samsResult, $groupId = 1)
 	{
 		$log = $this->app->getLog();
+		$req = $this->app->request();
 		$admin_oucu_list = Application::config( 'admin_oucu_list' );
 
 		$usr = Model::factory('Users')->create();
@@ -190,8 +190,8 @@ class LoginController extends Controller {
 		$usr->name = $samsResult->name;  // Display name.
 		$usr->password = Strong\Strong::getInstance()->getProvider()->hashPassword(Application::config( 'sams_password' ));
 		$usr->email = $samsResult->email;
-		$usr->ip_address = $this->app->request()->getIp();  //filter_input(INPUT_SERVER, 'REMOTE_ADDR');
-		$usr->group_id = $groupId;  //TODO;
+		$usr->ip_address = $this->app->request()->getIp();
+		$usr->group_id = $groupId;
 		$usr->active = true;
 		$usr->isadmin = in_array( $samsResult->login, $admin_oucu_list );
 		$usr->isgroup = false;
@@ -200,10 +200,12 @@ class LoginController extends Controller {
 
 		try {
 			$result = $usr->save();
-			$log->debug(__METHOD__ . ":success - " . json_encode( $result ));
+			$user_id = $usr->id;
+
+			$log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_CREATE', $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
 			self::_debug([ __METHOD__, 'ok', $result ]);
 		} catch (\Exception $ex) {
-			$log->error(__METHOD__ . ":error - " . $ex->getMessage());
+			$log->error(sprintf('%s | [%s @ %s] | %s | %s', $ex->getMessage(), $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
 			self::_debug([ __METHOD__, 'error', $ex->getMessage() ]);
 		}
 	}
