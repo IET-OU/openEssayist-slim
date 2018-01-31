@@ -73,7 +73,7 @@ To check:
 [travis-ss-icon]: https://api.travis-ci.org/SAFeSEA/openEssayist-slim.svg
     "Build status – Travis-CI (PHP)"
 [slim]: https://docs.slimframework.com/ "Slim Framework v2 (PHP)"
-[db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql "SQL database schema"
+[db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 
 [safesea]: http://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."

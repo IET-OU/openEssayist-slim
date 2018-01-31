@@ -70,11 +70,11 @@ class Application {
 			// $this->app->error();
 			return false;
 		}
-		self::_debug([ __METHOD__, "DB OK. Table '$table' DOES exist." ]);
 		if (CLI) {
 			echo "Database OK. Table '$table' does exist.\n";
 		} else {
-			echo "<!-- // DB OK. Table '$table' does exist. -->";
+			self::_debug([ __METHOD__, "DB OK. Table '$table' DOES exist." ]);
+			// Was: echo "<!-- // DB OK. Table '$table' does exist. -->";
 		}
 
 		return true;

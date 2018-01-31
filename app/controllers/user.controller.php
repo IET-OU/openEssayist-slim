@@ -870,7 +870,8 @@ class UserController extends Controller
 		$tsk = $dr->task()->find_one();
 
 
-		$data = $this->getStructTargetData($draft,$dr,$tsk);
+		$data = Analysis::getStructTargetData($draft, $dr, $tsk);
+		// Was: $data = $this->getStructTargetData($draft,$dr,$tsk);
 
 		$this->render('drafts/view.target',array(
 				'helpontask' => 'view.target',
