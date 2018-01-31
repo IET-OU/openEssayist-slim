@@ -73,12 +73,14 @@ class UptimeController extends Controller
   protected static function printVersionData($headers = false)
   {
     $backend_file = self::config('analyser_version');
-    $version_frontend = file_get_contents(self::VERSION_JSON);
-    $version_backend = $backend_file ? file_get_contents($backend_file) : json_encode([ 'stat' => 'missing' ]);
+    $missing = json_encode([ 'stat' => 'missing' ]);
+
+    $version_frontend = file_exists(self::VERSION_JSON) ? file_get_contents(self::VERSION_JSON) : $missing;
+    $version_backend = file_exists($backend_file) ? file_get_contents($backend_file) : $missing;
 
     if ($headers):
-      self::_debug([ 'OpenEssayist-ver' => $version_frontend ]);
-      self::_debug([ 'EssayAnalyser-ver' => $version_backend ]);
+      self::_debug([ 'OpenEssayist-ver' => json_decode($version_frontend) ]);
+      self::_debug([ 'EssayAnalyser-ver' => json_decode($version_backend) ]);
     else: ?>
 
     <script id="openessayist-ver"  type="application/json"> <?= $version_frontend ?> </script>
