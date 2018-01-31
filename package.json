@@ -30,7 +30,7 @@
     "ignore": [ ".cache", ".logs", "app", "templates", "public_html", "hive_*.js", "keyword.group.js" ]
   },
   "scripts": {
-    "link": "ln -s public_html/assets/openessayist/js openessayist-js",
+    "symlink-js": "ln -s public_html/assets/openessayist/js openessayist-js",
     "test": "semistandard",
     "fix": "semistandard --fix"
   }
