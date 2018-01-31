@@ -2,18 +2,31 @@
   OpenEssayist javascript | © The Open University (IET).
 */
 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+
 // From: base.html.twig.
 // <script id="openessayist-init" type="text/javascript">
 // $(document).ready(function() {
 
 window.jQuery(function ($) {
   var openEssayist = window.openEssayist;
+  var L = window.location;
+  var ga = window.ga;
 
   // Set the URL for the AJAX-based activity logging
   // Was: openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
   openEssayist.config = $('script[ data-openessayist ]').data();
+  var CFG = openEssayist.config;
 
-  console.warn('openEssayist config:', openEssayist.config);
+  console.warn('openEssayist config:', CFG);
+
+  ga('create', CFG.google_analytics, 'auto');
+
+  ga('send', 'pageview', CFG.analytics_prefix + L.pathname);
 
   // Activate the Bootstrap's tooltips
   if ($('[ rel = tooltip ]').length) {

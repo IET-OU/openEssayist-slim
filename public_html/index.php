@@ -105,6 +105,14 @@ if ($view instanceof TwigView)
 			return $var;
 	});
 
+	/** A TWIG filter for configuration values. USAGE: {{ 'key' | config }}
+	 * @param  string $key
+	 * @return string String (or object) value.
+	 */
+	$config_filter = new Twig_SimpleFilter('config', function ($key) {
+		return Application::config($key);
+	});
+
 	/**
 	 * Create a TWIG test for checking the existence of a value in an array
 	 * @param 	$val	The value to search for
@@ -121,6 +129,7 @@ if ($view instanceof TwigView)
 	});
 
 	$twig->addFilter($filter);
+	$twig->addFilter($config_filter);
 	$twig->addTest($test);
 }
 

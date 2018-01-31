@@ -109,6 +109,8 @@
 		<div class="container">
 		{% block footer %}
 			<p><span class="brand openessayist">openEssayist v{{ constant('VERSION') }}</span>  -
+				©<a href="http://www.open.ac.uk" title="Copyright © 2013-2018 The Open University">The Open University</a>.
+				<a href="https://iet.open.ac.uk" title="Institute of Educational Technology (IET) &#013;at The Open University">(IET)</a>
 				<span class="hidden-phone hidden-tablet">Designed and built by </span>
 				<a href="https://github.com/vanch3d" target="_blank"><i class="icon-github icon-large icon-dark"></i> vanch3d</a>
 				for the
@@ -144,12 +146,15 @@
 	{#<script src="{{ app_base }}/assets/bootstrap-modal/js/bootstrap-modal.js"></script>#}
 	<script src="{{ app_base }}/assets/dotdotdot-1.6.3/jquery.dotdotdot.min.js"></script>
 
-  <!-- // Set the URL for the AJAX-based activity logging. -->
+  <!-- // Set the URL for the AJAX-based activity logging, etc. -->
   <script
+    id="openessayist-js-config"
     data-openessayist='{}'
     data-user_isdemo="{{ auth.user.isdemo ? 'true' : 'false' }}"
     data-profile_save_notes="{{ urlFor('profile.save.notes') }}"
     data-log_url="{{ urlFor('ajax.log.activity') }}"
+    data-google_analytics="{{ 'google_analytics' | config }}"
+    data-analytics_prefix="{{ 'analytics_prefix' | config }}"
     ></script>
 
   <script src="{{ app_base }}/assets/openessayist/js/openessayist.core.js"></script>

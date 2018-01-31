@@ -51,6 +51,9 @@ $openessayist_config = [
 	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
 
+	'google_analytics' => 'UA-3845152-23', // GA property within 'IET Sites'.
+	'analytics_prefix' => '/local',        // Example: '/server-A', '/server-B'. ** EDIT ME **
+
 	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
 	'users' => [
 		'admin' => (object) [
