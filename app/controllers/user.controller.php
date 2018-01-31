@@ -1320,8 +1320,9 @@ class UserController extends Controller
 		}
 		foreach ($gr['nodes'] as $key => &$node)
 		{
-			if ($gg[$node[id]])
-				$node['rank'] = $gg[$node[id]]['rank'];
+			if (isset($gg[$node[ 'id' ]]) && $gg[$node[ 'id' ]]) {
+				$node['rank'] = $gg[$node['id']]['rank'];
+			}
 		}
 
 		$this->render("drafts/view.graph",array(
@@ -1348,8 +1349,9 @@ class UserController extends Controller
 		}
 		foreach ($gr['nodes'] as $key => &$node)
 		{
-			if ($gg[$node[id]])
-				$node['rank'] = $gg[$node[id]]['rank'];
+			if (isset($gg[$node[ 'id' ]]) && $gg[$node[ 'id' ]]) {
+				$node['rank'] = $gg[$node['id']]['rank'];
+			}
 		}
 
 		$this->render("drafts/view.cytoscape",array(
