@@ -51,6 +51,12 @@ class LoginController extends Controller {
 	{
 		self::_debug(__METHOD__);
 
+		$redirect = ! $this->app->request()->get( 'noredirect' );
+
+		if ($redirect && self::config('sams_redirect')) {
+			$this->redirect('samslogin');
+		}
+
 		if ($this->app->request()->isPost()) {
 			self::_debug([ __METHOD__, $this->post('username'), '****' ]);
 

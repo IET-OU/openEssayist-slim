@@ -47,6 +47,7 @@ $rdSavePath = __DIR__ . '/../_user_data/images/';
 
 $openessayist_config = [
 	'sams_enable' => false,  // Only enable for Open University.
+	'sams_redirect' => true,
 	'sams_password' => '** EDIT ME **',
 	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
