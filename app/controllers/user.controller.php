@@ -1133,9 +1133,9 @@ class UserController extends Controller
 		foreach ($series as $key=>$ser)
 		{
 			$gr = $groups2[$key];
-			$name = $gr['attr']['name'];
+			$name = isset($gr['attr']['name']) ? $gr['attr']['name'] : null;
 			$name = ($name) ?: "Default Group";
-			$color = $gr['attr']['color'];
+			$color = isset($gr['attr']['color']) ? $gr['attr']['color'] : null;
 			$color = ($color) ?: "#880000";
 
 			$series3[] = array(
