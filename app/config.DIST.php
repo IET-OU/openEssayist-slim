@@ -53,6 +53,7 @@ $openessayist_config = [
 
 	'google_analytics' => 'UA-3845152-23', // GA property within 'IET Sites'.
 	'analytics_prefix' => '/local',        // Example: '/server-A', '/server-B'. ** EDIT ME **
+	'analyser_version' => __DIR__ . '/../../openessayist-python/version.json',
 
 	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
 	'users' => [
