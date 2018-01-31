@@ -57,6 +57,9 @@
         "_X_install-mysql-lint": "git clone --depth=4 https://github.com/google/mysql-tools",
         "mysql-lint": "PYTHONPATH=$PYTHONPATH:$(pwd)/mysql-tools/parser_lib; python mysql-tools/validate.py  FILE.sql",
         "npm-install": "npm i db-linter # Markdown generator.",
+        "version.json": [
+          "(printf '{ \"v\": \"'; printf `git describe --long --dirty`; printf '\", \"t\": \"'; date | tr -d '\n'; printf '\" }') > public_html/version.json  # date -Is"
+        ],
         "test": [
           "parallel-lint --exclude vendor .",
           "npm test"

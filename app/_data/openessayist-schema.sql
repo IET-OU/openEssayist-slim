@@ -1,4 +1,6 @@
 --
+-- DO NOT DELETE! Used by `app/cli.php` --
+--
 -- OpenEssayist MySQL database schema.
 --
 -- @copyright © 2013-2018 The Open University (IET-OU).
@@ -141,4 +143,5 @@ CREATE TABLE `users` (
 
 -- Dump completed on 2018-01-11 14:28:07
 
+-- DO NOT DELETE! Used by `app/cli.php` --
 -- End. --
