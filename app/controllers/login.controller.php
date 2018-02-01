@@ -49,22 +49,25 @@ class LoginController extends Controller {
 	 */
 	public function index()
 	{
+		$req = $this->app->request();
+
 		self::_debug(__METHOD__);
 
-		$redirect = ! $this->app->request()->get( 'noredirect' );
+		if ( ! $req->isPost()) {
+			$redirect = ! $req->get( 'noredirect' );
 
-		if ($redirect && self::config('sams_redirect')) {
-			$this->redirect('samslogin');
+			if ($redirect && self::config('sams_redirect')) {
+				$this->redirect('samslogin');
+			}
 		}
 
-		if ($this->app->request()->isPost()) {
+		if ($req->isPost()) {
 			self::_debug([ __METHOD__, $this->post('username'), '****' ]);
 
 			if ($this->auth->login($this->post('username'), $this->post('password'))) {
 				// $this->app->flash('info', 'Your login was successful');
 
 				$user= $this->auth->getUser();
-				$req = $this->app->request();
 
 				$useragent = $req->headers('USER_AGENT') ?: "";
 
