@@ -290,6 +290,8 @@ class UserController extends Controller
 				$formdata["name"] = $post["name"];
 				$versionId = $formdata["version"] = $post["version"];
 
+				$r = $redirect = true;
+
 				try {
 					$url = $this->getAnalyserUrl('/api/analysis');
 
@@ -352,7 +354,8 @@ class UserController extends Controller
 
 						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'duration_sec' => $duration ]);
 
-						$this->redirect($r,false);
+						$redirect = true;
+						// Was: $this->redirect($r, false);
 					}
 					else
 					{	$json = $request->body;
@@ -371,19 +374,27 @@ class UserController extends Controller
 
 					self::_debug([ __METHOD__, 'Requests except', 500.2, $e->getMessage() ]);
 				}
-				catch (\PDOException  $e)
+				catch (\PDOException $e)
 				{
 					$status = 500;
 					$this->app->flashNow("error", "Sorry. Problem with the database. Try again later.");
 
 					self::_debug([ __METHOD__, 'PDO except', 500.3, $e->getMessage() ]);
 				}
-				catch (Exception $e)
+				catch (Exception $ex)
 				{
 					$status = 500;
 					$this->app->flashNow("error", "Sorry, we have a problem. Try again later.");
 
-					self::_debug([ __METHOD__, 'except', 500.4, $e->getMessage() ]);
+					self::_debug([ __METHOD__, 'except', 500.4, $ex->getMessage(), get_class( $ex ) ]);
+
+					// X-app-03: [ "UserController::submitDraft", "except", 500.4, "", "Slim\\Exception\\Stop" ]
+				}
+
+				// Redirect after 'catch' - prevent the Slim\Exception\Stop !
+				// @link https://docs.slimframework.com/routing/helpers/#-\Except:Stop
+				if ($r && $redirect) {
+					$this->redirect($r, false);
 				}
 			}
 		}
