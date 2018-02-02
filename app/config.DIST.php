@@ -89,33 +89,5 @@ $openessayist_config = [
 
 
 // ------------------------------------------------------------------------
-// TODO: move!
-
-/**
- * Needed in the RHEL distribution of Apache/PHP for the use of date();
- */
-date_default_timezone_set('Europe/London');
-
-try {
-	//echo "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBName'";
-	$host = $db[$activeGroup]['hostname'];
-	$root = $db[$activeGroup]['username'];
-	$root_password= $db[$activeGroup]['password'];
-	$database= $db[$activeGroup]['database'];
-
-	$dbh = new PDO("mysql:host=$host;charset=utf8", $root, $root_password);
-
-	// Was:  $dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
-	// Was:  or die(print_r($dbh->errorInfo(), true));
-
-} catch (PDOException $e) {
-	die("DB ERROR: ". $e->getMessage());
-}
-
-$providerString = sprintf('mysql:host=%s;dbname=%s;charset=utf8', $db[$activeGroup]['hostname'], $db[$activeGroup]['database']);
-ORM::configure($providerString);
-ORM::configure('username', $db[$activeGroup]['username']);
-ORM::configure('password', $db[$activeGroup]['password']);
-ORM::configure('driver_options', [ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'" ]);
-
+// The database connection code has been moved to `app/utils/DBConnection.php` (2-Feb-2018).
 // End.

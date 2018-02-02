@@ -13,6 +13,8 @@ use \Slim\Extras\Middleware\StrongAuth;
 use \Slim\Middleware\LoggerMiddleWare;
 use \Slim\Extras\Middleware\StrongAuthAdmin;
 
+IET_OU\OpenEssayist\Utils\DBConnection::connect();
+
 if (! application::databaseExists()) {
 	exit;
 }
@@ -131,7 +133,7 @@ $config = array(
 		),
 );
 
-ORM::configure('logging', true);
+// Was: ORM::configure('logging', true);
 
 // Define and add the StrongAuth middleware to the framework
 $app->add(new StrongAuthAdmin($config, new Strong\Strong($config)));
