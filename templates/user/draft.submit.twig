@@ -104,7 +104,7 @@
 		<input type="hidden" name="task" id="draft-task" value="{{ task.code }}"/>
 		<input type="hidden" name="version" id="draft-version" value="{{ form.version }}"/>
 
-		<input type="hidden" readonly name="counts" id="draft-counts" title="*** TO HIDE *** work-in-progress!" style="width:99%" />
+		<input type="hidden" name="counts" id="draft-counts"/>
 	</div>
 </div>
 
@@ -134,52 +134,17 @@
 <script src="{{ app_base }}/assets/jquery.validation/jquery.validate.min.js"></script>
 <script src="https://unpkg.com/countable@3.0.0/Countable.min.js"></script>
 
-<script>
+<script src="{{ app_base }}/assets/openessayist/js/openessayist.validator.js"></script>
+
+{# <script>
 window.jQuery(function ($) {
 	$.blockUI.defaults.baseZ = 1100; // Z-index?
 
 	var $form = $('form#post_essay');
 	var $essay = $form.find('textarea#text');
 	var $counts = $form.find('[ name = counts ]');
-	var minlength = $essay.data('minlength') || 200;
-	var maxlength = $essay.data('maxlength') || ( 200 * 1000 ); // Characters. Big!
 
-	$('#post_essay').validate({
-		rules: {
-			text:
-			{
-				required: true,
-				minlength: minlength,
-				maxlength: maxlength
-			}
-		},
-		submitHandler: function(form) {
-			var essay = $essay.val();
-			var wcount = essay.match(/[^\s]+/g).length;
-			var time = wcount / 100;
-			var msg = "";
-
-			if (time < 30)
-				msg = "it will take 15 to 30 seconds...";
-			else if (time < 60)
-				msg = "it will take up to one minute ...";
-			else
-				msg = "it will take one or two minutes ...";
-
-			$.blockUI({ message: '<div class="ajax alert alert-info">Starting Analysis. Please wait, ' + msg + '</div>' });
-			form.submit();
-
-			 },
-		highlight: function(element) {
-				 $(element).closest('.control-group').not(".help-block").removeClass('success').addClass('error');
-			 },
-		success: function(element) {
-			 element
-			 .text('OK!').addClass('valid')
-			 .closest('.control-group').not(".help-block").removeClass('error').addClass('success');
-		}
-
-	});
+// ...
 
 	// NDF, 02-February-2018.
 	window.Countable.on($essay.get(0), function (counter) {
@@ -191,6 +156,7 @@ window.jQuery(function ($) {
 
 });
 </script>
+#}
 {% endblock %}
 
 {% block injectCSS %}

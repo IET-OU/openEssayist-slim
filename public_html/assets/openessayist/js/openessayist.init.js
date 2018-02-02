@@ -2,11 +2,11 @@
   OpenEssayist javascript | © The Open University (IET).
 */
 
+// eslint-disable-next-line
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),  // eslint-disable-line
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) // eslint-disable-line
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');// eslint-disable-line
 
 // From: base.html.twig.
 // <script id="openessayist-init" type="text/javascript">
@@ -17,7 +17,7 @@ window.jQuery(function ($) {
   var L = window.location;
   var ga = window.ga;
 
-  // Set the URL for the AJAX-based activity logging
+  // Set the URL for the AJAX-based activity logging.
   // Was: openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
   openEssayist.config = $('script[ data-openessayist ]').data();
   var CFG = openEssayist.config;
@@ -28,7 +28,7 @@ window.jQuery(function ($) {
 
   ga('send', 'pageview', CFG.analytics_prefix + L.pathname);
 
-  // Activate the Bootstrap's tooltips
+  // Activate Bootstrap tooltips.
   if ($('[ rel = tooltip ]').length) {
     $('[ rel = tooltip ]').tooltip({ container: 'body' });
   }
