@@ -23,6 +23,7 @@ require_once __DIR__ . '/../utils/AnalysisUtils.php';
 require_once __DIR__ . '/../utils/LoggerMiddleware.php';
 require_once __DIR__ . '/../utils/PDOAdmin.php';
 require_once __DIR__ . '/../utils/StrongAuthAdmin.php';
+require_once __DIR__ . '/../utils/TwigApp.php';
 require_once __DIR__ . '/../utils/UASparser.php';
 
 // Controllers.

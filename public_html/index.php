@@ -37,68 +37,12 @@ $app = new \Slim\Slim(array(
     ))
 ));
 
-// Asset Management
-TwigView::$twigExtensions = array(
-	'Twig_Extensions_Slim',
-	'Twig_Extension_Debug'
-);
 
-TwigView::$twigTemplateDirs = array(
-	'../templates',
-);
-TwigView::$twigOptions = array(
-	'cache' => '../.cache',
-	'debug'=> true,
-);
+// Twig Asset Management
+// Set custom Twig filters -- code moved to `app/utils/TwigApp.php`.
 
-// Set custom Twig filters
-$view = $app->view();
+IET_OU\OpenEssayist\Utils\TwigApp::setup( $app->view() ); // Was: $view = $app->view();
 
-if ($view instanceof TwigView)
-{
-	/* @var $twig Twig_Environment */
-	$twig = $view->getEnvironment();
-
-	/**
-	 * Create a TWIG filter for Boolean values
-	 * @param 	$var	The variable to render
-	 * @return	A String containing "True" or "False"
-	 * Usage: {{ item|boolean}}
-	 */
-	$filter = new Twig_SimpleFilter('boolean', function ($var) {
-		if (is_bool($var))
-			return ($var) ? "True":"False";
-		else
-			return $var;
-	});
-
-	/** A TWIG filter for configuration values. USAGE: {{ 'key' | config }}
-	 * @param  string $key
-	 * @return string String (or object) value.
-	 */
-	$config_filter = new Twig_SimpleFilter('config', function ($key) {
-		return Application::config($key);
-	});
-
-	/**
-	 * Create a TWIG test for checking the existence of a value in an array
-	 * @param 	$val	The value to search for
-	 * @param 	$arr	The array
-	 * @param 	$def	The default value if the array does not exist
-	 * @return	True if the value is in the array, False if not, $def if the array is not set
-	 * Usage: {{ val is inOption(arr,def) }}
-	 */
-	$test = new Twig_SimpleTest('inOption', function ($val,$arr,$def=true) {
-		if (!isset($arr)) return $def;
-		if (isset($arr) && in_array($val, $arr) )
-			return true;
-		return false;
-	});
-
-	$twig->addFilter($filter);
-	$twig->addFilter($config_filter);
-	$twig->addTest($test);
-}
 
 // Create a hook to add the root URI to all views
 $app->hook('slim.before.dispatch', function() use ($app) {
@@ -223,7 +167,7 @@ $c->app->get('/help/', array($tutorCtrl, 'getHelpSystem'))->name('system.help');
 $c->app->get('/help/on/:topic', array($tutorCtrl, 'getHelpOnTopic'))->name('ajax.help.topic');
 $c->app->get('/help/on/:topic/hints', array($tutorCtrl, 'getHelpOnTopic'))->name('ajax.help.hint');
 
-
+// ADMIN routes.
 
 $c->app->get('/admin/', array($adminCtrl, 'index'))->name('admin.home');
 $c->app->get('/admin/reset', array($adminCtrl, 'reset'))->name('admin.reset');
@@ -259,5 +203,7 @@ $c->app->get('/status', [ $uptimeCtrl, 'backend' ])->name('uptime.backend');
 $c->app->error(array($appController, 'error'));
 $c->app->notFound(array($appController, 'NotFound'));
 
-// Run the application
+// Run the application.
 $c->run();
+
+// End.
