@@ -46,7 +46,7 @@
     },
     "scripts": {
         "cli-help": "app/cli.php --help",
-        "redhat-install": "yum install -y php-mcrypt php-zip patch",
+        "redhat-install": "yum install php php-mcrypt php-zip patch httpd mod_fcgid # -y",
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
         "mkdir": [ "mkdir ./.cache", "mkdir ./.logs", "mkdir -p _user_data/images" ],
         "chown": [ "chown -R nginx:nginx ./.cache", "chown -R nginx:nginx ./.logs" ],
