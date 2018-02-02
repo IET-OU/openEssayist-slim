@@ -3,14 +3,12 @@
 #
 # FastCGI bridge -- Apache 2 "mod_fcgid".
 #
+# Copy to:  /var/www/cgi-bin/php.fastcgi
+#
+# chown  apache:apache /var/www/cgi-bin/php.fastcgi
+# chmod  a+x /var/www/cgi-bin/php.fastcgi
+#
 # https://tecadmin.net/setup-httpd-with-fastcgi-and-php-on-centos-redhat/#
-#
-# yum install php php-fpm httpd mod_fcgid
-#
-# Copy to: /var/www/cgi-bin/php.fastcgi
-#
-# chown apache:apache /var/www/cgi-bin/php.fastcgi
-# chmod a+x /var/www/cgi-bin/php.fastcgi
 #
 
 PHPRC="/etc/php.ini"

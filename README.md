@@ -19,7 +19,9 @@ Built on [Slim][].
 
 ```sh
 composer redhat-check
-composer redhat-install
+composer redhat-install   # yum install php php-fpm php-mcrypt php-zip httpd mod_fcgid
+# cp -n app/_data/php.fastcgi /var/www/cgi-bin/
+#   ...
 ```
 
 ## Install .. Test
@@ -40,7 +42,7 @@ composer test
 
 ## Database
 
-To create and seed the database [tables][db], start typing:
+To create and seed the MySQL database [tables][db], start typing:
 
 ```sh
 composer cli-help
