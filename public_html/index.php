@@ -16,7 +16,7 @@ use \Slim\Extras\Middleware\StrongAuthAdmin;
 
 IET_OU\OpenEssayist\Utils\DBConnection::dbconnect();
 
-if (! application::databaseExists()) {
+if (! Application::databaseExists()) {
 	exit;
 }
 
@@ -25,8 +25,7 @@ $app = new \Slim\Slim(array(
 	'openEssayist.async' => false,
 	'view' => new TwigView,
 	'debug' => true,
-	'rd_save_path' => $GLOBALS[ 'rdSavePath' ],
-	// Was: 'rd_save_path' => __DIR__ . '/assets/openessayist/img/rd/',
+	'rd_save_path' => Application::config( 'rd_save_path' ),
 	// Was: 'rd_save_path' => substr($_SERVER['SCRIPT_FILENAME'], 0, -21) .'public_html/assets/openessayist/img/rd/',
     'log.level' => \Slim\Log::DEBUG,
     'log.enabled' => true,

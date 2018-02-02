@@ -1,7 +1,6 @@
 <?php
-
 /**
- * OpenEssayist database details.
+ * OpenEssayist - database and application configuration.
  *
  * $activeGroup contains key for current databases
  * $db contains all database sets available
@@ -39,31 +38,33 @@ $db['H817']['dbProvider'] = 'mysql';
 $db['H817']['logdir'] = __DIR__ . '/../log-h817';
 
 // Other configuration.
-$seedDatabase = false;
-$email = 'openessayist-techsupport@open.ac.uk'; // Was: 'nicolas.vanlabeke@open.ac.uk'
-$analyserUrl = 'http://127.0.0.1:8062';
-$rdSavePath = __DIR__ . '/../_user_data/images/';
 
+$_oe_email_ = 'openessayist-techsupport@open.ac.uk'; // Was: 'nicolas.vanlabeke@open.ac.uk'
 
 $openessayist_config = [
-	'sams_enable' => false,  // Only enable for Open University.
+	'email' => $_oe_email_,
+	'analyser_url' => 'http://127.0.0.1:8062',
+	'rd_save_path' => __DIR__ . '/../_user_data/images/',
+	'draft_maxlength_chars' => 4000,  // 200, // TODO: increase, eg. ( 200 * 1000 )
+
+	// SAMS authentication - only enable for Open University.
+	'sams_enable' => false,
 	'sams_redirect' => true,
 	'sams_password' => '** EDIT ME **',
 	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
-
-	'draft_maxlength_chars' => 4000,  // 200, // TODO: increase, eg. ( 200 * 1000 )
+	'analyser_version' => __DIR__ . '/../../openessayist-python/version.json',
 
 	'google_analytics' => 'UA-3845152-23', // GA property within 'IET Sites'.
 	'analytics_prefix' => '/local',        // Example: '/server-A', '/server-B'. ** EDIT ME **
-	'analyser_version' => __DIR__ . '/../../openessayist-python/version.json',
 
 	// Seed database ... 1+ users, 1+ groups, 1+ tasks.
+
 	'users' => [
 		'admin' => (object) [
 			'username' => 'admin',
 			'password' => '** EDIT ME **',
-			'email'  => $email,
+			'email'  => $_oe_email_,
 			'name' => 'Admin 01',
 			'isadmin' => true,
 			'auth_type' => 'seed',

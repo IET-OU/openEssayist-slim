@@ -15,7 +15,7 @@
         { "name": "LTI-LTT team / Institute of Educational Technology", "homepage": "https://iet.open.ac.uk/" }
     ],
     "prefer-stable": true,
-    "minimum-stability": "alpha",
+    "minimum-stability": "dev",
     "autoload": {
       "X-classmap": [ "app/" ]
     },

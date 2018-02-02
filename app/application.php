@@ -170,11 +170,11 @@ class Application {
 			self::_debug([ __METHOD__, $caller, get_class( $auth ), $auth->getUser(), $this->getAnalyserUrl(), $this->getSavePath() ]);
 		}
 		self::$once = true;
-		//$shown = true;
+		// $shown = true;
 	}
 
   protected function getSavePath() {
-		return $this->app->config('rd_save_path');
+		return realpath(self::config( 'rd_save_path' )); // Was: $this->app->config('rd_save_path')
 	}
 
   /**
@@ -182,6 +182,7 @@ class Application {
 	 * @return string  URL
 	 */
 	protected function getAnalyserUrl($path = '/') {
-		return ( isset($GLOBALS[ 'analyserUrl' ]) ? $GLOBALS[ 'analyserUrl' ] : 'http://localhost:8062' ) . $path;
+		$analyser_url = self::config( 'analyser_url' ); // Was: $GLOBALS[ 'analyserUrl' ]
+		return ( $analyser_url ? $analyser_url : 'http://localhost:8062' ) . $path;
 	}
 }
