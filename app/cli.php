@@ -3,10 +3,9 @@
 /**
  * Command-line CLI database tool - create and seed DB tables.
  *
- * OpenEssayist-slim.
- *
+ * @package   OpenEssayist-slim
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
- * @author   NDF, 24-Jan-2018.
+ * @author    Nick Freear, 24-January-2018.
  */
 
 $__HELP__ = <<<EOH
@@ -22,95 +21,60 @@ Help / actions:
 
 EOH;
 
-if ('cli' !== php_sapi_name()) {
-  die( 'CLI only.' );
-}
-
 define( 'CLI', true );
-define( 'SCHEMA_FILE', __DIR__ . '/_data/openessayist-schema.sql' );
 
-$last_arg = $argv[ $argc - 1 ];
-
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/application.php';
-require_once __DIR__ . '/models/users.model.php';  // Contains multiple models!
+require_once __DIR__ . '/utils/autoload.php';
 
 use Clio\Console as Clio;
-use Application as oeApp;
+use IET_OU\OpenEssayist\Utils\CliApp as oeApp;
+
+oeApp::cliCheck();
 
 Clio::output('>> OpenEssayist CLI.' . PHP_EOL);
-Clio::output('Schema: ' . SCHEMA_FILE);
-// echo "CLI start: $last_arg \nSchema: " . SCHEMA_FILE . PHP_EOL;
+Clio::output('Schema: ' . oeApp::SCHEMA_FILE);
+
+oeApp::dbconnect();
 
 if (oeApp::databaseExists()) {
   oeApp::userTableExists();
 }
 
-if ( '--create-db' === $last_arg ) {
-  //$orm = ORM::get_db();
+if (oeApp::arg( '--create-db' )) {
 
-  $dbh = oeApp::config( 'dbh', 'db' ); // $GLOBALS[ 'openessayist_dbh' ];
-  $database = oeApp::config( 'database', 'db' ); // $GLOBALS[ 'openessayist_database' ];
-
-  $result = $dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
-	or die(print_r($dbh->errorInfo(), true));
+  $result = oeApp::createDatabase();
 
   Clio::output('>> OK. Database created: '. $database);
-
   print_r( $result );
   exit;
 }
 
-if ( '--create-tables' === $last_arg ) {
-  $orm = ORM::get_db();
-
-  $sql = file_get_contents( SCHEMA_FILE );
-  $database = oeApp::config( 'database', 'db' );
+if (oeApp::arg( '--create-tables' )) {
   try {
-    $result = $orm->exec( $sql );
+    $result = oeApp::createTables();
   }
   catch (\PDOException $ex) {
-    // Table exists ??
-    Clio::error('Database Error: ' . $ex->getMessage());
+    Clio::error('Database Error: ' . $ex->getMessage()); // Table exists ??
     exit( 1 );
   }
-  Clio::output('>> OK. Tables created. Schema: ' . SCHEMA_FILE);
+  Clio::output('>> OK. Tables created. Schema: ' . oeApp::SCHEMA_FILE);
 
   print_r( $result );
   exit;
 }
 
-if ( '--count-tables' === $last_arg ) {
-  $database = oeApp::config( 'database', 'db' );
-  $count_tables = ORM::for_table( 'information_schema.tables' )->where( 'table_schema', $database )->count();
-  // $result = ORM::raw_execute( "USE $database; SHOW TABLES; SELECT found_rows() AS count;");
-  // $statement = ORM::get_last_statement();
-
-  Clio::output('>> Count of tables: ' . $count_tables);
+if (oeApp::arg( '--count-tables' )) {
+  Clio::output('>> Count of tables: ' . oeApp::countTables());
   exit;
 }
 
-if ( '--seed-users' === $last_arg ) {
+if (oeApp::arg( '--seed-users' )) {
   $users = oeApp::config( 'users' );
   print_r( $users );
 
   $strong = new Strong\Strong([ 'provider' => 'PDO', 'pdo' => ORM::get_db(), ]);
   foreach ($users as $user) {
-    $u = Model::factory('Users')->create();
-    $u->username = $user->username;
-    $u->password = Strong\Strong::getInstance()->getProvider()->hashPassword( $user->password );
-    $u->email = $user->email;
-    $u->name = $user->name;
-    $u->isadmin = $user->isadmin;
-    $u->active = 1;
-    $u->isdemo = 0;
-    $u->auth_type = $user->auth_type;
-    $u->ip_address = ''; //$this->app->request()->getIp();
-    $u->group_id = 1; // $gid;
-
     try {
-      $u->save();
+      $result = oeApp::createUser( $user );
     }
     catch (\PDOException $ex) {
       print_r($ex->getMessage());
@@ -122,7 +86,7 @@ if ( '--seed-users' === $last_arg ) {
   exit;
 }
 
-if ( '--seed-groups' === $last_arg ) {
+if (oeApp::arg( '--seed-groups' )) {
   $groups = oeApp::config( 'groups' );
   print_r( $groups );
 
@@ -145,7 +109,7 @@ if ( '--seed-groups' === $last_arg ) {
   exit;
 }
 
-if ( '--seed-tasks' === $last_arg ) {
+if (oeApp::arg( '--seed-tasks' )) {
   $tasks = oeApp::config( 'tasks' );
   print_r( $tasks );
 

@@ -1,7 +1,8 @@
 <?php
 /**
- * OpenEssayist-slim - Front controller.
+ * OpenEssayist front controller.
  *
+ * @package   OpenEssayist-slim
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  */
 
@@ -13,7 +14,7 @@ use \Slim\Extras\Middleware\StrongAuth;
 use \Slim\Middleware\LoggerMiddleWare;
 use \Slim\Extras\Middleware\StrongAuthAdmin;
 
-IET_OU\OpenEssayist\Utils\DBConnection::connect();
+IET_OU\OpenEssayist\Utils\DBConnection::dbconnect();
 
 if (! application::databaseExists()) {
 	exit;
