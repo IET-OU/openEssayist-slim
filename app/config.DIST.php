@@ -52,6 +52,8 @@ $openessayist_config = [
 	'sams_group_id' => 1,  // Set a default.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
 
+	'draft_maxlength_chars' => 4000,  // 200, // TODO: increase, eg. ( 200 * 1000 )
+
 	'google_analytics' => 'UA-3845152-23', // GA property within 'IET Sites'.
 	'analytics_prefix' => '/local',        // Example: '/server-A', '/server-B'. ** EDIT ME **
 	'analyser_version' => __DIR__ . '/../../openessayist-python/version.json',

@@ -51,6 +51,8 @@
 		<textarea class="boxborder" rows="15"
 			aria-describedby="help-text"
 			name="text" id="text" placeholder="paste the text of your essay"
+			data-minlength="200"
+			data-maxlength="{{ 'draft_maxlength_chars' | config }}"
 			required="required" {{ not(task.isopen) ? "readonly"}}>{{ form.text }}</textarea>
 
 		<span class="help-block" id="help-text">
@@ -101,6 +103,8 @@
 		<input type="hidden" name="module" id="draft-module" value="{{ group.code }}"/>
 		<input type="hidden" name="task" id="draft-task" value="{{ task.code }}"/>
 		<input type="hidden" name="version" id="draft-version" value="{{ form.version }}"/>
+
+		<input type="hidden" readonly name="counts" id="draft-counts" title="*** TO HIDE *** work-in-progress!" style="width:99%" />
 	</div>
 </div>
 
@@ -128,24 +132,33 @@
 	{{ parent() }}
 <script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
 <script src="{{ app_base }}/assets/jquery.validation/jquery.validate.min.js"></script>
+<script src="https://unpkg.com/countable@3.0.0/Countable.min.js"></script>
 
 <script>
-$(document).ready(function() {
-	$.blockUI.defaults.baseZ = 1100;
+window.jQuery(function ($) {
+	$.blockUI.defaults.baseZ = 1100; // Z-index?
+
+	var $form = $('form#post_essay');
+	var $essay = $form.find('textarea#text');
+	var $counts = $form.find('[ name = counts ]');
+	var minlength = $essay.data('minlength') || 200;
+	var maxlength = $essay.data('maxlength') || ( 200 * 1000 ); // Characters. Big!
 
 	$('#post_essay').validate({
 		rules: {
 			text:
 			{
 				required: true,
-				minlength: 200
+				minlength: minlength,
+				maxlength: maxlength
 			}
 		},
 		submitHandler: function(form) {
-			var essay = $("textarea#text").val();
+			var essay = $essay.val();
 			var wcount = essay.match(/[^\s]+/g).length;
 			var time = wcount / 100;
 			var msg = "";
+
 			if (time < 30)
 				msg = "it will take 15 to 30 seconds...";
 			else if (time < 60)
@@ -167,6 +180,14 @@ $(document).ready(function() {
 		}
 
 	});
+
+	// NDF, 02-February-2018.
+	window.Countable.on($essay.get(0), function (counter) {
+		console.warn('Counts:', counter);
+
+		$counts.val(JSON.stringify(counter));
+	},
+	{ hardReturns: true });
 
 });
 </script>

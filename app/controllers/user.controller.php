@@ -346,13 +346,16 @@ class UserController extends Controller
 						$draft->tstart = $time_start;
 						$draft->tend = $time_end;
 
+						$counts = json_encode($post[ 'counts' ]);  // JSON via Countable.js.
+						$draft->counts = json_decode( $counts );
+
 						$result = $draft->save();
 
 						// redirect to the "drafts review" page
 						$this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
 						$r= $this->app->urlFor("me.draft.action",array("idt" => $taskId));
 
-						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'duration_sec' => $duration ]);
+						self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $post['version'], 'result' => $result, 'duration_sec' => $duration, 'counts' => $counts ]);
 
 						$redirect = true;
 						// Was: $this->redirect($r, false);

@@ -35,9 +35,11 @@ CREATE TABLE `draft` (
   `tend`   int(11) DEFAULT NULL COMMENT 'Added. Time-end.',
   `date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation date. Changed "DEFAULT".',
   `modified` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT 'Add a modified date.',
+  `counts` varchar(160) DEFAULT NULL COMMENT 'Added. JSON from Countable.js',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- ALTER TABLE `draft` ADD column `counts` varchar(160) DEFAULT NULL COMMENT 'Added. JSON from Countable.js';
 
 --
 -- Table structure for table `feedback`
