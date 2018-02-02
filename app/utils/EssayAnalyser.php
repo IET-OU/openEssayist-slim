@@ -65,7 +65,7 @@ class EssayAnalyser extends \Application
 
     $times->duration = $times->end - $times->start;
 
-    $log->debug(__METHOD__ . ":end - $taskId,$versionId - seconds:$duration");
+    $log->debug(__METHOD__ . ":end - $taskId,$versionId - seconds:" . $times->duration);
 
     $post_data[ 'text' ] = substr( $post_data[ 'text' ], 0, 30 ) . ' [...]';
     self::_debug([ __METHOD__, 'POST', $post_data ]);
@@ -77,7 +77,7 @@ class EssayAnalyser extends \Application
 
       /* @var $draft Draft */
 
-      $result->db_result = $this->saveDraft( $taskId, $userId, $post, $times );
+      $result->db_result = $this->saveDraft( $taskId, $userId, $post, $times, $json );
       // Was: $result = $draft->save();
 
       // redirect to the "drafts review" page
@@ -92,7 +92,7 @@ class EssayAnalyser extends \Application
     }
     else
     {	$json = $request->body;
-      $ret = json_decode($json,true);
+      $ret = json_decode($json, true);
 
       $result->status = 500;
 
@@ -105,14 +105,19 @@ class EssayAnalyser extends \Application
   }
 
   /**
-   * Create a Draft object, and save to the database.
+   * Create a Draft model object, and save to the database.
+   * @param int $taskId
+   * @param int $userId
+   * @param array $post Post-data from the end-user.
+   * @param object $times
+   * @param string $analysisJson
    */
-  protected function saveDraft( $taskId, $userId, $post, $times )
+  protected function saveDraft( $taskId, $userId, $post, $times, $analysisJson )
   {
     /* @var $draft Draft */
     $draft = Model::factory('Draft')->create();
     $draft->type = 0;
-    $draft->analysis = $json;
+    $draft->analysis = $analysisJson;  // Was: $json;
     $draft->task_id = $taskId;
     $draft->version = $post["version"];
     $draft->name = $post["name"];
@@ -121,7 +126,7 @@ class EssayAnalyser extends \Application
     // Was: $draft->date = date('Y-m-d H:i:s e');
 
     $draft->text = $post[ 'text' ]; // The original text.
-    $draft->tstart = $time->start;
+    $draft->tstart = $times->start;
     $draft->tend = $times->end;
 
     $counts = json_encode($post[ 'counts' ]);  // JSON via Countable.js.

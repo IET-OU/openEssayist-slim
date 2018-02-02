@@ -19,6 +19,7 @@ require_once __DIR__ . '/../application.php';
 // Utilities.
 require_once __DIR__ . '/../utils/DBConnection.php';
 require_once __DIR__ . '/../utils/CliApp.php';
+require_once __DIR__ . '/../utils/EssayAnalyser.php';
 require_once __DIR__ . '/../utils/AnalysisUtils.php';
 require_once __DIR__ . '/../utils/LoggerMiddleware.php';
 require_once __DIR__ . '/../utils/PDOAdmin.php';
