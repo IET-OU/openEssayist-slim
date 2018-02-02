@@ -5,48 +5,13 @@
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  */
 
-header( 'X-test: 1' );
-
-error_reporting( E_ALL );
-ini_set( 'display_errors', true );
-
-
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/utils/autoload.php';
 
 use \Slim\Slim;
 use \Slim\Extras\Views\Twig as TwigView;
 use \Slim\Extras\Middleware\StrongAuth;
 use \Slim\Middleware\LoggerMiddleWare;
 use \Slim\Extras\Middleware\StrongAuthAdmin;
-
-require_once "../app/config.php";
-require_once "../app/application.php";
-
-require_once "../app/utils/AnalysisUtils.php";
-require_once "../app/utils/LoggerMiddleware.php";
-require_once "../app/utils/PDOAdmin.php";
-require_once "../app/utils/StrongAuthAdmin.php";
-require_once "../app/utils/UASparser.php";
-
-// Controllers
-require_once "../app/controller.php";
-require_once "../app/controllers/admin.controller.php";
-require_once "../app/controllers/home.controller.php";
-require_once "../app/controllers/login.controller.php";
-require_once "../app/controllers/user.controller.php";
-require_once "../app/controllers/demo.controller.php";
-require_once "../app/controllers/tutor.controller.php";
-require_once "../app/controllers/group.controller.php";
-require_once "../app/controllers/uptime.controller.php";
-
-// Models
-require_once "../app/models/users.model.php";
-require_once "../app/models/draft.model.php";
-
-// System's constants
-define('APPLICATION', 'openEssayist');
-define('VERSION', '2.7 beta');
-define('EXT', '.twig');
 
 if (! application::databaseExists()) {
 	exit;
