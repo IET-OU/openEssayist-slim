@@ -287,7 +287,7 @@ class UserController extends Controller
 				$versionId = $formdata["version"] = $post["version"];
 
 				$analyser = new IET_OU\OpenEssayist\Utils\EssayAnalyser();
-				$result = $analyser->setup();
+				$result = $analyser->initResult();
 
 				try {
 					$result = $analyser->analyseAndSave( $taskId, $this->user[ 'id' ] );

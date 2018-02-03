@@ -10,7 +10,10 @@
 
 class EssayAnalyser extends \Application
 {
-  public function setup()
+  /**
+   * @return object  Return an initialized 'result' object.
+   */
+  public function initResult()
   {
     return (object) [
       'status' => 200,
@@ -25,7 +28,7 @@ class EssayAnalyser extends \Application
    *
    * @param int $taskId
    * @param int $userId
-   * @return object  A result object.
+   * @return object  A 'result' object.
    */
   public function analyseAndSave( $taskId, $userId )
   {
@@ -33,7 +36,7 @@ class EssayAnalyser extends \Application
     $log = $this->app->getLog();
     $post = $req->post();
 
-    $result = $this->setup();
+    $result = $this->initResult();
 
     $url = $this->getAnalyserUrl('/api/analysis');
 

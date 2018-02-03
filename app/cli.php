@@ -43,7 +43,7 @@ if (oeApp::arg( '--create-db' )) {
 
   $result = oeApp::createDatabase();
 
-  Clio::output('>> OK. Database created: '. $database);
+  Clio::output('>> OK. Database created: '. $result->database);
   print_r( $result );
   exit;
 }
@@ -56,7 +56,7 @@ if (oeApp::arg( '--create-tables' )) {
     Clio::error('Database Error: ' . $ex->getMessage()); // Table exists ??
     exit( 1 );
   }
-  Clio::output('>> OK. Tables created. Schema: ' . oeApp::SCHEMA_FILE);
+  Clio::output("\n" . '>> OK. Tables created. Schema: ' . oeApp::SCHEMA_FILE);
 
   print_r( $result );
   exit;

@@ -48,7 +48,11 @@ class CliApp extends DBConnection
     $result = $dbh->exec("CREATE DATABASE IF NOT EXISTS `$database`;")
   	or die(print_r($dbh->errorInfo(), true));
 
-    return $result;
+    return (object) [
+      'result' => $result,
+      'database' => $database,
+      'dbh' => $dbh,
+    ];
   }
 
   /**
