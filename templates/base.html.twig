@@ -13,20 +13,9 @@
   <meta name="copyright" content="Copyright © 2013-2018 The Open University. All rights reserved.">
   <meta name="author" content="Nicolas Van Labeke (IET - Open University)">
 
-	<!-- Le styles -->
-	{#
-	<link href="{{ app_base }}/assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="{{ app_base }}/assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="{{ app_base }}/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" >
-	<link href="{{ app_base }}/assets/jquery-ui-1.9.2.custom/css/bootstrap/jquery-ui-1.9.2.custom.css" rel="stylesheet">
-	<link href="{{ app_base }}/assets/jquery-tour/css/theme4/style.css" rel="stylesheet" title="jTour" >
-	#}
-	<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-	<link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-	{# <link href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet"> #}
-	<link href="{{ app_base }}/assets/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet">
-	<link href="{{ app_base }}/assets/openessayist/css/application.css" rel="stylesheet">
-	<link href="{{ app_base }}/assets/openessayist/css/app.stickyfooter.css" rel="stylesheet">
+
+  {% include "stylesheet/header.html.twig" %}
+
 	{% block injectCSS %}
 	{% endblock %}
 
@@ -35,12 +24,6 @@
       <script src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
   <![endif]-->
 
-	<!-- Le fav and touch icons -->
-	<link href="{{ app_base }}/assets/openessayist/img/favicon.ico" rel="shortcut icon">
-	{# <style>
-	/* Sticky footer styles
-      ---- ... */
-</style> #}
 {% endblock %}
 </head>
 <body>
@@ -125,50 +108,9 @@
 	</footer>
 
 
+  {% include "javascript/footer.html.twig" %}
 
-	<!-- Le javascript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<!--[if lt IE 9]>
-		<script src="{{ app_base }}/assets/openessayist/js/aight.min.js"></script>
-	<![endif]-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-	{#
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-	<script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-	<script src="{{ app_base }}/assets/bootstrap/js/bootstrap.js"></script>
-	<script src="{{ app_base }}/assets/jquery-tour/js/jTour.js"></script>
-	<script src="{{ app_base }}/assets/log4javascript-1.4.6/log4javascript.js"></script>
-	#}
-	<script src="{{ app_base }}/assets/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
-	{#<script src="{{ app_base }}/assets/bootstrap-modal/js/bootstrap-modal.js"></script>#}
-	<script src="{{ app_base }}/assets/dotdotdot-1.6.3/jquery.dotdotdot.min.js"></script>
-
-  <!-- // Set the URL for the AJAX-based activity logging, etc. -->
-  <script
-    id="openessayist-js-config"
-    data-openessayist='{}'
-    data-user_isdemo="{{ auth.user.isdemo ? 'true' : 'false' }}"
-    data-profile_save_notes="{{ urlFor('profile.save.notes') }}"
-    data-log_url="{{ urlFor('ajax.log.activity') }}"
-    data-google_analytics="{{ 'google_analytics' | config }}"
-    data-analytics_prefix="{{ 'analytics_prefix' | config }}"
-    ></script>
-
-  <script src="{{ app_base }}/assets/openessayist/js/openessayist.core.js"></script>
-  <script src="{{ app_base }}/assets/openessayist/js/openessayist.init.js" id="openessayist-init"></script>
-
-	{# <script type="text/javascript">
-	$(document).ready(function() {
-		// Set the URL for the AJAX-based activity logging
-		openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
-
-		// ...
-	});
-	</script> #}
-	{% block injectJS %}
+  {% block injectJS %}
 	{% endblock %}
 
 </body>
