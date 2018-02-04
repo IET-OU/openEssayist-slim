@@ -1,5 +1,5 @@
 /*!
-  OpenEssayist javascript | © The Open University (IET).
+  OpenEssayist JS: ajax.notepad | © The Open University (IET).
 */
 
 // From: site.twig.

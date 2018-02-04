@@ -1,8 +1,8 @@
 /*!
-  OpenEssayist javascript | © The Open University (IET).
+  OpenEssayist JS: form.validator | © The Open University (IET).
 */
 
-// From: user/draft.submit.twig.
+// From: 'user/draft.submit.twig'
 
 window.jQuery(function ($) {
   $.blockUI.defaults.baseZ = 1100; // Z-index?

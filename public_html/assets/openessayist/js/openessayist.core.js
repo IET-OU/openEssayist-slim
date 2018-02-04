@@ -1,26 +1,27 @@
 /*!
-  OpenEssayist javascript | © The Open University (IET).
+  OpenEssayist JS: core | © The Open University (IET).
 */
 
-var openEssayist = function () {
+/* var openEssayist = function () {
   this._selfreport = null;
 };
+openEssayist.LOG_URL = null; */
 
-openEssayist.LOG_URL = null;
 /**
  *
  * @param msg
  * @returns {myClass.doSomething}
  */
-openEssayist.log4j = function (action, data) {
+window.openEssayist.log4j = function (action, data) {
   var $ = window.jQuery;
+  var CFG = window.openEssayist.config;
 
   console.warn('log4j:', action, data);
 
   $.ajax({
     type: 'POST',
     method: 'post',
-    url: openEssayist.config.log_url, // URL and function to call
+    url: CFG.log_url, // URL and function to call
     data: {
       'action': action,
       'data': data
@@ -45,11 +46,12 @@ openEssayist.log4j = function (action, data) {
 /**
  *
  */
-openEssayist.prototype = {
-};
+// openEssayist.prototype = {
+// };
 
-openEssayist.showSRTool = function () {
+window.openEssayist.showSRTool = function () {
   var $ = window.jQuery;
+  var OES = window.openEssayist;
 
   $.pnotify.defaults.history = false;
 
@@ -65,7 +67,7 @@ openEssayist.showSRTool = function () {
     closer_hover: false,
     sticker_hover: false,
     sticker: false,
-    icon: 'icon-large  icon-comments',
+    icon: 'icon-large icon-comments',
     before_open: function (pnotify) {
       var $button = $(pnotify.closer);
 
@@ -81,18 +83,20 @@ openEssayist.showSRTool = function () {
       var location = null; // TODO: <<< ???
 
       $('#reflect1-yes').click(function () {
-        openEssayist.log4j('REPORT.USEFULNESS', { result: 1, url: $(location).attr('pathname') });
+        OES.log4j('REPORT.USEFULNESS', { result: 1, url: $(location).attr('pathname') });
         pnotify.pnotify_remove();
       });
 
       $('#reflect1-no').click(function () {
-        openEssayist.log4j('REPORT.USEFULNESS', { result: 0, url: $(location).attr('pathname') });
+        OES.log4j('REPORT.USEFULNESS', { result: 0, url: $(location).attr('pathname') });
         pnotify.pnotify_remove();
       });
     }
   };
 
-  if (this._selfreport) { this._selfreport.pnotify_remove(); }
+  if (this._selfreport) {
+    this._selfreport.pnotify_remove();
+  }
   this._selfreport = $.pnotify(optsQ1);
 };
 

@@ -1,5 +1,5 @@
 /*!
-  OpenEssayist javascript | © The Open University (IET).
+  OpenEssayist JS: help.modal | © The Open University (IET).
 */
 
 // From: 'site.twig'
@@ -70,16 +70,16 @@ window.jQuery(function ($) {
           },
           type: 'info',
           icon: 'icon-large icon-comments ',
+
           before_open: function (pnotify) {
             // $(pnotify.text_container).attr('aria-live', 'polite');
             // $(pnotify.text_container).attr('aria-relevant', 'all');
 
             $(pnotify.text_container).attr('role', 'alert');
 
-            $(pnotify.closer).attr('role', 'button');
-            $(pnotify.closer).attr('tabindex', '0');
-            $(pnotify.closer).attr('title', 'Close this hint');
-            $(pnotify.closer).addClass('btn btn-mini');
+            $(pnotify.closer).attr({
+              role: 'button', tabindex: 0, title: 'Close this hint'
+            }).addClass('btn btn-mini');
           },
 
           after_open: function (pnotify) {
