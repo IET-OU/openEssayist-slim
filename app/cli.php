@@ -53,7 +53,7 @@ if (oeApp::arg( '--create-tables' )) {
     $result = oeApp::createTables();
   }
   catch (\PDOException $ex) {
-    Clio::error('Database Error: ' . $ex->getMessage()); // Table exists ??
+    Clio::error('Database error. ' . $ex->getMessage()); // Table exists ??
     exit( 1 );
   }
   Clio::output("\n" . '>> OK. Tables created. Schema: ' . oeApp::SCHEMA_FILE);
@@ -71,18 +71,19 @@ if (oeApp::arg( '--seed-users' )) {
   $users = oeApp::config( 'users' );
   print_r( $users );
 
+  error_reporting( E_ALL & ~E_WARNING );
   $strong = new Strong\Strong([ 'provider' => 'PDO', 'pdo' => ORM::get_db(), ]);
   foreach ($users as $user) {
     try {
-      $result = oeApp::createUser( $user );
+      $res = oeApp::createUser( $user );
     }
     catch (\PDOException $ex) {
-      print_r($ex->getMessage());
+      Clio::error('Database error. ' .$ex->getMessage());
+      exit( 1 );
     }
     Clio::output('>> OK. User added, username: ', $user->username);
-    print_r( $u->get( 'username' ), $u->get( 'id' ) );
+    print_r($res->user->get( 'username' ), $res->user->get( 'id' ));
   }
-
   exit;
 }
 

@@ -74,11 +74,15 @@ class DBConnection extends \Application
     $u->group_id = 1; // $gid;
 
     // try {
-    return $u->save();
+    $result = $u->save();
     /* }
     catch (\PDOException $ex) {
       print_r($ex->getMessage());
     } */
+    return (object) [
+      'result' => $result,
+      'user' => $u,
+    ];
   }
 
   public static function hashPassword( $password )
