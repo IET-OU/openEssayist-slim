@@ -13,7 +13,7 @@ class EssayAnalyser extends \Application
   /**
    * @return object  Return an initialized 'result' object.
    */
-  public function initResult()
+  public static function initResult()
   {
     return (object) [
       'status' => 200,
@@ -36,7 +36,7 @@ class EssayAnalyser extends \Application
     $log = $this->app->getLog();
     $post = $req->post();
 
-    $result = $this->initResult();
+    $result = self::initResult();
 
     $url = $this->getAnalyserUrl('/api/analysis');
 

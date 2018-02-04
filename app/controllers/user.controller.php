@@ -7,6 +7,7 @@
 
 use Respect\Validation\Validator as v;
 use IET_OU\OpenEssayist\Utils\AnalysisUtils as Analysis;
+use IET_OU\OpenEssayist\Utils\EssayAnalyser;
 
 /**
  *
@@ -263,6 +264,8 @@ class UserController extends Controller
 		$req = $this->app->request();
 		$async = $this->app->config('openEssayist.async');
 
+		$result = EssayAnalyser::initResult();
+
 		self::_debug([ 'm' => __METHOD__, 'taskId' => $taskId, 'isPost' => $req->isPost(), 'async' => $async ]);
 
 		/* @var $d Draft */
@@ -287,7 +290,6 @@ class UserController extends Controller
 				$versionId = $formdata["version"] = $post["version"];
 
 				$analyser = new IET_OU\OpenEssayist\Utils\EssayAnalyser();
-				$result = $analyser->initResult();
 
 				try {
 					$result = $analyser->analyseAndSave( $taskId, $this->user[ 'id' ] );

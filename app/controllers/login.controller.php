@@ -53,13 +53,7 @@ class LoginController extends Controller {
 
 		self::_debug(__METHOD__);
 
-		if ( ! $req->isPost()) {
-			$redirect = ! $req->get( 'noredirect' );
-
-			if ($redirect && self::config('sams_redirect')) {
-				$this->redirect('samslogin');
-			}
-		}
+		$this->checkSamsLoginRedirect();
 
 		if ($req->isPost()) {
 			self::_debug([ __METHOD__, $this->post('username'), '****' ]);
@@ -139,6 +133,19 @@ class LoginController extends Controller {
 		$this->app->flash('info', 'Come back sometime soon');
 		$this->auth->logout(true);
 		$this->redirect('home');
+	}
+
+	protected function checkSamsLoginRedirect()
+	{
+		$req = $this->app->request();
+
+		if ( ! $req->isPost()) {
+			$redirect = ! $req->get( 'noredirect' );
+
+			if ($redirect && self::config('sams_redirect') && self::config('sams_enable')) {
+				$this->redirect('samslogin');
+			}
+		}
 	}
 
 	/** @route "samslogin"
