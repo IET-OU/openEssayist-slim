@@ -26,6 +26,7 @@ require_once __DIR__ . '/../utils/PDOAdmin.php';
 require_once __DIR__ . '/../utils/StrongAuthAdmin.php';
 require_once __DIR__ . '/../utils/TwigApp.php';
 require_once __DIR__ . '/../utils/UASparser.php';
+require_once __DIR__ . '/../utils/VersionedAsset.php';
 
 // Controllers.
 require_once __DIR__ . '/../controller.php';

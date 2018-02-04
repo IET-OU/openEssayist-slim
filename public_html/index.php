@@ -38,10 +38,11 @@ $app = new \Slim\Slim(array(
 ));
 
 
-// Twig Asset Management
+// Twig Asset Management.
 // Set custom Twig filters -- code moved to `app/utils/TwigApp.php`.
 
-IET_OU\OpenEssayist\Utils\TwigApp::setup( $app->view() ); // Was: $view = $app->view();
+$twigApp = new IET_OU\OpenEssayist\Utils\TwigApp( $app->view() );
+// Was: IET_OU\OpenEssayist\Utils\TwigApp::setup( $app->view() );
 
 
 // Create a hook to add the root URI to all views

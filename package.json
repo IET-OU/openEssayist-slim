@@ -1,9 +1,12 @@
 {
+  "#": "** CAREFUL! Used in ~ 'app/utils/VersionedAsset.php' **",
+
   "private": true,
   "name": "iet-ou-openessayist-slim",
   "description": "(See - 'composer.json') | © The Open University.",
   "license": "UNLICENSED",
   "repository": "https://github.com/IET-OU/openEssayist-slim",
+
   "peerDependencies": {
     "twitter-bootstrap": "2.3.2",
     "font-awesome": "3.2.1",
@@ -22,7 +25,7 @@
     "d3": "3.3.6",
     "highcharts": "3.0.5",
     "isotope-layout": "1.5.25",
-    "countable": "^3.0.0"
+    "countable": "3.0.0"
   },
   "devDependencies": {
     "semistandard": "^12.0.0"
