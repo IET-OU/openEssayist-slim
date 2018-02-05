@@ -65,7 +65,7 @@
         ],
         "test": [
           "parallel-lint --exclude vendor --exclude .cache .",
-          "# npm test"
+          "npm test"
         ]
     },
     "extra": {
