@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block injectCSS %}
-<link href="{{ app_base }}/assets/jquery.pnotify/jquery.pnotify.default.css" media="all" rel="stylesheet">
+<link href="{{ 'pnotify' | stylesheet }}" media="all" rel="stylesheet">
 <link href="{{ app_base }}/assets/openessayist/css/app.pnotify-modal-etc.css" rel="stylesheet">
 
 {# <style>
@@ -16,7 +16,7 @@
 {% block injectJS %}
 {# <script src="{{ app_base }}/assets/bootstrap-wysiwyg/jquery.hotkeys.js"></script>
 <script src="{{ app_base }}/assets/bootstrap-wysiwyg/bootstrap-wysiwyg.js"></script> #}
-<script src="{{ app_base }}/assets/jquery.pnotify/jquery.pnotify.js"></script>
+<script src="{{ 'pnotify' | javascript }}"></script>
 
 {% if helpontask is defined %}
 <script id="helpmodal-js-config"

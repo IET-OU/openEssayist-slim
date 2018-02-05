@@ -21,6 +21,9 @@ before_script:
   #- composer chown  # chown: invalid user: ‘nginx:nginx’
   - composer symlink-data
   - npm run symlink-js
+  - npm run build
+  - npm run min
+  - npm run hash-js
 
 script: composer test
 
@@ -28,6 +31,7 @@ after_script:
   - composer version.json
   - composer validate
   - ls -alh
+  - ls -alh public_html/assets/
   - git status
 
 # End.

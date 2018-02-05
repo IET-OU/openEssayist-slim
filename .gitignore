@@ -31,4 +31,11 @@ mysql-tools/
 auth.json
 .env
 
+app/utils/OpenEssayistAssets.php
+templates/asset-versions.twig
+
+app.js
+app.r*.js
+app.min.js
+
 # End.

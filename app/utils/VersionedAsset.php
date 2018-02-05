@@ -16,15 +16,22 @@ class VersionedAsset extends \Application {
   // Note, the key eg. 'font-awesome' matches a 'peerDependency' in 'package.json'.
   protected $styles = [
     'x-google-droid-sans' => 'https://fonts.googleapis.com/css?family=Droid+Sans:400,700',
-    'font-awesome' => 'https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css',
+    'font-awesome' => 'https://unpkg.com/font-awesome@{ver}/css/font-awesome.min.css',
     'twitter-bootstrap' => 'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
+    'bootstrap-modal' => 'https://cdn.rawgit.com/jschr/bootstrap-modal/{ver}/css/bootstrap-modal.css',
+    'pnotify' => '{assets}/jquery.pnotify/jquery.pnotify.default.css',
+    '_X_CDN_pnotify' => 'https://unpkg.com/pnotify@{ver}/dist/pnotify.css',
   ];
 
   protected $scripts = [
     'twitter-bootstrap' => 'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js',
-    'jquery' => 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',
-    'jquery-ui' => 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js',
-
+    'bootstrap-modal' => 'https://cdn.rawgit.com/jschr/bootstrap-modal/{ver}/js/bootstrap-modalmanager.js',
+    'pnotify' => '{assets}/jquery.pnotify/jquery.pnotify.js',
+    '_X_CDN_pnotify' => 'https://unpkg.com/pnotify@{ver}/dist/pnotify.js',
+    'jquery' => 'https://unpkg.com/jquery@{ver}/dist/jquery.min.js',
+    'jqueryui' => 'https://unpkg.com/jqueryui@{ver}/jquery-ui.min.js',
+    'jquery-dotdotdot' => '{assets}/dotdotdot-1.6.3/jquery.dotdotdot.min.js',
+    '_X_CDN_jquery-dotdotdot' => 'https://unpkg.com/jquery-dotdotdot@{ver}/src/jquery.dotdotdot.min.js',
     'jquery-blockui' => '{assets}/jquery-ui-1.9.2.custom/js/jquery.blockUI.js',
     'd3' => '{assets}/d3.js/d3.v3.min.js',
     'countable' => 'https://unpkg.com/countable@3.0.0/Countable.min.js',
@@ -32,7 +39,7 @@ class VersionedAsset extends \Application {
 
   protected static $depends = [];
 
-  public function __construct($load_package = false)
+  public function __construct($load_package = true)
   {
     parent::__construct();
 

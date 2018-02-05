@@ -12,6 +12,7 @@
     "authors": [
         { "name": "Nicolas Van Labeke (vanch3d)", "role": "Original developer", "homepage": "http://nvl.calques3d.org/" },
         { "name": "Richard Lovelock" },
+        { "name": "Nick Freear" },
         { "name": "LTI-LTT team / Institute of Educational Technology", "homepage": "https://iet.open.ac.uk/" }
     ],
     "prefer-stable": true,
@@ -60,10 +61,10 @@
         "mysql-lint": "PYTHONPATH=$PYTHONPATH:$(pwd)/mysql-tools/parser_lib; python mysql-tools/validate.py  FILE.sql",
         "npm-install": "npm i db-linter # Markdown generator.",
         "version.json": [
-          "(printf '{ \"v\": \"'; printf `git describe --long --dirty`; printf '\", \"t\": \"'; date | tr -d '\n'; printf '\" }') > public_html/version.json  # date -Is"
+          "(printf '{ \"v\": \"'; printf `git describe --long --dirty --always`; printf '\", \"t\": \"'; date | tr -d '\n'; printf '\" }') > public_html/version.json  # date -Is"
         ],
         "test": [
-          "parallel-lint --exclude vendor .",
+          "parallel-lint --exclude vendor --exclude .cache .",
           "npm test"
         ]
     },
