@@ -87,6 +87,7 @@ class EssayAnalyser extends \Application
       $this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
       $result->resp = $this->app->urlFor("me.draft.action", array("idt" => $taskId));
 
+      $counts = $post[ 'counts' ];
       self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $versionId, 'result' => $result, 'duration_sec' => $times->duration, 'counts' => $counts ]);
 
       $result->status = 200;
