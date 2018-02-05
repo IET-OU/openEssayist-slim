@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Word Cloud{% endblock %} 
-{% block subheader %}Your Draft : Word Cloud{% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Word Cloud{% endblock %}
+{% block subheader %}Your Draft : Word Cloud{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -17,45 +17,45 @@
 <div class="widget">
 			<div class="widget-header" data-toggle="collapse" data-target="#demo">
 				<h2>Key Words Cloud</h2>
-				
+
 			</div>
-			
+
 			<div class="widget-content" id='svg-container'></div>
 			</div>
-			
+
 <div class="widget hidden">
 			<div class="widget-header" data-toggle="collapse" data-target="#demo">
 				<h2> Display Options </h2>
-				
+
 			</div>
-			
+
 			<div class="widget-content" id='svg-angles'>
-			
-			
+
+
 			<input type="number" id="angle-count" value="5" min="1"> <label for="angle-count">orientations</label>
     <label for="angle-from">from</label> <input type="number" id="angle-from" value="-60" min="-90" max="90"> °●@
     <label for="angle-to">to</label> <input type="number" id="angle-to" value="60" min="-90" max="90"> °
 			</div>
 			</div>
-						
+
 </div></div>
 
 {% endblock %}
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.js"></script>
+<script src="{{ 'd3' | javascript }}"></script>
 <script src="{{ app_base }}/assets/d3.js/d3.layout.cloud.js"></script>
-<script type="text/javascript">
+
+<script id="cloud-js-view">
+
 var fill = d3.scale.category20();
 
-
-
 var words = {{ keywords|json_encode|raw  }};
-	
+
 d3.layout.cloud().size([800, 600])
     .words(words.map(function(d) {
-        
+
       return {text: d.ngram.join(" "), count: d.count, size: 10 + d.count};
     }))
     .rotate(function() { return 0; })
@@ -77,7 +77,7 @@ d3.layout.cloud().size([800, 600])
 	//svg.append("desc").text("Word cloud of the key words and key phrases");
 	svg.append("title")
 	 	.text("Word cloud of the key words and key phrases");
-	 
+
 	svg.style("margin", "auto auto")
 		.style("display", "block")
 		.attr("width", "800")
@@ -206,7 +206,7 @@ d3.layout.cloud().size([800, 600])
 	          .on("dragend", generate));
 	    drag.attr("transform", function(d) { return "rotate(" + (d + 90) + ")translate(-" + r + ")"; });
 
-	    
+
 	    d3.select("#angle-count").property("value", count);
 	    d3.select("#angle-from").property("value", from);
 	    d3.select("#angle-to").property("value", to);

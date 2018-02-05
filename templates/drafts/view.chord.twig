@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Visualisation (Adjacency Chord){% endblock %} 
-{% block subheader %}Draft - Visualisation (Adjacency Chord){% endblock %} 
+{% block title %}Draft - Visualisation (Adjacency Chord){% endblock %}
+{% block subheader %}Draft - Visualisation (Adjacency Chord){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -30,33 +30,33 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
-<script src="{{ app_base }}/assets/d3.js/d3.v3.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
+<script src="{{ 'jquery-blockui' | javascript }}"></script>
+<script src="{{ 'd3' | javascript }}"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
 
-<script type="text/javascript">
+<script id="chord-js-view">
 $(document).ready(function(){
 
 	var sections = [
 	        		'????',
-	        		'#+s:c#', 
-	        		'#+s:d_i#', 
-	        		'#+s:d#', 
-	        		'#+s:s#', 
-	        		'#+s:i#', 
-	        		'#-s:t#', 
-	        		'#+s:p#', 
-	        		'#-s:h#', 
-	        		'#-s:n#', 
-	        		'#-s:q#',  
+	        		'#+s:c#',
+	        		'#+s:d_i#',
+	        		'#+s:d#',
+	        		'#+s:s#',
+	        		'#+s:i#',
+	        		'#-s:t#',
+	        		'#+s:p#',
+	        		'#-s:h#',
+	        		'#-s:n#',
+	        		'#-s:q#',
 	        		'#-s:p#',
-	        		'xxxxx'					
-	        		];	
+	        		'xxxxx'
+	        		];
 
 	// From http://mkweb.bcgsc.ca/circos/guide/tables/
 	var matrix = [];
 
-	//$.blockUI({ message: '<div class="ajax alert alert-info"><img src="/assets/openessayist/img/ajax-loader.gif" /> loading and display data ...</div>' }); 
+	//$.blockUI({ message: '<div class="ajax alert alert-info"><img src="/assets/openessayist/img/ajax-loader.gif" /> loading and display data ...</div>' });
 	var xhr = d3.json("{{ urlFor('ajax.graph.json',{"draft":draft.id,"graph":"graphse"}) }}")
 		.on("progress", function() { console.log("progress", d3.event.loaded); })
 	    .on("error", function(error) { console.log("failure!", error);$.unblockUI(); })
@@ -80,9 +80,9 @@ $(document).ready(function(){
 			var categories = {{ category|json_encode|raw  }};
 			var sentences = {{ sentence|json_encode|raw  }};
 			var rank =  {{ rank|json_encode|raw  }};
-			
+
 			var c = d3.scale.ordinal().domain(sections).range(colorbrewer.Paired[11]);
-					
+
 			// Compute index per node.
 			nodes.forEach(function(node, i) {
 				node.group = categories[node.id];
@@ -94,7 +94,7 @@ $(document).ready(function(){
 				matrix[i] = d3.range(n).map(function(j) { return 0; });
 			});
 
-				
+
 			//Convert links to matrix; count character occurrences.
 			links.forEach(function(link) {
 				//console.log(link);
@@ -102,14 +102,11 @@ $(document).ready(function(){
 				matrix[link.target][link.source] += link.weight;
 			});
 
-			
-	     	
-		
+
 		var chord = d3.layout.chord()
 	    .padding(.05)
 	    .sortSubgroups(d3.descending)
 	    .matrix(matrix);
-
 
 
 	var width = 960,
@@ -144,7 +141,7 @@ $(document).ready(function(){
 	  .enter().append("g").selectAll("g")
 	    .data(groupTicks)
 	  .enter().append("g")
-	  		
+
 	    .attr("transform", function(d) {
 	      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
 	          + "translate(" + outerRadius + ",0)";
@@ -161,7 +158,7 @@ $(document).ready(function(){
 	    .attr("x", 8)
 	    .attr("dy", ".35em")
 	    .attr("width", "100px")
-	    
+
 	    .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
 	    .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
 	    .text(function(d) { return d.label; });
@@ -185,7 +182,7 @@ $(document).ready(function(){
 	    };
 	  });
 	}
-	
+
 
 	// Returns an event handler for fading a given chord group.
 	function fade(opacity) {
@@ -196,11 +193,11 @@ $(document).ready(function(){
 	        .style("opacity", opacity);
 	  };
 	}
-	
+
 	function axisPopover(d,i)
 	{
 		$(this).popover({
-			title:"Sentence" , 
+			title:"Sentence" ,
 		    container:"body",
 		    trigger: 'click',
 		    html : true,
@@ -215,20 +212,19 @@ $(document).ready(function(){
 			    else if (d.startAngle> Math.PI/4)
 			    	return "right";
 			    else return "top";
-		    	
+
 			},
-	    
-		    content: function() 
-		    	{ 	
+
+		    content: function()
+		    	{
 	    			var rank = (nodes[i].rank==-1)? "" : "<span class='badge badge-info'>"+(nodes[i].rank+1)+"</span>";
 	    			var tag  = "<span class='badge'>"+nodes[i].group+"</span>";
-					return sentences[nodes[i].id] + "<p>"+tag + rank+"</p>";} , 
+					return sentences[nodes[i].id] + "<p>"+tag + rank+"</p>";} ,
 			});
-	}
-		
+		}
+
 	};
 
-	
 });
 </script>
 {% endblock %}

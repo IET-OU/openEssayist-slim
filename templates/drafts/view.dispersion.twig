@@ -92,15 +92,16 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
 <script src="{{ app_base }}/assets/highcharts/js/highcharts.js"></script>
 <script src="{{ app_base }}/assets/highcharts/js/modules/exporting.js"></script>
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.dataTableExt.js"></script>
 
 <script src="{{ app_base }}/assets/openessayist/js/openessayist.viewdispersion.js"></script>
 
 <script id="viewDispersion-js-config">
+
 openEssayist.viewDispersion_data = {
 
 	'$series': {{ series|json_encode|raw }},

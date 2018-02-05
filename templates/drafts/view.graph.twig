@@ -1,10 +1,10 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Sentence Network (D3.js){% endblock %} 
-{% block subheader %}Draft - Sentence Network (D3.js){% endblock %} 
+{% block title %}Draft - Sentence Network (D3.js){% endblock %}
+{% block subheader %}Draft - Sentence Network (D3.js){% endblock %}
 
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -16,7 +16,7 @@
 <div class="widget">
 			<div class="widget-header" data-toggle="collapse" data-target="#demo">
 				<h2>Graph</h2>
-		
+
 			</div>
 			<div class="widget-content" id='svg-container' style="height: 600px;"></div>
 			</div>
@@ -26,14 +26,15 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
-<script type="text/javascript">
-$(document).ready(function()
-{
+<script src="{{ 'd3' | javascript }}"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
+
+<script id="graph-js-view">
+
+$(document).ready(function () {
 	// load graph JSON data
 	var url = "{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}";
-	d3.json(url,setupGraph);
+	d3.json(url, setupGraph);
 });
 
 function setupGraph(err, data)
@@ -43,11 +44,11 @@ function setupGraph(err, data)
 
 	w = $('#svg-container').width();
 	h = $('#svg-container').height();
-	
+
 	data.nodes.forEach(function(d, i) {
         d.key = i;
         d.x= Math.random() * w;
-        d.y= Math.random() * h; 
+        d.y= Math.random() * h;
     });
 
 
@@ -62,9 +63,9 @@ function setupGraph(err, data)
   		    //.domain([0,n])
 			//.range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]);
 			.interpolate(d3.interpolateHcl);
-    
 
- 
+
+
     var force = d3.layout.force()
         .nodes(nodes)
         .links(links)
@@ -78,9 +79,9 @@ function setupGraph(err, data)
         ;
 
 
-        
-    
-    
+
+
+
     var svg = d3.select("#svg-container").append("svg:svg")
     .attr({
         "width": "100%",
@@ -92,7 +93,7 @@ function setupGraph(err, data)
     	//.call(d3.behavior.zoom().on("zoom", redraw))
     	;
 
-  
+
 
 
 var path = svg.append("svg:g").selectAll("path")
@@ -102,7 +103,7 @@ var path = svg.append("svg:g").selectAll("path")
       .style("stroke-opacity", function(d) { return 0.1; })
       .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
 
-   
+
 var circle = svg.append("svg:g").selectAll("circle")
     .data(force.nodes())
   .enter().append("svg:circle")

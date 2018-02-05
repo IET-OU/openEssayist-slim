@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Sentence Network (Voronoi D3.js){% endblock %} 
-{% block subheader %}Draft - Sentence Network (Voronoi D3.js){% endblock %} 
+{% block title %}Draft - Sentence Network (Voronoi D3.js){% endblock %}
+{% block subheader %}Draft - Sentence Network (Voronoi D3.js){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -15,7 +15,7 @@
 <div class="widget">
 			<div class="widget-header" data-toggle="collapse" data-target="#demo">
 				<h2>Graph</h2>
-		
+
 			</div>
 			<div class="widget-content" id='svg-container'></div>
 			</div>
@@ -25,19 +25,19 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
-<script type="text/javascript">
+<script src="{{ 'd3' | javascript }}"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
+
+<script id="voronoi-js-view">
 
 var width = 960,
 height = 500;
-	
-d3.json('{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}', function(err, data) {
 
+d3.json('{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}', function(err, data) {
 
     data.nodes.forEach(function(d, i) {
       //  d.id = i;
-      	
+
     });
 
 	function name(d) { return d.name; }
@@ -101,7 +101,7 @@ d3.json('{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}', 
 	        .attr('d', function(d) { return 'M'+d.join(',')+'Z'; });
 	});
 
-	
+
 
 
 	    link = svg.selectAll('.link')
@@ -131,9 +131,9 @@ d3.json('{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}', 
 	        .links( data.links )
 	        .start();
 
-	    
-	
-    
+
+
+
 });
 
 

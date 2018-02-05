@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Visualisation (CytoScape){% endblock %} 
-{% block subheader %}Draft - Visualisation (CytoScape){% endblock %} 
+{% block title %}Draft - Visualisation (CytoScape){% endblock %}
+{% block subheader %}Draft - Visualisation (CytoScape){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -30,10 +30,11 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
+<script src="{{ 'd3' | javascript }}"></script>
 <script src="{{ app_base }}/assets/cytoscape.js-2.0.1/cytoscape.min.js"></script>
 <script src="{{ app_base }}/assets/cytoscape.js-2.0.1/arbor.js"></script>
-<script type="text/javascript">
+
+<script id="cytoscape-js-view">
 
 $(document).ready(function()
 {
@@ -55,12 +56,12 @@ function setupGraph(data)
     //.range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]);
     .interpolate(d3.interpolateHcl);
 	console.log(color(0));
-	
+
 	//console.log(data.nodes);
 	$.each( data.nodes, function( key, val ) {
         dnodes.push(
-                { data: { id: String(val.id), 
-                    	  name: String(val.id), 
+                { data: { id: String(val.id),
+                    	  name: String(val.id),
                     	  rank:0,
                     	  favColor: color(key)
                     	}
@@ -69,11 +70,11 @@ function setupGraph(data)
 	$.each( data.links, function( key, val ) {
         dlinks.push(
 			{ data: {
-				source: String(data.nodes[val.source].id), 
-				target: String(data.nodes[val.target].id) 
+				source: String(data.nodes[val.source].id),
+				target: String(data.nodes[val.target].id)
 			}});
 	});
-	
+
 	$('#svg-container').cytoscape({
 		  style: cytoscape.stylesheet()
 		    .selector("node")
@@ -81,10 +82,10 @@ function setupGraph(data)
 		        'content': 'data(name)' ,
 		        'text-valign': 'center',
 		        'color': 'white',
-		        
+
 		        'background-color' : 'data(favColor)' ,
 		      })
-		      
+
 		     /*.selector("node[rank != '-1']")
 		      .css({
 		        'content': 'data(name)' ,
@@ -93,7 +94,7 @@ function setupGraph(data)
 		        'background-color': 'red',
 		        'text-outline-width': 2,
 		        'text-outline-color': '#888'
-		      })*/ 
+		      })*/
 		    .selector('edge')
 		      .css({
 		        /*'target-arrow-shape': 'triangle'*/
@@ -121,7 +122,7 @@ function setupGraph(data)
 
 				name: 'arbor',
 			    liveUpdate: true, // whether to show the layout as it's running
-			    ready: undefined, // callback on layoutready 
+			    ready: undefined, // callback on layoutready
 			    stop: undefined, // callback on layoutstop
 			    maxSimulationTime: 6000, // max length in ms to run the layout
 			    fit: true, // fit to viewport
@@ -138,7 +139,7 @@ function setupGraph(data)
 
 			    // static numbers or functions that dynamically return what these
 			    // values should be for each element
-			    nodeMass: undefined, 
+			    nodeMass: undefined,
 			    edgeLength: undefined,
 
 			    stepSize: 1, // size of timestep in simulation
@@ -146,12 +147,12 @@ function setupGraph(data)
 			    // function that returns true if the system is stable to indicate
 			    // that the layout can be stopped
 			    stableEnergy: function( energy ){
-			        var e = energy; 
+			        var e = energy;
 			        return (e.max <= 0.5) || (e.mean <= 0.3);
 			    }
 			},
 		  elements: {
-		    nodes: dnodes 
+		    nodes: dnodes
 			    /*[
 				{% for node in graph.nodes %}
 	            { data: { id: "{{ node.id }}", name: "{{ node.id }}", rank:{{ node.rank?:-1 }}} },
@@ -163,31 +164,31 @@ function setupGraph(data)
 		        {% endfor %}
 		    ]*/
 		  },
-		  
+
 		  ready: function(){
 		    window.cy = this;
-		    
+
 		    // giddy up...
-		    
+
 		    cy.elements().unselectify();
-		    
+
 		    cy.on('tap', 'node', function(e){
-		      var node = e.cyTarget; 
+		      var node = e.cyTarget;
 		      var neighborhood = node.neighborhood().add(node);
-		      
+
 		      cy.elements().addClass('faded');
 		      neighborhood.removeClass('faded');
 		    });
-		    
+
 		    cy.on('tap', function(e){
 		      if( e.cyTarget === cy ){
 		        cy.elements().removeClass('faded');
 		      }
 		    });
 		  }
-		});	
+		});
 }
-	
+
 
 
 
@@ -200,7 +201,7 @@ function setupGraph(data)
 
 #graph-container {
   height: 600px;
-  
+
 }
 
 #svg-container {

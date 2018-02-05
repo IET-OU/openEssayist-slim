@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Sentence Network (VivaGraph){% endblock %} 
-{% block subheader %}Draft - Sentence Network (VivaGraph){% endblock %} 
+{% block title %}Draft - Sentence Network (VivaGraph){% endblock %}
+{% block subheader %}Draft - Sentence Network (VivaGraph){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -22,7 +22,7 @@
 			<div class="widget-content" id='mynetwork'>
 				<div  id='graphConainer'></div>
 
-   			 
+
    			 </div>
 			<p id="selection"></p>
 			</div>
@@ -32,16 +32,18 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
+<script src="{{ 'd3' | javascript }}"></script>
 <script src="{{ app_base }}/assets/vivagraph.js/vivagraph.js"></script>
-<script type="text/javascript">
+
+<script id="vivagraph-js-view">
+
 $(document).ready(function(){
 	var graph = Viva.Graph.graph();
-   
-	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}", 
+
+	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}",
 			function( data ) {
 		//console.log(data.nodes);
-		
+
 		var n = data.nodes.length;
 		var color = d3.scale.linear()
 	    .domain([0,n/2,n])
@@ -50,7 +52,7 @@ $(document).ready(function(){
 	    //.range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]);
 	    .interpolate(d3.interpolateHcl);
 		//console.log(color(0));
-		
+
 		$.each( data.nodes, function( key, val ) {
 			val.key = key;
 			graph.addNode(val.id,val);
@@ -58,7 +60,7 @@ $(document).ready(function(){
 		$.each( data.links, function( key, val ) {
 			graph.addLink(data.nodes[val.source].id,data.nodes[val.target].id);
 		});
-		
+
 		var layout = Viva.Graph.Layout.forceDirected(graph, {
 			 springLength : 235,
              springCoeff : 0.00055,
@@ -93,7 +95,7 @@ $(document).ready(function(){
 		var renderer = Viva.Graph.View.renderer(graph,{
 				container : document.getElementById('graphConainer'),
 				graphics : svgGraphics,
-				layout : layout, 
+				layout : layout,
 				prerender: 0,
 				renderLinks : true,
 		});
@@ -113,9 +115,9 @@ $(document).ready(function(){
 				isRunning = true;
 			}
 		});
-		
+
 	});
-	
+
 });
 </script>
 {% endblock %}
@@ -124,7 +126,7 @@ $(document).ready(function(){
 	{{ parent() }}
 <style type="text/css">
 #graphConainer {
-               
+
                 width: 100%;
                 height: 600px;
             }
@@ -155,6 +157,6 @@ $(document).ready(function(){
         width: 100%;
         height: 100%;
     }
-	
+
 </style>
 {% endblock %}

@@ -32,7 +32,10 @@
     "d3": "3.3.6",
     "highcharts": "3.0.5",
     "isotope-layout": "1.5.25",
-    "countable": "3.0.0"
+    "datatables": "1.9.4",
+    "x-exhibit-api": "3.0.0",
+    "countable": "3.0.0",
+    "log4javascript": "https://sourceforge.net/projects/log4javascript/#1.4.6"
   },
   "devDependencies": {
     "semistandard": "^12.0.0",

@@ -1,8 +1,8 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Visualisation (Exhibit){% endblock %} 
+{% block title %}Draft - Visualisation (Exhibit){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -25,28 +25,28 @@
 
 		<div class="widget-content" >
 			<div data-ex-role="facet" data-ex-expressions=".contains.text"
-				data-ex-facet-class="TextSearch" 
-				data-ex-query-param-name="srch"></div>	
-				
+				data-ex-facet-class="TextSearch"
+				data-ex-query-param-name="srch"></div>
+
 			{#<div data-ex-role="facet" id="facet-search" data-ex-facet-class="TextSearch" data-ex-expressions=".contains.keyword"></div>
 			<div data-ex-role="facet" id="facet-type" data-ex-expression=".type" data-ex-scroll="false" data-ex-facet-label="Discipline"></div>#}
 			{#<div data-ex-role="facet" data-ex-expression=".contains" data-ex-facet-label="Discipline"></div>
 			<div data-ex-role="facet" data-ex-expression=".contains.tag" data-ex-facet-label="Discipline"></div>#}
 			<div data-ex-role="facet" id="facet-keyword1"
-								
+
 								 data-ex-expression=".contains.keyword"
-								 data-ex-facet-label="Keywords (1)" 
-								 data-ex-sort-mode="count" 
-								 data-ex-sort-direction="forward" 
+								 data-ex-facet-label="Keywords (1)"
+								 data-ex-sort-mode="count"
+								 data-ex-sort-direction="forward"
 								 data-ex-show-missing="false"></div>
-			<div data-ex-role="facet" id="facet-keyword2" 
-								
+			<div data-ex-role="facet" id="facet-keyword2"
+
 								data-ex-expression=".contains.keyword"
-								 data-ex-facet-label="Keywords (2)" 
-								 data-ex-sort-mode="count" 
-								 data-ex-sort-direction="forward" 
+								 data-ex-facet-label="Keywords (2)"
+								 data-ex-sort-mode="count"
+								 data-ex-sort-direction="forward"
 								 data-ex-show-missing="false"></div>
-					 			
+
 		</div>
 	</div>
 
@@ -74,12 +74,12 @@
 			<div class="btn-toolbar">
 			</div>
 			<div data-ex-role="exhibit-controlPanel"></div>
-			</div>    
-	
+			</div>
+
 		<div class="widget-content" >
-		
-		
-		
+
+
+
 				<div data-ex-role="coder" data-ex-coder-class="Color" id="party-colors" style="display: none">
                         <span data-ex-color="#B2DF8A">#+s#</span>
 						<span data-ex-color="#CAB2D6">#-s:h#</span>
@@ -87,41 +87,41 @@
 						<span data-ex-color="#E31A1C">#+s:i#</span>
 				        <span data-ex-color="#1F78B4">#+s:c#</span>
 				</div>
-                    
+
 		 <div data-ex-role="viewPanel" >
-        
-            <div data-ex-role="view" 
+
+            <div data-ex-role="view"
             	 data-ex-item-types="paragraph"
             	data-ex-orders=".id"
             	data-ex-possible-orders=".id,.label"
                 data-ex-label="Text"
                 data-ex-view-class="Thumbnail"
                 data-ex-show-all="true">
-                
+
 			<div data-ex-role="exhibit-lens" class="par-wrapper" data-ex-onshow="test(this)" style="display: none;" data-ex-item-types="paragraph">
-				<div data-ex-data-tag-content=".tag" class="par-tag"></div>	
+				<div data-ex-data-tag-content=".tag" class="par-tag"></div>
 				<div data-ex-content=".contains" class="par-container">
 						<span data-ex-content=".text"></span></div>
 				</div>
 
-				
+
 			<div  data-ex-label="Details" data-ex-role="exhibit-lens" class="pddr-lens" style="display: none;" data-ex-item-types="sentence">
 				<div>XXX</div>
 			</div>
-                   
-                        
-		              
+
+
+
             </div>
-           
-            
-            <div data-ex-role="view"  
+
+
+            <div data-ex-role="view"
                 data-ex-label="Details"
                 data-ex-view-class="Tile"
                 data-ex-show-all="true">
             </div>
-            
-             
-            <div  data-ex-role="view"  
+
+
+            <div  data-ex-role="view"
                 data-ex-view-class="Timeline"
                 data-ex-start=".start"
                 data-ex-end=".end"
@@ -130,17 +130,17 @@
                 data-ex-timeline-constructor="timelineConstructor"
                 data-ex-bubble-Width="150"
                 data-ex-ubble-Height="150">
-              
+
             </div>
-            
-            
+
+
         </div>
-		
-		
+
+
 		</div>
 		</div>
-		
-		
+
+
 			<div class="widget">
 		<div class="widget-header">
 			<h2> Key Words </h2>
@@ -158,41 +158,42 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="//api.simile-widgets.org/exhibit/3.0.0/exhibit-api.js"></script>
+<script src="{{ 'x-exhibit-api' | javascript }}"></script>
 <script src="{{ app_base }}/assets/highlight.js/highlight.pack.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
-<script type="text/javascript">
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
+
+<script id="exhibit-js-view">
 var sections =  {
-		'#-s:t#': 'Title', 
-		'#+s:s#': 'Summary', 
-		'#+s:d#': 'Discussion', 
-		'#+s:d_i#':'Discussion', 
-		'#+s:i#': 'Introduction', 
-		'#+s:c#': 'Conclusion', 
-		'#-s:q#': 'Assignment',  
-		'#+s:p#': 'Preface', 
-		'#-s:h#': 'Heading', 
-		'#-s:n#': 'Numerics', 
-		'#-s:p#': 'Punctuation'					
+		'#-s:t#': 'Title',
+		'#+s:s#': 'Summary',
+		'#+s:d#': 'Discussion',
+		'#+s:d_i#':'Discussion',
+		'#+s:i#': 'Introduction',
+		'#+s:c#': 'Conclusion',
+		'#-s:q#': 'Assignment',
+		'#+s:p#': 'Preface',
+		'#-s:h#': 'Heading',
+		'#-s:n#': 'Numerics',
+		'#-s:p#': 'Punctuation'
 		};
-          		
+
 
 sections =  {
 	'????':'',
-	'#+s:c#': 'Conclusion', 
-	'#+s:d_i#':'Discussion', 
-	'#+s:d#': 'Discussion', 
-	'#+s:s#': 'Summary', 
-	'#+s:i#': 'Introduction', 
-	'#-s:t#': 'Title', 
-	'#+s:p#': 'Preface', 
-	'#-s:h#': 'Heading', 
-	'#-s:n#': 'Numerics', 
-	'#-s:q#': 'Assignment',  
-	'#-s:p#': 'Punctuation'					
-	};	
+	'#+s:c#': 'Conclusion',
+	'#+s:d_i#':'Discussion',
+	'#+s:d#': 'Discussion',
+	'#+s:s#': 'Summary',
+	'#+s:i#': 'Introduction',
+	'#-s:t#': 'Title',
+	'#+s:p#': 'Preface',
+	'#-s:h#': 'Heading',
+	'#-s:n#': 'Numerics',
+	'#-s:q#': 'Assignment',
+	'#-s:p#': 'Punctuation'
+	};
 
-	
+
 function test(elmt)
 {
 	$('#debug').empty();
@@ -223,14 +224,14 @@ function test(elmt)
 			var forms = database.getObjects(obj, "forms").toArray();
 
 			$('#debug').append('<p>'+forms.join(" ")+'</p>');
-					
+
 			formatters.push({
 				className: "ngram group0",
-				beginWithKeyword: true, 
+				beginWithKeyword: true,
 				keywords: forms.join(" "),
 				relevance: 0
 			});
-		
+
 		});
 
 		$.each(tt1,function(idx,obj){
@@ -238,50 +239,46 @@ function test(elmt)
 			var forms = database.getObjects(obj, "forms").toArray();
 
 			$('#debug').append('<p>'+forms.join(" ")+'</p>');
-					
+
 			formatters.push({
 				className: "ngram group1",
-				beginWithKeyword: true, 
+				beginWithKeyword: true,
 				keywords: forms.join(" "),
 				relevance: 0
 			});
-		
+
 		});
-		
+
 		$.each(tt2,function(idx,obj){
 			var forms = database.getObjects(obj, "forms").toArray();
 			$('#debug').append('<p>'+forms.join(" ")+'</p>');
 			formatters.push({
 				className: "ngram group2",
-				beginWithKeyword: true, 
+				beginWithKeyword: true,
 				keywords: forms.join(" "),
 				relevance: 0
 			});
-		
+
 		});
-		
-		
+
+
 		// return the "language" definition
 		return {
 			case_insensitive: true,
 			contains: formatters
 		};
-		
+
 	}(hljs);
 
 
 	$(elmt).find('.par-container').each(function(i, e) {
 		hljs.highlightBlock(e);
 	});
-	
+
 }
 
 
-
-
-
-	function timelineConstructor(timelineDiv, eventSource) {   
-
+	function timelineConstructor(timelineDiv, eventSource) {
 
 		var oldLabelInterval = Timeline.GregorianDateLabeller.prototype.labelInterval;
 
@@ -294,7 +291,7 @@ function test(elmt)
 		   return oldLabelInterval.call(this, date, intervalUnit);
 		}
 		 };
-		
+
 		Exhibit.jQuery(timelineDiv)
          	.css("height", this.timelineHeight + "px")
          	.attr("class", "exhibit-timelineView-timeline");
@@ -304,18 +301,18 @@ function test(elmt)
      	//theme.event.bubble.height = this.getUIContext().getSetting("bubbleHeight");
      theme.event.track.height = 40; // this sets the height for a track
      theme.event.track.gap = 10; // this sets the spacing between tracks
-     theme.event.tape.height = 32; // this sets how thick a duration  
+     theme.event.tape.height = 32; // this sets how thick a duration
      theme.event.track.offset = 20;
 
         //var date_begin = new Date(1999, 0, 1);
         var bandInfos = [
             Timeline.createBandInfo({
-                width:          "15%", 
+                width:          "15%",
                 intervalUnit: Exhibit.DateTime.DECADE,
                 date:		"0001-01-01",
                 intervalPixels: 40,
                 eventSource:    eventSource,
-	        	overview:       true,   
+	        	overview:       true,
                 theme:          theme
             }),
             Timeline.createBandInfo({
@@ -350,7 +347,7 @@ function test(elmt)
 	 	    endLabel  : "C-term",
 	  	    color     : "#000000",
 		    opacity   : 100,
-		    theme     : theme }) 
+		    theme     : theme })
 	        ];
 	}*/
         tl = Timeline.create(timelineDiv, bandInfos, Timeline.HORIZONTAL);
@@ -361,12 +358,8 @@ function test(elmt)
     }
 
 
-	
-	
 $(document).ready(function(){
 
-
-	
 });
 </script>
 {% endblock %}
@@ -402,7 +395,7 @@ $(document).ready(function(){
 
 
 .par-wrapper
-{	
+{
 	/*display: table-row;*/
 	border-bottom: 2px solid white;
     border-top: 2px solid white;
@@ -415,7 +408,7 @@ $(document).ready(function(){
     border-right: 8px solid white;
         text-align: center;
     vertical-align: bottom;
-   
+
 }
 
 .timeline-event-label
@@ -433,9 +426,9 @@ $(document).ready(function(){
 div.exhibit-text-facet input {
   display: block;
   width: 100%;
-  min-height: 28px;      
-  
-  
+  min-height: 28px;
+
+
   .box-sizing(border-box);
   box-sizing:border-box;
 	-moz-box-sizing:border-box; /* Firefox */

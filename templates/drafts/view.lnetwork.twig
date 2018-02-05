@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Sentence Network (links.Network){% endblock %} 
-{% block subheader %}Draft - Sentence Network (links.Network){% endblock %} 
+{% block title %}Draft - Sentence Network (links.Network){% endblock %}
+{% block subheader %}Draft - Sentence Network (links.Network){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -20,9 +20,9 @@
 				<h2>Sentence Graph</h2>
 			</div>
 			<div class="widget-content" id='mynetwork'>
-		
 
-   			 
+
+
    			 </div>
 			<p id="selection"></p>
 			</div>
@@ -32,9 +32,10 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
+<script src="{{ 'd3' | javascript }}"></script>
 <script src="{{ app_base }}/assets/links.timeline/network.js"></script>
-<script type="text/javascript">
+
+<script id="lnetwork-js-view">
 
 links.Network.NodeNVL = links.Network.Node.prototype;
 
@@ -103,13 +104,13 @@ links.Network.Link.prototype._line = function (ctx) {
 };
 
 links.Network.Node.prototype = links.Network.NodeNVL;
-	
+
 $(document).ready(function(){
 	var nodesTable = null;
 	var linksTable = null;
 	var network = null;
 
-	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}", 
+	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}",
 		function( data ) {
   			nodesTable = [];
   			linksTable = [];
@@ -121,7 +122,7 @@ $(document).ready(function(){
 	  		    //.domain([0,n])
   			    //.range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]);
   			    .interpolate(d3.interpolateHcl);
-  	  			
+
   			$.each( data.nodes, function( key, val ) {
   				nodesTable.push({
   		      		'id': val.id ,
@@ -132,7 +133,7 @@ $(document).ready(function(){
   			});
   			$.each( data.links, function( key, val ) {
   				linksTable.push({
-  		            'from': data.nodes[val.source].id, 
+  		            'from': data.nodes[val.source].id,
   		            'to': data.nodes[val.target].id
   		          });
   			});
@@ -151,15 +152,15 @@ $(document).ready(function(){
   			  // Instantiate our graph object.
   			  network = new links.Network(document.getElementById('mynetwork'));
 
-  			  // Draw our graph with the created data and options 
+  			  // Draw our graph with the created data and options
   			  network.draw(nodesTable, linksTable, options);
-  			  
+
   			  // Add event listeners
   			  links.events.addListener(network, 'select', function(params) {
-  			    document.getElementById('selection').innerHTML = 
+  			    document.getElementById('selection').innerHTML =
   			      'Selection: ' + JSON.stringify(network.getSelection());
   			  });
-	});	
+	});
 
 
 });
@@ -170,7 +171,7 @@ $(document).ready(function(){
 	{{ parent() }}
 <style type="text/css">
 
-	
-	
+
+
 </style>
 {% endblock %}

@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Draft - Sentence Network (SigmaJS){% endblock %} 
-{% block subheader %}Draft - Sentence Network (SigmaJS){% endblock %} 
+{% block title %}Draft - Sentence Network (SigmaJS){% endblock %}
+{% block subheader %}Draft - Sentence Network (SigmaJS){% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -20,9 +20,9 @@
 				<h2>Sentence Graph</h2>
 			</div>
 			<div class="widget-content sigma-parent" id='mynetwork'>
-		
+
 				<div class="sigma-expand" id="sigma-example"></div>
-   			 
+
    			 </div>
 			<p id="selection"></p>
 			</div>
@@ -32,15 +32,15 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
-	
+<script src="{{ 'd3' | javascript }}"></script>
+
 <script src="{{ app_base }}/assets/sigma.js/sigma.min.js"></script>
 <script src="{{ app_base }}/assets/sigma.js/plugins/sigma.forceatlas2.js"></script>
-<script type="text/javascript">
 
-$(document).ready(function(){
+<script id="sigma-js-view">
 
-	
+$(document).ready(function () {
+
 	// Instanciate sigma.js and customize rendering :
 	var sigInst = sigma.init(document.getElementById('sigma-example'))
 		.drawingProperties({
@@ -59,7 +59,7 @@ $(document).ready(function(){
 		    maxRatio: 5
 	});
 
-	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}", 
+	$.getJSON("{{ urlFor('ajax.graph.json',{'draft':draft.id,'graph':'graphse'}) }}",
 		function( data ) {
 			var n = data.nodes.length;
 		var color = d3.scale.linear()
@@ -69,8 +69,8 @@ $(document).ready(function(){
 	    //.range(["hsl(62,100%,90%)", "hsl(228,30%,20%)"]);
 	    .interpolate(d3.interpolateHcl);
 		console.log(color(0));
-			
-		
+
+
 		//console.log(data.nodes);
 		$.each( data.nodes, function( key, val ) {
 			console.log(key);
@@ -89,7 +89,7 @@ $(document).ready(function(){
 						color: "grey",
 					});
 		});
-		
+
 		//sigInst.draw();
 		sigInst.startForceAtlas2();
 		var isRunning = true;
@@ -108,7 +108,7 @@ $(document).ready(function(){
 		});
 	});
 
-		
+
 });
 </script>
 {% endblock %}
@@ -137,6 +137,6 @@ $(document).ready(function(){
     padding-bottom: 8px;
     padding-top: 12px;
   }
-	
+
 </style>
 {% endblock %}

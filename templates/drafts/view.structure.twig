@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Word Count{% endblock %} 
-{% block subheader %}Your Draft : Word Count{% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Word Count{% endblock %}
+{% block subheader %}Your Draft : Word Count{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="widget-content" style="padding: 0px;">
 		<div id="struct_pie" style="height: 500px;margin: 0 auto"></div>
 	</div>
@@ -47,7 +47,7 @@
 			<th>Structure</th>
 			<th>Word count</th>
 			<th>Share</th>
-		</tr>	
+		</tr>
 	</thead>
 	<tbody>
 		{% set sumratings = 0 %}
@@ -80,7 +80,7 @@
 
 {% block injectCSS %}
 	{{ parent() }}
-	
+
 	<style>
 	button .legendcolor
 {
@@ -106,24 +106,24 @@ table.table thead .sorting_asc:after { font-family: FontAwesome; content: "   ÔÉ
 table.table thead .sorting_desc:after { font-family: FontAwesome; content: "   ÔÉù";}
 
 table.table thead .sorting_asc_disabled {  }
-table.table thead .sorting_desc_disabled { }	
-	
+table.table thead .sorting_desc_disabled { }
+
 	</style>
 
 {% endblock %}
-	
+
 {% block injectJS %}
 	{{ parent() }}
 <script src="{{ app_base }}/assets/highcharts/js/highcharts.js"></script>
 <script src="{{ app_base }}/assets/highcharts/js/modules/exporting.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.dataTableExt.js"></script>
-<script type="text/javascript">
 
+<script id="structure-js-view">
 
-	
 $(document).ready(function() {
+
 	$('#data-table').dataTable( {
 		"bPaginate": false,
         "bLengthChange": false,
@@ -138,7 +138,7 @@ $(document).ready(function() {
 		]
 	} );
 	$('#data-table tbody').removeAttr("role").removeAttr("aria-live").removeAttr("aria-relevant");
-	
+
 	// Create a RGBa color from a HEX string
 	function hexToRgba(hex,opacity) {
 	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -148,24 +148,24 @@ $(document).ready(function() {
 	        g= parseInt(result[2], 16);
 	        b= parseInt(result[3], 16);
 	        return "rgba("+r+","+g+","+b+",.5)";
-	    } 
+	    }
 	    else return hex;
 	}
 
 	// Map color index to the ColorBrewer set
 	function getColor(obj)
-	{	
+	{
 		idx = obj['color'];
 		clr = hexToRgba(colorbrewer.Paired[11][idx],.5);
 		obj['color'] = clr;
 		return obj;
 	}
 
-	// Apply the color mapping to both series 
+	// Apply the color mapping to both series
 	var breakdown = {{ breakdown|json_encode|raw }};
-	breakdown = breakdown.map(getColor);  
+	breakdown = breakdown.map(getColor);
 
-	// General HighCharts configuration 
+	// General HighCharts configuration
 	var hcOptions = {
 			credits:{enabled:false},
 		    title:{text:'Breakdown of word count per structure parts'},
@@ -175,7 +175,7 @@ $(document).ready(function() {
 	            sourceHeight: 825,
 	        },
 		    chart: {
-		    	backgroundColor: "#fbfbf8",			    
+		    	backgroundColor: "#fbfbf8",
 				plotBackgroundColor: null,
 		        plotBorderWidth: null,
 		        plotShadow: false
@@ -193,10 +193,10 @@ $(document).ready(function() {
              followTouchMove: true,
              hideDelay: 100,
 			formatter: function () {
-                 return this.point.name + ": <b>" + this.point.y +"</b> words (out of "+ this.total +")<br>" +  
+                 return this.point.name + ": <b>" + this.point.y +"</b> words (out of "+ this.total +")<br>" +
                  this.series.name + ': <b>' + Highcharts.numberFormat(this.percentage, 1) + '%</b>';
              }
-    	   
+
         },
         plotOptions: {
             pie: {
@@ -217,7 +217,7 @@ $(document).ready(function() {
             type: 'pie',
             name: 'Structure share',
             data: breakdown
-        	
+
         }]
     }));
 
@@ -246,12 +246,11 @@ $(document).ready(function() {
 			            series.setVisible(false);
 			        } else {
 			            series.setVisible(true);
-			            
+
 			        }
 				})
 		);
 	});
-    
 
 });
 </script>
