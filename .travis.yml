@@ -28,6 +28,7 @@ before_script:
 script: composer test
 
 after_script:
+  - npm test
   - composer version.json
   - composer validate
   - ls -alh

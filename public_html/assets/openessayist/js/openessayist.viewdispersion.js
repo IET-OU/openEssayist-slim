@@ -31,12 +31,10 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
     });
 };
 
-window.jQuery(function ($) {
+(function (W, $, openEssayist) {
 // $(document).ready(function() {
   var chart = null;
   var chartOptions = null;
-
-  var DISP = window.openEssayist.viewDispersion;
 
   var Highcharts = window.Highcharts;
   var colorbrewer = window.colorbrewer;
@@ -110,6 +108,8 @@ window.jQuery(function ($) {
     return 'rgba(' + g.join() + ')';
   }
 
+  W._OE_getColor = getColor; // NDF:
+
   function getColor (tag) {
     var idx = $.inArray(tag, Object.keys(sections));
 
@@ -122,6 +122,7 @@ window.jQuery(function ($) {
   var tt = getColor('#+s:i#');
   // var myCats = DISP.myCats; // {{ categories|json_encode|raw }}; // NDF:
 
+  openEssayist._VD_initialize = function (DISP) {
   chartOptions = {
     credits: {
       enabled: false
@@ -302,7 +303,11 @@ window.jQuery(function ($) {
         }) // click ()
     ); // append()
   });
-});
+
+};
+
+// });
+})(window, window.jQuery, window.openEssayist);
 
 // </script>
 // {% endblock %}

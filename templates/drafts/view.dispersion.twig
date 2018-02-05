@@ -98,9 +98,10 @@
 <script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.dataTableExt.js"></script>
 
+<script src="{{ app_base }}/assets/openessayist/js/openessayist.viewdispersion.js"></script>
 
 <script id="viewDispersion-js-config">
-openEssayist.viewDispersion = {
+openEssayist.viewDispersion_data = {
 
 	'$series': {{ series|json_encode|raw }},
 
@@ -111,20 +112,21 @@ openEssayist.viewDispersion = {
 			{
 				from: {{ band.from }},
 				to: {{ band.to }},
-				color: getColor('{{ band.tag }}'),
-				 thickness: '5%'
+				color: _OE_getColor('{{ band.tag }}'),
+				thickness: '5%'
 			},
 		{% endfor %}
 	],
 
-  tickPositions: {{ ticks|json_encode|raw }},
+	tickPositions: {{ ticks|json_encode|raw }},
 
 	formatterGg: {{ tags|json_encode|raw }}
 };
 </script>
 
-<script src="{{ app_base }}/assets/openessayist/js/openessayist.viewdispersion.js"></script>
-
+<script>
+	openEssayist._VD_initialize( openEssayist.viewDispersion_data );
+</script>
 
 {# <script type="text/javascript">
 /*
