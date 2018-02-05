@@ -93,7 +93,7 @@ class EssayAnalyser extends \Application
       $draftId = $result->db_result->draft_id;
       self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $versionId, 'result' => $result, 'duration_sec' => $times->duration, 'counts' => $counts ]);
 
-      $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Saved', $username, 'ip', $req->getPath, json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]) ));
+      $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Saved', $username, 'ip', $req->getPath(), json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]) ));
 
       $result->status = 200;
       $result->redirect = true;
@@ -110,7 +110,7 @@ class EssayAnalyser extends \Application
       self::_debug([ __METHOD__, 'error', 500.1, $ret ]);
 
       // $log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_CREATE', $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
-      $log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Analyser', $username, 'ip', $req->getPath, json_encode( $ret ) ));
+      $log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Analyser', $username, 'ip', $req->getPath(), json_encode( $ret ) ));
     }
 
     return $result;

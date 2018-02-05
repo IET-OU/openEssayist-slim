@@ -303,7 +303,7 @@ class UserController extends Controller
 
 					self::_debug([ __METHOD__, 'Requests except', 500.2, $e->getMessage() ]);
 
-					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Requests', $username, 'ip', $req->getPath, $e->getMessage() ));
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Requests', $username, 'ip', $req->getPath(), $e->getMessage() ));
 				}
 				catch (\PDOException $e)
 				{
@@ -312,7 +312,7 @@ class UserController extends Controller
 
 					self::_debug([ __METHOD__, 'PDO except', 500.3, $e->getMessage() ]);
 
-					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.PDO', $username, 'ip', $req->getPath, $e->getMessage() ));
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.PDO', $username, 'ip', $req->getPath(), $e->getMessage() ));
 				}
 				catch (\Exception $ex)
 				{
@@ -321,7 +321,7 @@ class UserController extends Controller
 
 					self::_debug([ __METHOD__, 'except', 500.4, $ex->getMessage(), get_class( $ex ) ]);
 
-					$log->error(sprintf( '%s | [%s @ %s] | %s | %s | %s', 'ANALYSER.Unknown', $username, 'ip', $req->getPath, $ex->getMessage(), get_class( $ex ) ));
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s | %s', 'ANALYSER.Unknown', $username, 'ip', $req->getPath(), $ex->getMessage(), get_class( $ex ) ));
 
 					// X-app-03: [ "UserController::submitDraft", "except", 500.4, "", "Slim\\Exception\\Stop" ]
 				}
