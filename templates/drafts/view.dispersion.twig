@@ -130,26 +130,15 @@ openEssayist.viewDispersion_data = {
 
 {# <script type="text/javascript">
 /*
- * TO DO: DataTable internal function _fnBindAction needs to be changed to that one
- * 	for better accessibility (keep focus on clicked header, intercept keydown rather than keypress)
+ * TO DO: DataTable internal function _fnBindAction needs to be changed to that ...
  */
-$.fn.DataTable._fnBindAction = function( n, oData, fn )
-{
-	$(n)
-		.bind( 'click.DT', oData, function (e) {
-				//NVL: DO NOT REMOVE FOCUS
-				//n.blur(); // Remove focus outline for mouse users
-				fn(e);
-			} )
-
+$.fn.DataTable._fnBindAction = function( n, oData, fn ) {
 			// ...
 };
 
 $(document).ready(function() {
 	var chart = null;
 	var chartOptions = null;
-
-	var $series = {{ series|json_encode|raw }};  // NDF:
 
 	// ...
 </script> #}

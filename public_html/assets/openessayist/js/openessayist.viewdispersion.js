@@ -4,7 +4,7 @@
 
 // From: 'templates/drafts/view.dispersion.twig'
 
-// <script type="text/javascript">
+// <script>
 /*
  * TO DO: DataTable internal function _fnBindAction needs to be changed to that one
  *   for better accessibility (keep focus on clicked header, intercept keydown rather than keypress)
@@ -36,10 +36,10 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
   var chart = null;
   var chartOptions = null;
 
-  var Highcharts = window.Highcharts;
-  var colorbrewer = window.colorbrewer;
+  var Highcharts = W.Highcharts;
+  var colorbrewer = W.colorbrewer;
 
-  // var $series = DISP.$series; // {{ series|json_encode|raw }}; // NDF:
+  // var $series = DISP.$series; // {{ series|json_encode|raw }};
 
   $('#data-table').dataTable({
     bPaginate: false,
@@ -57,6 +57,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
   $('.btn-setting').click(function () {
     var data = $(this).data('option-value');
     var zoomtype = chartOptions.chart.zoomType;
+
     if (data === zoomtype) {
       return;
     }
@@ -108,7 +109,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
     return 'rgba(' + g.join() + ')';
   }
 
-  W._OE_getColor = getColor; // NDF:
+  W._OE_getColor = getColor;
 
   function getColor (tag) {
     var idx = $.inArray(tag, Object.keys(sections));
@@ -120,9 +121,12 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
   }
 
   // var tt = getColor('#+s:i#');
-  // var myCats = DISP.myCats; // {{ categories|json_encode|raw }}; // NDF:
+  // var myCats = DISP.myCats; // {{ categories|json_encode|raw }};
 
-  openEssayist._VD_initialize = function (DISP) {
+  /**
+   * Main entry function to create chart.
+   */
+  openEssayist._VD_initialize = function (DISP, elementId) {
     chartOptions = {
       credits: {
         enabled: false
@@ -141,7 +145,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
       },
       chart: {
         backgroundColor: null,
-        renderTo: 'container',
+        renderTo: elementId || 'container', // HTML element ID.
         type: 'scatter',
         zoomType: 'x',
         reflow: true,
@@ -161,11 +165,11 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
         hideDelay: 100,
 
         formatter: function () {
-          return '<b>' + DISP.myCats[this.point.y] + '</b><br>' + this.series.name;
+          return '<b>' + DISP.myCats[ this.point.y ] + '</b><br>' + this.series.name;
         }
       },
-      xAxis: [
-        { // master axis
+      xAxis: [ // master axis
+        {
           min: 0,
           title: {
             enabled: false,
@@ -178,7 +182,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
           startOnTick: false,
           endOnTick: false,
           showLastLabel: true,
-          plotBands: DISP.plotBands // NDF:
+          plotBands: DISP.plotBands
           /* plotBands: [
             {% for key,band in structure %}
               {
@@ -198,13 +202,13 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
                  enabled: false,
                    text: 'Essay Structure'
              },
-             // tickPositions: {{ ticks|json_encode|raw }}, // NDF:
+             // tickPositions: {{ ticks|json_encode|raw }},
              labels: {
                enabled: false,
                 staggerLines: 1,
                 rotation: -90,
                formatter: function () {
-                 var gg = DISP.formatterGg; // {{ tags|json_encode|raw }} // NDF:
+                 var gg = DISP.formatterGg; // {{ tags|json_encode|raw }}
                  return gg[this.value];},
                },
            } */
@@ -216,13 +220,12 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
           text: null
         },
         min: 0,
-
         startOnTick: true,
         endOnTick: true,
         tickInterval: 1,
         minorTickInterval: 1,
         type: 'category',
-        categories: DISP.myCats // myCats, // NDF:
+        categories: DISP.myCats
       },
       plotOptions: {
         series: {
@@ -248,7 +251,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
           }
         }
       },
-      series: DISP.$series // NDF:
+      series: DISP.$series
     };
 
     chart = new Highcharts.Chart(chartOptions);
@@ -286,15 +289,14 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
           'data-tag': item.tag,
           'class': 'btn active'
         })
-          .attr('role', 'checkbox')
-          .attr('aria-checked', 'true')
+          .attr({ role: 'checkbox', 'aria-checked': 'true' })
           .prepend($('<div/>')
             .addClass('legendcolor')
             .attr('aria-hidden', 'true')
             .css('background-color', item.color)
           ).click(function () {
             var chart = $('#container').highcharts();
-            var series = chart.series[index];
+            var series = chart.series[ index ];
 
             $(this).attr('aria-checked', !series.visible);
 
@@ -303,7 +305,7 @@ window.$.fn.DataTable._fnBindAction = function (n, oData, fn) {
             } else {
               series.show();
             }
-          }) // click ()
+          }) // click()
       ); // append()
     });
   };
