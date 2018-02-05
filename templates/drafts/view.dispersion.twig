@@ -1,10 +1,10 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Keywords Dispersion{% endblock %} 
-{% block subheader %}Your Draft : Key Words Dispersion{% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Keywords Dispersion{% endblock %}
+{% block subheader %}Your Draft : Key Words Dispersion{% endblock %}
 
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -20,7 +20,7 @@
 	<div class="widget-header" data-toggle="collapse" data-target="#demo">
 		<h2>Key Words Dispersion</h2>
 	</div>
-	
+
 	<div class="widget-toolbar">
 		<div class="btn-toolbar" id="options" role="toolbar" aria-controls="container">
 			<div class="btn-group option-set"  data-toggle="buttons-radio" data-option-key="sortBy">
@@ -34,11 +34,11 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div class="widget-content" style="padding: 0px;">
 		<div id="container" style="height: 600px;margin: 0 auto">
-			
+
 		</div>
 	</div>
 </div>
@@ -52,7 +52,7 @@
 		<h2>Word Count (Data Table)</h2>
 	</div>
 	<div class="widget-content">
-	
+
 	<table id="data-table" class="table table-striped  table-hover table-condensed">
 	<thead>
 		<tr>
@@ -62,8 +62,8 @@
 			{% for i in 0..9 %}
 			<th>{{ (i+1)*10 }}%</th>
 			{% endfor %}
-			
-		</tr>	
+
+		</tr>
 	</thead>
 	<tbody>
 		{% for item in table %}
@@ -76,7 +76,7 @@
 				{% set tot = tot + item.data[i] %}
 			<td>{{ item.data[i]?:'' }}</td>
 			{% endfor %}
-			
+
 		</tr>
 		{% endfor %}
 	</tbody>
@@ -142,7 +142,7 @@ $(document).ready(function() {
 		]
 	} );
 	$('#data-table tbody').removeAttr("role").removeAttr("aria-live").removeAttr("aria-relevant");
-	
+
 
 	$('.btn-setting').click(function(){
 		var data = $(this).data('option-value');
@@ -159,30 +159,30 @@ $(document).ready(function() {
 
 	sections =  {
 			'????':'',
-			'#+s:c#': 'Conclusion', 
-			'#+s:d_i#':'Discussion', 
-			'#+s:d#': 'Discussion', 
-			'#+s:s#': 'Summary', 
-			'#+s:i#': 'Introduction', 
-			'#-s:t#': 'Title', 
-			'#+s:p#': 'Preface', 
-			'#-s:h#': 'Heading', 
-			'#-s:n#': 'Numerics', 
-			'#-s:q#': 'Assignment',  
-			'#-s:p#': 'Punctuation'					
+			'#+s:c#': 'Conclusion',
+			'#+s:d_i#':'Discussion',
+			'#+s:d#': 'Discussion',
+			'#+s:s#': 'Summary',
+			'#+s:i#': 'Introduction',
+			'#-s:t#': 'Title',
+			'#+s:p#': 'Preface',
+			'#-s:h#': 'Heading',
+			'#-s:n#': 'Numerics',
+			'#-s:q#': 'Assignment',
+			'#-s:p#': 'Punctuation'
 			};
-	
-	
+
+
 	$('#resizer').resizable({
 		ghost: false,
 		animate: false,
-	    // On resize, set the chart size to that of the 
+	    // On resize, set the chart size to that of the
 	    // resizer minus padding. If your chart has a lot of data or other
-	    // content, the redrawing might be slow. In that case, we recommend 
+	    // content, the redrawing might be slow. In that case, we recommend
 	    // that you use the 'stop' event instead of 'resize'.
 	    resize: function() {
 	        if (chart) chart.setSize(
-	            this.offsetWidth - 20, 
+	            this.offsetWidth - 20,
 	            this.offsetHeight - 20,
 	            false
 	        );
@@ -190,18 +190,18 @@ $(document).ready(function() {
 	});
 
 	function hex2rgba(x,a) {
-		  var r=x.replace('#','').match(/../g),g=[],i;
+		  var r = x && x.replace('#','').match(/../g), g = [], i;
 		  for(i in r){g.push(parseInt(r[i],16));}g.push(a);
 		  return 'rgba('+g.join()+')';
 		}
-	
+
 	function getColor(tag)
 	{
 		var idx = $.inArray(tag,Object.keys(sections));
 		idx = (idx==-1)?2:idx;
 		var clr = colorbrewer.Paired[11][idx];
 		var clr2 = hex2rgba(clr,'0.2');
-		return clr2;				
+		return clr2;
 	}
 
 	var tt = getColor('#+s:i#');
@@ -223,7 +223,7 @@ $(document).ready(function() {
             sourceHeight: 825,
         },
 		chart: {
-	    	backgroundColor: null,			    
+	    	backgroundColor: null,
 			renderTo: 'container',
 			type: 'scatter',
 			zoomType: 'x',
@@ -242,14 +242,14 @@ $(document).ready(function() {
             followPointer: true,
             followTouchMove: true,
             hideDelay: 100,
-			
+
 			formatter: function() {
 				return "<b>" +  myCats[this.point.y] + "</b><br>" + this.series.name;
 	                }
 	    },
 	    xAxis: [{ // master axis
 			min: 0,
-			
+
 	    	title: {
 		    	enabled: false,
 		        text: 'word count'
@@ -272,7 +272,7 @@ $(document).ready(function() {
 				{% endfor %}
 				]
 		}/*,{	// slave axis
-			linkedTo:0 ,			
+			linkedTo:0 ,
 			minRange: 50,
 			opposite: false,
 	    	title: {
@@ -285,7 +285,7 @@ $(document).ready(function() {
 				 staggerLines: 1,
 				 rotation: -90,
 				formatter: function() {
-					var gg = {{ tags|json_encode|raw }} 
+					var gg = {{ tags|json_encode|raw }}
 					return gg[this.value];},
 				},
 		}*/],
@@ -295,15 +295,15 @@ $(document).ready(function() {
 				text: null
 			},
 			min:0,
-			
+
 			startOnTick: true,
 			endOnTick: true,
 			tickInterval: 1,
 			minorTickInterval: 1,
 			type: 'category',
 			categories:  myCats,
-			
-			
+
+
 		},
 		plotOptions: {
 			series: {
@@ -330,34 +330,34 @@ $(document).ready(function() {
 			}
 		},
 		series: $series
-			
+
 	};
 
 	chart = new Highcharts.Chart(chartOptions);
 
 	//$(".highcharts-container svg")
 	//	.prepend("<title>xxxx</title>");
-	
+
 	/*$('.highcharts-legend')
 		.attr("role","navigation")
 		.attr("aria-label","Legend")
 		.attr("aria-controls","container");
-	
+
 	$('.highcharts-legend-item').each(function()
 		{
 			var cnt = $(this).find("span").html();
 			//if (!cnt) return;
-			
+
 			$(this).attr("role","checkbox")
 					.attr("title",'Show or hide key words from '+cnt)
 					.attr("tabindex","0")
 					.click(function() {
 						$(this).focus();
 						});
-					
-		
+
+
 		});*/
-		
+
 	$.each($series,function(index,item){
 		var that = item;
 		$('#legend_bullet').append(
@@ -379,7 +379,7 @@ $(document).ready(function() {
 					var chart = $('#container').highcharts();
 					var series = chart.series[index];
 					$(this).attr("aria-checked",!series.visible);
-					
+
 			        if (series.visible) {
 			            series.hide();
 			        } else {
@@ -388,7 +388,7 @@ $(document).ready(function() {
 				})
 		);
 	});
-	
+
 });
 
 </script>
@@ -397,7 +397,7 @@ $(document).ready(function() {
 {% block injectCSS %}
 	{{ parent() }}
 <style type="text/css">
-			
+
 button .legendcolor
 {
     background-color: white;
@@ -422,7 +422,7 @@ table.table thead .sorting_asc:after { font-family: FontAwesome; content: "   ÔÉ
 table.table thead .sorting_desc:after { font-family: FontAwesome; content: "   ÔÉù";}
 
 table.table thead .sorting_asc_disabled {  }
-table.table thead .sorting_desc_disabled { }	
-	
+table.table thead .sorting_desc_disabled { }
+
 </style>
 {% endblock %}
