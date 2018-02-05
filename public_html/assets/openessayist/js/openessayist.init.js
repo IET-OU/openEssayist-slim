@@ -2,6 +2,8 @@
   OpenEssayist JS: init | © The Open University (IET).
 */
 
+var openEssayist = window.openEssayist || {};
+
 // eslint-disable-next-line
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),  // eslint-disable-line
@@ -14,16 +16,13 @@
 // $(document).ready(function() {
 
 window.jQuery(function ($) {
-  // var openEssayist = window.openEssayist;
   var L = window.location;
   var ga = window.ga;
 
   // Set the URL for the AJAX-based activity logging.
-  // Was: openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
-  var CFG = $('#openessayist-js-config').data();
-  // openEssayist.config = $('script[ data-openessayist ]').data();
-  // var CFG = openEssayist.config;
-  window.openEssayist.config = CFG;
+  var CFG = $('#openessayist-js-config').data(); // Was: openEssayist.LOG_URL = "{{ urlFor('ajax.log.activity') }}";
+
+  openEssayist.config = CFG;
 
   console.warn('openEssayist config:', CFG);
 

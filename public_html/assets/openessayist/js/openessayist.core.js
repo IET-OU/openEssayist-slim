@@ -2,19 +2,16 @@
   OpenEssayist JS: core | © The Open University (IET).
 */
 
-/* var openEssayist = function () {
-  this._selfreport = null;
-};
-openEssayist.LOG_URL = null; */
+var openEssayist = window.openEssayist || {};
 
 /**
  *
  * @param msg
  * @returns {myClass.doSomething}
  */
-window.openEssayist.log4j = function (action, data) {
+openEssayist.log4j = function (action, data) {
   var $ = window.jQuery;
-  var CFG = window.openEssayist.config;
+  var CFG = openEssayist.config;
 
   console.warn('log4j:', action, data);
 
@@ -43,11 +40,9 @@ window.openEssayist.log4j = function (action, data) {
   });
 };
 
-/**
- *
+/** Self-reflective (SR) tool.
  */
-// openEssayist.prototype = {
-// };
+// openEssayist.prototype = {};
 
 window.openEssayist.showSRTool = function () {
   var $ = window.jQuery;
