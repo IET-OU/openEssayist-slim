@@ -27,10 +27,10 @@ class EssayAnalyser extends \Application
    * Call the analyse service, and save the analysis to the database.
    *
    * @param int $taskId
-   * @param int $userId
+   * @param object $user
    * @return object  A 'result' object.
    */
-  public function analyseAndSave( $taskId, $userId )
+  public function analyseAndSave( $taskId, $user )
   {
     $req = $this->app->request();
     $log = $this->app->getLog();
@@ -41,6 +41,8 @@ class EssayAnalyser extends \Application
     $url = $this->getAnalyserUrl('/api/analysis');
 
     $versionId = $post[ 'version' ];
+    $counts = $post[ 'counts' ];
+    $username = $user->username;
 
     $post_data = [
         'text' 				=> $post["text"],
@@ -48,7 +50,7 @@ class EssayAnalyser extends \Application
         'task' 				=> $post["task"],    // 'task' = 'task.code' = 'TMA01'.
         'task_id' 		=> $taskId,
         'version_id' 	=> $versionId,
-        'user_id' 		=> $userId, // Was: $this->user['id'],
+        'user_id' 		=> $user->id, // Was: $this->user['id'],
         'rd_save_path'=> $this->getSavePath(),
     ];
 
@@ -80,15 +82,18 @@ class EssayAnalyser extends \Application
 
       /* @var $draft Draft */
 
-      $result->db_result = $this->saveDraft( $taskId, $userId, $post, $times, $json );
+      $result->db_result = $this->saveDraft( $taskId, $user->id, $post, $times, $json );
       // Was: $result = $draft->save();
 
       // redirect to the "drafts review" page
       $this->app->flash('info', 'The analysis of your draft was successful. Check the details below.');
       $result->resp = $this->app->urlFor("me.draft.action", array("idt" => $taskId));
 
-      $counts = $post[ 'counts' ];
+
+      $draftId = $result->db_result->draft_id;
       self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $versionId, 'result' => $result, 'duration_sec' => $times->duration, 'counts' => $counts ]);
+
+      $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Saved', $username, 'ip', $req->getPath, json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]) ));
 
       $result->status = 200;
       $result->redirect = true;
@@ -103,6 +108,9 @@ class EssayAnalyser extends \Application
       $this->app->flashNow("error", "Sorry. Problem with the analyser. Make sure you text is not empty. If it continues, please contact the admin.");
 
       self::_debug([ __METHOD__, 'error', 500.1, $ret ]);
+
+      // $log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_CREATE', $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
+      $log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Analyser', $username, 'ip', $req->getPath, json_encode( $ret ) ));
     }
 
     return $result;
@@ -138,6 +146,9 @@ class EssayAnalyser extends \Application
 
     $db_result = $draft->save();
 
-    return $db_result;
+    return (object) [
+      'result' => $db_result,
+      'draft_id' => $draft->get( 'id' ),
+    ];
   }
 }

@@ -262,6 +262,7 @@ class UserController extends Controller
 		set_time_limit( 5 * 60 ); // Default: 30 seconds.
 
 		$req = $this->app->request();
+		$log = $this->app->getLog();
 		$async = $this->app->config('openEssayist.async');
 
 		$result = EssayAnalyser::initResult();
@@ -288,11 +289,14 @@ class UserController extends Controller
 				// Was: $formdata["state"] = $post["state"];
 				$formdata["name"] = $post["name"];
 				$versionId = $formdata["version"] = $post["version"];
+				$username = $this->user[ 'username' ];
+
+				$logData = json_encode([ 'user' => $usr[ 'id' ], 'task' => $taskId, ]);
 
 				$analyser = new IET_OU\OpenEssayist\Utils\EssayAnalyser();
 
 				try {
-					$result = $analyser->analyseAndSave( $taskId, $this->user[ 'id' ] );
+					$result = $analyser->analyseAndSave( $taskId, (object) $this->user);
 				}
 				catch (\Requests_Exception $e)
 				{
@@ -300,6 +304,8 @@ class UserController extends Controller
 					$this->app->flashNow("error", "Sorry. Cannot connect to the analyser. Try again later.");
 
 					self::_debug([ __METHOD__, 'Requests except', 500.2, $e->getMessage() ]);
+
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Requests', $username, 'ip', $req->getPath, $e->getMessage() ));
 				}
 				catch (\PDOException $e)
 				{
@@ -307,6 +313,8 @@ class UserController extends Controller
 					$this->app->flashNow("error", "Sorry. Problem with the database. Try again later.");
 
 					self::_debug([ __METHOD__, 'PDO except', 500.3, $e->getMessage() ]);
+
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.PDO', $username, 'ip', $req->getPath, $e->getMessage() ));
 				}
 				catch (\Exception $ex)
 				{
@@ -314,6 +322,8 @@ class UserController extends Controller
 					$this->app->flashNow("error", "Sorry, we have a problem. Try again later.");
 
 					self::_debug([ __METHOD__, 'except', 500.4, $ex->getMessage(), get_class( $ex ) ]);
+
+					$log->error(sprintf( '%s | [%s @ %s] | %s | %s | %s', 'ANALYSER.Unknown', $username, 'ip', $req->getPath, $ex->getMessage(), get_class( $ex ) ));
 
 					// X-app-03: [ "UserController::submitDraft", "except", 500.4, "", "Slim\\Exception\\Stop" ]
 				}
