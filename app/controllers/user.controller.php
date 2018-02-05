@@ -291,8 +291,6 @@ class UserController extends Controller
 				$versionId = $formdata["version"] = $post["version"];
 				$username = $this->user[ 'username' ];
 
-				$logData = json_encode([ 'user' => $usr[ 'id' ], 'task' => $taskId, ]);
-
 				$analyser = new IET_OU\OpenEssayist\Utils\EssayAnalyser();
 
 				try {
