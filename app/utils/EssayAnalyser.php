@@ -118,7 +118,7 @@ class EssayAnalyser extends \Application
   protected function saveDraft( $taskId, $userId, $post, $times, $analysisJson )
   {
     /* @var $draft Draft */
-    $draft = Model::factory('Draft')->create();
+    $draft = \Model::factory('Draft')->create();
     $draft->type = 0;
     $draft->analysis = $analysisJson;  // Was: $json;
     $draft->task_id = $taskId;
