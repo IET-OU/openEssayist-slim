@@ -39,9 +39,14 @@ require_once __DIR__ . '/../controllers/tutor.controller.php';
 require_once __DIR__ . '/../controllers/group.controller.php';
 require_once __DIR__ . '/../controllers/uptime.controller.php';
 
-// Models (X 7) - multiple models per file :(!
-require_once __DIR__ . '/../models/users.model.php';
+// Models (X 7).
 require_once __DIR__ . '/../models/draft.model.php';
+require_once __DIR__ . '/../models/Feedback.php';
+require_once __DIR__ . '/../models/Group.php';
+require_once __DIR__ . '/../models/KWCategory.php';
+require_once __DIR__ . '/../models/Note.php';
+require_once __DIR__ . '/../models/Task.php';
+require_once __DIR__ . '/../models/users.model.php';
 
 // System's constants
 define('APPLICATION', 'openEssayist');
