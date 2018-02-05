@@ -4,6 +4,7 @@
   "private": true,
   "name": "iet-ou-openessayist-slim",
   "description": "(See - 'composer.json') | © The Open University.",
+  "version": "3.0.0-dev",
   "license": "UNLICENSED",
   "repository": "https://github.com/IET-OU/openEssayist-slim",
 
@@ -12,8 +13,8 @@
     "font-awesome": "3.2.1",
     "bootstrap-modal": "2.2.6",
     "x-bootstrap-modal": "git+https://github.com/jschr/bootstrap-modal.git#2.1.0",
-    "jquery": "1.12.4",
-    "v2--jquery": "2.2.4",
+    "v1--jquery": "1.12.4",
+    "jquery": "2.2.4",
     "v3--jquery": "3.3.1",
     "jqueryui": "1.11.1",
     "jquery-dotdotdot": "1.6.3",
@@ -46,7 +47,7 @@
     "min": "uglifyjs openessayist-js/*core.js openessayist-js/*init.js openessayist-js/*ajax.js --comments /^!/ -o public_html/assets/app.min.js",
     "#- ug": "uglifyjs pub*/as*/openes*/*/*core.js pub*/as*/openes*/*/*init.js -b --comments /^!/ -o public_html/assets/app.js",
     "# ug": "uglifyjs public_html/assets/openessayist/js/openessayist.core.js",
-    "hash-js": "cd public_html/assets; ln -s app.js app.r$(git describe --always).js",
+    "hash-js": "cd public_html/assets; ln -s app.js app.r$(git rev-parse --short HEAD).js",
     "test": "semistandard public_html/assets/openessayist/js/open*.js",
     "fix": "semistandard --fix"
   }

@@ -24,7 +24,7 @@ window.jQuery(function ($) {
 
   openEssayist.config = CFG;
 
-  console.warn('openEssayist config:', CFG);
+  console.warn('openEssayist config:', CFG, $.fn.jquery);
 
   ga('create', CFG.google_analytics, 'auto');
 
