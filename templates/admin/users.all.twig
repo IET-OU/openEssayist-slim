@@ -1,6 +1,6 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Admin / Users {% endblock %} 
+{% block title %}Admin / Users {% endblock %}
 
 {% block content %}
 <div class="row-fluid">
@@ -9,12 +9,12 @@
 		<div class="widget-header">
 		<h3>User Action</h3>
 		</div>
-		<div class="widget-content"> 
-		
-		
-		
+		<div class="widget-content">
+
+
+
 				<form id="batchuser">
-					
+
 				<fieldset>
          			<legend>Add batch of users</legend>
          			 <p>
@@ -28,44 +28,44 @@
           			<p>
             			<label>Count</label>
 			            <input type="number" min="1" max="50" step="1" name="count" id="count" value="20">
-          			</p>       			
+          			</p>
           			<p>
             			<label>Username seed</label>
 			            <input type="text" name="pattern" id="pattern" value="">
           			</p>
           			</fieldset>
           			<p>
-          			
+
           			</p>
 				</form>
 				<button class="btn" id="generate-users">Generate</button>
-				
+
 		</div>
-		<div class="widget-content"> 				
+		<div class="widget-content">
 				<table id="generate-output" style="width: 100%">
 				</table>
-				
-			</div> 
+
+			</div>
 	</div>
-	
+
 	<div class="widget">
 		<div class="widget-header">
 		<h3>Group Action</h3>
 		</div>
-		<div class="widget-content"> 
+		<div class="widget-content">
 				<p> </p>
-			</div> 
+			</div>
 	</div>
 	</div>
 
 <div class="span9">
-	
+
 	{% for item in data %}
 		<div class="widget">
 			<div class="widget-header">
 				<h3>{{ item.group.name }}</h3>
 			</div>
-			<div class="widget-content"> 
+			<div class="widget-content">
 
 				<table class="table table-condensed table-striped table-bordered">
 				<thead>
@@ -84,22 +84,22 @@
 				</thead>
 				<tbody>
 					{% for user in item.users %}
-					
+
 					<tr class={{ user.isadmin? "info" : (user.isgroup ? "success": "") }}>
 					<td><code>{{ user.id }}</code></td>
 					<td>{{ user.username }}</td>
 
 					<td>{% if user.active %}<i class="icon-check"></i><span style="display: none;"> True</span>
-						
+
 					    {% endif %}
 					<td><span class="badge {{ user.drafts?'badge-info' }}">{{ user.drafts?:""}}</span></td>
-				
+
 					</tr>
 					{% endfor %}
 				</tbody>
 				</table>
-			
-			</div> 
+
+			</div>
 		</div>
 	{% endfor %}
 	</div>
@@ -111,18 +111,17 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.dataTableExt.js"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.paging.js"></script>
 
 <script id="script-batchusers">
 var bindBatchUser = function(e) {
-	
+
 	var id = $("form#batchuser #group").val();
 	var stub = $("form#batchuser #pattern").val();
 	var nb = $("form#batchuser #count").val();
 	console.log(id,stub,nb);
-
 
 	$.ajax({
 		type : "POST",
@@ -132,27 +131,26 @@ var bindBatchUser = function(e) {
 			"id":id,
 			"nb":nb,
 			"pattern":stub
-			}, 
+			},
 		//contentType : "application/json; charset=utf-8",
 		//processData : true,
 		dataType : "json",
 		success : function(msg, status) {
 			// Set Response outcome
-			
-			
-			
+
+
 			$.each(msg.users, function(index, element) {
 				var placeholder = $("<tr/>");
 
 				$("<td/>",{ "text": msg.groupname, "style" : "width:25%"})
-					.appendTo(placeholder);				
+					.appendTo(placeholder);
 				$("<td/>",{ "text": element.username, "style" : "width:50%"})
 					.appendTo(placeholder);
 				$("<td/>",{ "text": element.pwd, "style" : "width:50%"})
 					.appendTo(placeholder);
-					
+
 				placeholder.appendTo($("#generate-output"));
-				
+
 				});
 		},
 		error : function(xhr, msg, e) {
@@ -160,8 +158,8 @@ var bindBatchUser = function(e) {
 			// there was an unhandled exception
 			console.log(msg);
 		}
-	});	
-	
+	});
+
 };
 
 $(document).ready(function() {
@@ -173,11 +171,11 @@ $(document).ready(function() {
 	        var f = parseFloat( x );
 	        return isNaN(f)? 0 : f;
 	    },
-	 
+
 	    "num-html-asc": function ( a, b ) {
 	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 	    },
-	 
+
 	    "num-html-desc": function ( a, b ) {
 	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 	    }
@@ -200,33 +198,30 @@ $(document).ready(function() {
         "sPaginationType": "bootstrap",
         "fnInitComplete": function () {
         	var that = this;
-   
+
         	this.find("input:text").each(function(idx, elt) {
             	var index = 2*idx+1;
         		$(elt).keyup( function () {
-	        		// Filter on the column (the index) of this element 
+	        		// Filter on the column (the index) of this element
 	        		that.fnFilter( this.value, index);
         			} );
             });
         	this.find("input:checkbox").each(function(idx, elt) {
             	var index = idx+2;
         		$(elt).change( function () {
-	        		// Filter on the column (the index) of this element 
+	        		// Filter on the column (the index) of this element
 	        		var cbval =  ($(this).is(':checked')) ? "True" : '';
 	        		that.fnFilter( cbval, index,true,false);
         			} );
             });
-            
 
-                
         }
 
 	} );
+
 	$('#data-table tbody').removeAttr("role").removeAttr("aria-live").removeAttr("aria-relevant");
 
-	
 });
-
 
 </script>
 
@@ -235,7 +230,7 @@ $(document).ready(function() {
 {% block injectCSS %}
 	{{ parent() }}
 <style type="text/css">
-			
+
 
 table.table thead th .sorting,
 table.table thead th .sorting_asc,
@@ -248,14 +243,14 @@ table.table thead th .sorting_desc_disabled {
 
 table.table th.sorting:after,
 table.table th.sorting_asc:after,
-table.table th.sorting_desc:after 
+table.table th.sorting_desc:after
 { float: right;}
 table.table th.sorting:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_asc:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_desc:after { font-family: FontAwesome; content: "   ";}
 
 table.table th.sorting_asc_disabled {  }
-table.table th.sorting_desc_disabled { }	
+table.table th.sorting_desc_disabled { }
 
 div.dataTables_paginate, div.dataTables_filter {
 	float: right;
@@ -269,6 +264,6 @@ td input.search_init
 	font-size: 11px;
 }
 
-	
+
 </style>
 {% endblock %}

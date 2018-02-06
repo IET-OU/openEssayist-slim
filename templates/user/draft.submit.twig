@@ -130,9 +130,9 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
+<script src="{{ 'jquery-blockui' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.validation/jquery.validate.min.js"></script>
-<script src="https://unpkg.com/countable@3.0.0/Countable.min.js"></script>
+<script src="{{ 'countable' | javascript }}"></script>
 
 <script src="{{ app_base }}/assets/openessayist/js/openessayist.validator.js"></script>
 
@@ -142,17 +142,12 @@ window.jQuery(function ($) {
 
 	var $form = $('form#post_essay');
 	var $essay = $form.find('textarea#text');
-	var $counts = $form.find('[ name = counts ]');
 
 // ...
 
 	// NDF, 02-February-2018.
 	window.Countable.on($essay.get(0), function (counter) {
-		console.warn('Counts:', counter);
-
-		$counts.val(JSON.stringify(counter));
-	},
-	{ hardReturns: true });
+	});
 
 });
 </script>

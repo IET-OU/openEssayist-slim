@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 {% import "widgets/ngram.macro.twig" as ngram %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Key Words{% endblock %} 
-{% block subheader %}Your Draft : Key Words & Key Phrases{% endblock %} 
-{% block bccontainer %}		
+{% block title %}{{ task.name }} v{{ draft.version }} - Key Words{% endblock %}
+{% block subheader %}Your Draft : Key Words & Key Phrases{% endblock %}
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -19,7 +19,7 @@
 		<h2>Key Words and Key Phrases</h2>
 	</div>
 	<div class="widget-content">
-	
+
 	<table id="data-table" class="table table-striped  table-hover table-condensed">
 	<thead>
 		<tr>
@@ -28,7 +28,7 @@
 			<th>Frequency</th>
 			<th>Forms in text</th>
 			<th>Centrality</th>
-		</tr>	
+		</tr>
 	</thead>
 	<tbody>
 	{% for key,items in keywords %}
@@ -43,7 +43,7 @@
 		{% endfor %}
 	{% endfor %}
 	</tbody>
-	
+
 	</table>
 	</div>
 </div></div>
@@ -53,7 +53,7 @@
 {% for key,items in keywords %}
 <div class="row-fluid">
 	<div class="span12">
-	
+
 		<div class="widget" aria-labelledby="app-list{{ loop.index0 }}" role="application">
 			<div class="widget-header">
 				<h2 id="app-title{{ loop.index0 }}"> {{ key|title }} <span aria-hidden="true">({{ items|length }})</span></h2>
@@ -68,11 +68,11 @@
 					{% endfor %}
 				</ul>
 			</div>
-		
-			 
+
+
 		</div>
 	</div>
-</div>	
+</div>
 {%  endfor %}
 
 
@@ -82,27 +82,26 @@
 {% block injectCSS %}
 	{{ parent() }}
 <style>
-	
+
 .widget-content ul
 {
 	margin: 0;
 }
 
-	
-.btn-ngram { 
-	white-space: nowrap; 
-	margin:0 0 5px 5px; 
-	
+.btn-ngram {
+	white-space: nowrap;
+	margin:0 0 5px 5px;
+
 }
 
-.btn-ngram.btn-large 
+.btn-ngram.btn-large
 {
 	padding: 6px 15px;
 }
 
 .btn-ngram.btn-small
 {
-	padding:2px 10px; 
+	padding:2px 10px;
 }
 
 .btn-ngram > .label {
@@ -113,12 +112,11 @@
 	/*float: right;*/
 	margin-left:25px;
 	}
-	
+
 .inlinebar,.bartodo
 {
     border: 1px solid Gainsboro;
 }
-
 
 .pop
 { display:table;}
@@ -136,12 +134,12 @@
  	padding: 3px 0px;
  	padding-right: 6px;
  }
- 
+
  .popover-title {
  	font-size: 20px;
     font-weight: bold;
  }
-	
+
 .dl-horizontal dt {
 	width: inherit;
 }
@@ -150,7 +148,7 @@
 	margin-left:110px;
 }
 
-	
+
 button .legendcolor
 {
     background-color: white;
@@ -160,7 +158,7 @@ button .legendcolor
     margin-top: 2px;
     width: 20px;
 }
-	
+
 table.table thead .sorting,
 table.table thead .sorting_asc,
 table.table thead .sorting_desc,
@@ -171,27 +169,29 @@ table.table thead .sorting_desc_disabled {
 }
 
 
- 
 table.table thead .sorting:after { font-family: FontAwesome; content: "   ";}
 table.table thead .sorting_asc:after { font-family: FontAwesome; content: "   ";}
 table.table thead .sorting_desc:after { font-family: FontAwesome; content: "   ";}
 
 table.table thead .sorting_asc_disabled {  }
-table.table thead .sorting_desc_disabled { }	
+table.table thead .sorting_desc_disabled { }
 </style>
 {% endblock %}
 
 {% block injectJS %}
 	{{ parent() }}
 <script src="{{ app_base }}/assets/jquery.sparkline/jquery.sparkline.js"></script>
-{#<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.min.js"></script>
+{#<script src="{{ 'datatables' | javascript }}"></script>
+
 <script id="keyword-datatable">
+
 $(document).ready(function() {
+
 	$.fn.dataTableExt.oStdClasses.sLength ="dataTables_length span6 ";
 	$.fn.dataTableExt.oStdClasses.sFilter  ="dataTables_filter span6 ";
 	$.fn.dataTableExt.oStdClasses.sInfo  ="dataTables_info span6 ";
 	$.fn.dataTableExt.oStdClasses.sPaging   ="dataTables_paginate span6 pull-right ";
-	
+
 	$.fn.dataTableExt.oStdClasses.sPageButton="btn btn-small";
 	$.fn.dataTableExt.oStdClasses.sPageButtonActive="btn btn-small active";
 	$.fn.dataTableExt.oStdClasses.sPageButtonStaticDisabled="btn btn-small disabled";
@@ -210,7 +210,7 @@ $(document).ready(function() {
         "aaSorting": [[ 2, "desc" ]],
         "aoColumnDefs": [
 			{ "bSearchable": false, "bSortable": false, "aTargets": [ 0,3 ] },
-					
+
 		],
 		"oLanguage": {
             "sSearch": "Filter by: "
@@ -221,7 +221,7 @@ $(document).ready(function() {
 });
 </script> #}
 
-	
+
 <script id="keyword-popover">
 $(document).ready(function() {
 
@@ -244,7 +244,7 @@ $(document).ready(function() {
 	    			score.push("0.2");
 	    			score.push("0.1");
 	    			score.join(",");
-	    			    			
+
 
 	    			$newDiv = $('<div />').addClass("pop").attr("tabindex","0");
 
@@ -252,30 +252,30 @@ $(document).ready(function() {
 					$r1.append($('<div />',{ "text": "Frequency:", "class": "pop-title" }));
 					$r1.append($('<div />',{"class": "pop-desc"}).append(
 	    	    			$('<span />',{ "text": count, "class": "label label-info"})));
-	    				    			
+
 	    			if (dim=="1")
 	        		{
 	        			$r1 = $('<div />').addClass("pop-line").appendTo($newDiv);
 	    				$r1.append($('<div />',{ "text": "Forms in text:", "class": "pop-title" }));
 	    				$r1.append($('<div />',{ "class" : "pop-desc"}).append(
 	        	    			$('<span />',{ "text": forms})));
-	        		}	    	
+	        		}
 
 	    			{% if auth.user.isadmin and false %}
 	    			$r2 = $('<div />').addClass("pop-line").appendTo($newDiv);
 					$r2.append($('<div />',{ "text": "Centrality:", "class": "pop-title"}));
 					$r2.append($('<div />',{ "class": "pop-desc"}).append(
-	    	    			$('<span />',{"class": 'inlinebar bartodo',"text":score})));	    			
+	    	    			$('<span />',{"class": 'inlinebar bartodo',"text":score})));
 
 	    			$r2 = $('<div />').addClass("pop-line").appendTo($newDiv);
 					$r2.append($('<div />',{ "text": "Trend:", "class": "pop-title"}));
 					$r2.append($('<div />',{ "class": "pop-desc"}).append(
-	    	    			$('<span />',{"class": 'inlinebar trendtodo',"text":trend})));	    			
-					{% endif %}	
-						
+	    	    			$('<span />',{"class": 'inlinebar trendtodo',"text":trend})));
+					{% endif %}
+
 	        		return $newDiv;
 			 	}
-		    }; 
+		    };
 
 	 // popover demo
 	$(".ngram[data-toggle=popover]").popover(popOptions);
@@ -295,8 +295,7 @@ $(document).ready(function() {
 		    $(this).popover("toggle");
 		}
 	});
-	
-	
+
 
 		$(':not(#anything)').on('click', function (e) {
 		    $('.ngram[data-toggle=popover]').each(function () {
@@ -309,10 +308,7 @@ $(document).ready(function() {
 		    });
 		});
 
-	 
-	
-
 });
 
 </script>
-{% endblock %} 
+{% endblock %}

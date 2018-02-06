@@ -1,7 +1,7 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 {% import "widgets/ngram.macro.twig" as ngram %}
 
-{% block title %}Draft - Keyword Categories{% endblock %} 
+{% block title %}Draft - Keyword Categories{% endblock %}
 
 {% block injectCSS %}
 	{{ parent() }}
@@ -31,9 +31,6 @@ h3 > .cat_color
 	font-weight: bolder;
 }
 
-
-
-
 </style>
 <link href="{{ app_base }}/assets/jquery.minicolors/jquery.minicolors.css" rel="stylesheet">
 <link href="{{ app_base }}/assets/jquery.dataTables/css/jquery.dataTables.css" rel="stylesheet">
@@ -41,7 +38,7 @@ h3 > .cat_color
 
 {% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.panel.twig" %}
 	    <li><div class="btn-group">
     	<a href="{{ urlFor('me.drafts',{"idt":task.id}) }}" class="btn btn-small" >
@@ -61,17 +58,17 @@ h3 > .cat_color
     	  	<li><a href="{{ urlFor('me.draft.view.graph',{"draft":draft.id,"graph":"graphke"}) }}">Keyword Graph</a>
     	  	<li><a href="{{ urlFor('me.draft.view.graph',{"draft":draft.id,"graph":"graphse"}) }}">Sentence Graph</a>
 		</ul></div>
-    </li>	   	    
+    </li>
 {% endblock %}
 
 {% block content %}
 <div class="row-fluid"><div class="span12">
 
 <div class="widget">
-<div class="widget-header"><i class="icon-list-alt"></i><h3>Keywords</h3></div>	
+<div class="widget-header"><i class="icon-list-alt"></i><h3>Keywords</h3></div>
 
 <div class="widget-toolbar">
-	<div class="btn-toolbar">    
+	<div class="btn-toolbar">
 	<div class="btn-group">
     				<button id="catg-Save" class="btn btn-mini btn-primary">Save</button>
     				<button id="catg-Reset" class="btn btn-mini disabled">Reset</button>
@@ -86,8 +83,8 @@ h3 > .cat_color
 
 <div class="widget-content">
 	<div class="row-fluid">
-	
-	
+
+
 	<table id="table_id">
 	<thead>
 		<tr>
@@ -104,13 +101,13 @@ h3 > .cat_color
 	</tbody>
 
 </table>
-	
-	
-	</div>		
+
+
+	</div>
 </div>
-	
-			
-		
+
+
+
 </div>
 </div></div>
 
@@ -169,9 +166,9 @@ h3 > .cat_color
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.min.js"></script>
-<script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
-<script src="{{ app_base }}/assets/d3.js/d3.v3.min.js"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
+<script src="{{ 'jquery-blockui' | javascript }}"></script>
+<script src="{{ 'd3' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.minicolors/jquery.minicolors.js"></script>
 <script>
 $(document).ready(function() {
@@ -183,7 +180,7 @@ $(document).ready(function() {
 			if (is_dirty == true)
 		  		return 'Are you sure you want to leave?';
 		});
-	
+
 	$('input.minicolors').minicolors({animationSpeed: 100,control: "wheel"});
     $('#dlgSetting').on('hidden', function () {
         //tt = $(this).find('.minicolors');
@@ -202,26 +199,26 @@ $(document).ready(function() {
             var desc = $('#dlg_desc').val();
             console.log(name + " " + color + " " + desc );
 			g = tp.find('.grp_name');
-			if (g) g.val(name); 
+			if (g) g.val(name);
 			g = tp.find('.grp_color');
-			if (g) g.val(color); 
+			if (g) g.val(color);
 			g = tp.find('.grp_desc');
-			if (g) g.val(desc); 
+			if (g) g.val(desc);
 
 			g = tp.find('h3 > .cat_name');
 			if (g) g.text(name);
 			g = tp.find('h3 > .cat_color');
 			if (g) g.css('background-color',color);
-			is_dirty = true;		
+			is_dirty = true;
 		}
     });
 
-    	    
-    var color = d3.scale.category10().range(); 
-    
+
+    var color = d3.scale.category10().range();
+
     color = color.slice({{ groups|length ? groups|length-1:0  }});
 	console.log(color);
-	
+
 	updateSortable = function()
 	{
 		// set the dropable widgets
@@ -244,35 +241,35 @@ $(document).ready(function() {
 			if (tp)
 			{
 				g = tp.find('.grp_name');
-				if (g) $('#dlg_name').val(g.val()); 
+				if (g) $('#dlg_name').val(g.val());
 				g = tp.find('.grp_desc');
-				if (g) $('#dlg_desc').val(g.val()); 
+				if (g) $('#dlg_desc').val(g.val());
 
 				g = tp.find('.grp_color');
-				if (g) $('#dlg_dlg').val(g.val()); 
+				if (g) $('#dlg_dlg').val(g.val());
 				$('#dlg_color').minicolors('value',g.val());
-				$('#dlg_category').val(myBookId); 
-							
+				$('#dlg_category').val(myBookId);
+
 			}
 			//$('#dlg_color').val(dd);
 			//$('#dlg_color').minicolors('value',dd);
 		});
 	};
-	
+
 	//initialise the blockUI widget on AJAX calls
-	$.blockUI.defaults.baseZ = 1100; 
+	$.blockUI.defaults.baseZ = 1100;
 	$(document).ajaxStop($.unblockUI);
 	updateSortable();
 
 	$("#catg-Save").click(function(e) {
-		$.blockUI({ message: '<div class="ajax alert alert-info"><img src="{{ app_base }}/assets/openessayist/img/ajax-loader.gif" /> Saving User Data ...</div>' }); 
+		$.blockUI({ message: '<div class="ajax alert alert-info"><img src="{{ app_base }}/assets/openessayist/img/ajax-loader.gif" /> Saving User Data ...</div>' });
 		var json = {};
-		
+
 		var allcats = $('.droptrue');
 		allcats.each(function(index) {
 			var setting = $(this).sortable('toArray');
 			var id = $(this).attr('id');
-			json[id] = { 
+			json[id] = {
 				'keywords': setting,
 				'id': id
 			};
@@ -289,7 +286,7 @@ $(document).ready(function() {
 			json[id].attr = {
 					'name' : nm,
 					'desc' : desc,
-					'color': clr 
+					'color': clr
 				};
 		});
 		console.log(json);
@@ -297,12 +294,12 @@ $(document).ready(function() {
 			type : "POST",
 			method: "post",
 			url : "{{ urlFor('profile.save.keyword',{"idt":task.id}) }}", // URL and function to call
-			data : {	
+			data : {
 					"user": "{{  auth.user.id }}",
-					"task" : "{{ task.id }}", 
+					"task" : "{{ task.id }}",
 					"draft": "{{ draft.id }}",
 					"data" : json
-			}, 
+			},
 			//contentType : "application/json; charset=utf-8",
 			//processData : true,
 			dataType : "json",
@@ -316,16 +313,16 @@ $(document).ready(function() {
 				// there was an unhandled exception
 				console.log(msg);
 			}
-		});	
+		});
 
 	});
-	
+
 	$("#catg-New").click(function(e) {
 		console.log("new category...");
 
 		var holder = $('.widget-content-cats > .row-fluid :last');
 		var n = holder.children().length;
-		
+
 		var template = $('#cat_template').clone();
 
 		var title = template.find("div.widget-header > h3 > .cat_name  ");
@@ -338,8 +335,8 @@ $(document).ready(function() {
 			{	info.removeClass('dropfalse');
 				info.addClass('droptrue');
 			}
-				
-		
+
+
 		if (n!=2)
 		{
 			template.appendTo(holder);
@@ -348,7 +345,7 @@ $(document).ready(function() {
 		{
 			var newElement = $('<div class="row-fluid"></div>');
 			template.appendTo(newElement);
-			
+
 			newElement.appendTo("#widget-content-cats");
 			// set the dropable widgets
 		}
@@ -361,22 +358,22 @@ $(document).ready(function() {
 		if (info) info.val(clr);
 		g = template.find('.cat_color');
 		if (g) g.css('background-color',clr);
-		
+
 		holder = $('.widget-content-cats');
 		var allcats = holder.find(".span6");
 		var nCats = allcats.length;
 		allcats.each(function(index)
 			{
-				$(this).attr('id','cat_'+index); 
+				$(this).attr('id','cat_'+index);
 				var setting = $(this).find(".btn-setting");
 				if (setting) setting.attr('data-category','cat_'+index);
 				var close = $(this).find(".btn-close");
 				if (close) close.attr('data-category','cat_'+index);
 				var dropz = $(this).find(".droptrue");
-				dropz.attr('id','category_'+index); 
+				dropz.attr('id','category_'+index);
 			});
 
-		
+
 		updateSortable();
 	});
 });

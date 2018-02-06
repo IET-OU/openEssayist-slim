@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Key Sentences{% endblock %} 
-{% block subheader %}Your Draft : Key Sentences{% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Key Sentences{% endblock %}
+{% block subheader %}Your Draft : Key Sentences{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -21,21 +21,21 @@
 			<div class="widget-toolbar">
 				<div class="btn-toolbar form-inline" id="options" role="toolbar" aria-controls="sentence-container">
 				    <div class="btn-group option-set"  data-toggle="buttons-radio" data-option-key="sortBy">
-    					<span class="btn-label">Sort by: </span>	
+    					<span class="btn-label">Sort by: </span>
     					<button class="btn  active" id="sort-rank"
     						rel="tooltip" data-placement="bottom"
-							title="Rank the sentences by their importance" 
+							title="Rank the sentences by their importance"
 							data-option-value="rank">Importance</button>
-					    <button class="btn " 
+					    <button class="btn "
 					    	rel="tooltip" data-placement="bottom"
-							title="Rank the sentences by their order in the text" 
+							title="Rank the sentences by their order in the text"
 					    	data-option-value="id">Text Order</button>
 					    {#<button class="btn" data-option-value="tag">Structure</button>#}
     				</div>
 				</div>
 			</div>
-	
-	
+
+
 	<div class="widget-content clearfix " id="sentence-container"  role="list" aria-labelledby="app-group-title">
 				{#<table class="table table-condensed table-striped table-bordered">
 				<tbody>
@@ -43,24 +43,24 @@
 					<tr><td>{{ sentence.text  }}</td>	</tr>
 				{% endfor %}
 				</tbody>
-				</table>#} 
+				</table>#}
 				{% for sentence in sentences %}
-					<div class="sent" data-tag="{{ sentence.tag}}" 
-						 			  data-rank="{{ sentence.rank}}" 
-						 			  data-id="{{ sentence.id}}" 
+					<div class="sent" data-tag="{{ sentence.tag}}"
+						 			  data-rank="{{ sentence.rank}}"
+						 			  data-id="{{ sentence.id}}"
 						 			   role="listitem">
 						<div class="par-tag" data-tag="{{ sentence.tag}}">
 							<span class="icon-stack">
 	          					<i class="icon-circle-blank  icon-stack-base"></i>
     	      					<i class="icon-heading "></i>
-        					</span></div>		
-						<div class="par-container">				 			  
+        					</span></div>
+						<div class="par-container">
 							<span>{{ sentence.text}}</span>
 						</div>
 					</div>
 				{% endfor %}
-</div> 
-			
+</div>
+
 	</div>
 </div></div>
 
@@ -72,7 +72,7 @@
 {% block injectJS %}
 	{{ parent() }}
 <script src="{{ app_base }}/assets/jquery.isotope.min.js"></script>
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
 
 <script type="text/javascript">
 
@@ -93,52 +93,52 @@ function createIsotope()
             		return parseInt( $elem.attr('data-id'), 10 );
           	}
           }
-    	
+
     });
-	
+
 }
 
 
 $(window).on("beforeprint",function() {
 	var $container = $('#sentence-container');
 	$container.isotope('destroy');
-});	
+});
 
 $(window).on("afterprint",function() {
 	createIsotope();
 });
-   
+
 $(function(){
 
 	var sections =  {
-			'#-s:t#': 'Title', 
-			'#+s:s#': 'Summary', 
-			'#+s:d#': 'Discussion', 
-			'#+s:d_i#':'Discussion', 
-			'#+s:i#': 'Introduction', 
-			'#+s:c#': 'Conclusion', 
-			'#-s:q#': 'Assignment',  
-			'#+s:p#': 'Preface', 
-			'#-s:h#': 'Heading', 
-			'#-s:n#': 'Numerics', 
-			'#-s:p#': 'Punctuation'					
+			'#-s:t#': 'Title',
+			'#+s:s#': 'Summary',
+			'#+s:d#': 'Discussion',
+			'#+s:d_i#':'Discussion',
+			'#+s:i#': 'Introduction',
+			'#+s:c#': 'Conclusion',
+			'#-s:q#': 'Assignment',
+			'#+s:p#': 'Preface',
+			'#-s:h#': 'Heading',
+			'#-s:n#': 'Numerics',
+			'#-s:p#': 'Punctuation'
 			};
-	          		
-	
+
+
 sections =  {
 		'????':'',
-		'#+s:c#': 'Conclusion', 
-		'#+s:d_i#':'Discussion', 
-		'#+s:d#': 'Discussion', 
-		'#+s:s#': 'Summary', 
-		'#+s:i#': 'Introduction', 
-		'#-s:t#': 'Title', 
-		'#+s:p#': 'Preface', 
-		'#-s:h#': 'Heading', 
-		'#-s:n#': 'Numerics', 
-		'#-s:q#': 'Assignment',  
-		'#-s:p#': 'Punctuation'					
-		};	
+		'#+s:c#': 'Conclusion',
+		'#+s:d_i#':'Discussion',
+		'#+s:d#': 'Discussion',
+		'#+s:s#': 'Summary',
+		'#+s:i#': 'Introduction',
+		'#-s:t#': 'Title',
+		'#+s:p#': 'Preface',
+		'#-s:h#': 'Heading',
+		'#-s:n#': 'Numerics',
+		'#-s:q#': 'Assignment',
+		'#-s:p#': 'Punctuation'
+		};
 
 /*$(".par-tag[data-tag]").each(function()
 		{
@@ -155,9 +155,9 @@ sections =  {
 			}
 			$(this).attr('title', sections[tag]);
 		});*/
-	
-    
-    
+
+
+
       var $optionSets = $('#options .option-set'),
           $optionLinks = $optionSets.find('button');
 
@@ -170,7 +170,7 @@ sections =  {
         var $optionSet = $this.parents('.option-set');
         $optionSet.find('.active').removeClass('active');
         $this.addClass('active');
-  
+
         // make option object dynamically, i.e. { filter: '.my-filter-class' }
         var options = {},
             key = $optionSet.attr('data-option-key'),
@@ -186,7 +186,7 @@ sections =  {
           var $container = $('#sentence-container');
           $container.isotope( options );
         }
-        
+
         return false;
       });
 
@@ -213,7 +213,7 @@ div.sent{
     border-right: 8px solid white;
         text-align: center;
     vertical-align: bottom;
-   
+
 }
 
 .par-container
@@ -229,11 +229,11 @@ div.sent{
     border-right: 8px solid white;
         text-align: center;
     vertical-align: top;
-    
+
     font-size: 11px;
     font-weight: bolder;
     min-width: 50px;
-   
+
 }
 
 /*.par-tag[data-tag='#+s:c#']:after
@@ -326,7 +326,7 @@ div.sent{
 .span12 {
     width: 724px;
   }
-  
+
 .row-fluid .span12 {
     width: 724px;
   }

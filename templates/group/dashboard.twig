@@ -1,9 +1,9 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Group{% endblock %} 
-{% block subheader %}Your Group Homepage{% endblock %} 
+{% block title %}Group{% endblock %}
+{% block subheader %}Your Group Homepage{% endblock %}
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.panel.twig" with {'navsrc': 'me.group'} %}
 {% endblock %}
 
@@ -13,17 +13,17 @@
     <div class="navbar-inner">
     	<span class="brand" >{{ group.name }}</span>
     	<ul class="nav">
- 			<li><a title="Monitor your students" 
+ 			<li><a title="Monitor your students"
  					href="{{ urlFor('group.home') }}" rel="tooltip" data-placement="bottom">
-				<i class="icon-search icon-large"></i> 
+				<i class="icon-search icon-large"></i>
 				<span class="hidden-phone hidden-tablet">Activity</span>
 			</a></li>
- 			<li><a title="Manage your group's tasks" 
+ 			<li><a title="Manage your group's tasks"
  					href="{{ urlFor('group.task') }}" rel="tooltip" data-placement="bottom">
-				<i class="icon-cogs icon-large"></i> 
+				<i class="icon-cogs icon-large"></i>
 				<span class="hidden-phone hidden-tablet">Tasks</span>
 			</a></li>
-			
+
     	</ul>
     </div>
 </div>
@@ -36,10 +36,10 @@
 	<div class="widget-header">
 		<h2>History of activity in group</h2>
 	</div>
-			
+
 	<div class="widget-content">
-	
-	
+
+
 			<table class="table table-condensed table-striped table-bordered">
 				<thead>
 					<tr>
@@ -65,7 +65,7 @@
 					</tr>
 				</thead>
 				<tbody>
-									
+
 					{% for item in items %}
 					<tr>
 						<td>{{ item.date }}</td>
@@ -78,10 +78,10 @@
 					{% endfor  %}
 				</tbody>
 				</table>
-	
+
 
 	</div>
-	
+
 </div></div>
 </div>
 
@@ -90,9 +90,9 @@
 {% block injectJS %}
 	{{ parent() }}
 <script src="{{ app_base }}/assets/jquery.sparkline/jquery.sparkline.js"></script>
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.paging.js"></script>
-	
+
 	<script id="keyword-popover">
 $(document).ready(function() {
 	/*$('.barsparklinedd').sparkline('html', {
@@ -117,8 +117,8 @@ $(document).ready(function() {
         "aaSorting": [[ 0, "desc" ]],
         "aoColumnDefs": [
 			{ "bSortable": false, "aTargets": [ 5 ] },
-			{ 	
-				
+			{
+
 				"aTargets": [ 0 ],
 				"mDataProp": function ( data, type, val ) {
 					if (type === 'set') {
@@ -126,10 +126,10 @@ $(document).ready(function() {
 
 						// Store the base value which is in the format: YYYY/MM/DD
 						data.date = val;
-				
+
 						// Sorting is done as an integer value
 						data.date_int = d.getTime();
-				
+
 						// Use date formatting function to build the date
 						data.date_filter  = val +' '+ dateFormat( d );
 						return;
@@ -144,12 +144,12 @@ $(document).ready(function() {
 					return dateFormat(new Date(data.date));
 				}
             },
-			{ 	
-				
+			{
+
 				"aTargets": [ 3 ],
 				"mDataProp": function ( data, type, val ) {
 					if (type === 'set') {
-						
+
 						var str = val.split("[]");
 
 						data.draft = [];
@@ -165,7 +165,7 @@ $(document).ready(function() {
 						return data.draft.version;
 					}
 					return '<span class="label label-success">Version <b>'+
-								data.draft.version +'</b></span> <span>'+ 
+								data.draft.version +'</b></span> <span>'+
 								data.draft.name + '</span>';
 				}
             }
@@ -173,25 +173,25 @@ $(document).ready(function() {
         "sPaginationType": "bootstrap",
         "fnInitComplete": function () {
         	var that = this;
-   
+
         	this.find("input:text").each(function(idx, elt) {
             	var index = $(elt).data( "column" );
         		if (index) $(elt).keyup( function () {
-	        		// Filter on the column (the index) of this element 
+	        		// Filter on the column (the index) of this element
 	        		that.fnFilter( this.value, index);
         			} );
             });
-        	
+
            	this.find("select").each(function(idx, elt) {
             	var index = $(elt).data( "column" );
         		if (index) $(elt).change( function () {
-	        		// Filter on the column (the index) of this element 
+	        		// Filter on the column (the index) of this element
 	        		that.fnFilter( $(this).val(), index);
         			} );
             });
-            
 
-                
+
+
         }
 	});
 
@@ -232,10 +232,10 @@ $(document).ready(function() {
 			case 3: out += "rd "; break;
 			default: out += "th "; break;
 		}
-		
+
 		return out;
 	}
-	
+
 });
 </script>
 {% endblock %}
@@ -243,7 +243,7 @@ $(document).ready(function() {
 {% block injectCSS %}
 	{{ parent() }}
 <style type="text/css">
-			
+
 
 table.table thead th .sorting,
 table.table thead th .sorting_asc,
@@ -256,14 +256,14 @@ table.table thead th .sorting_desc_disabled {
 
 table.table th.sorting:after,
 table.table th.sorting_asc:after,
-table.table th.sorting_desc:after 
+table.table th.sorting_desc:after
 { float: right;}
 table.table th.sorting:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_asc:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_desc:after { font-family: FontAwesome; content: "   ";}
 
 table.table th.sorting_asc_disabled {  }
-table.table th.sorting_desc_disabled { }	
+table.table th.sorting_desc_disabled { }
 
 div.dataTables_paginate, div.dataTables_filter {
 	float: right;
@@ -279,6 +279,5 @@ td .search_init
 	width: inherit;
 }
 
-	
 </style>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
 {% set helpers = {
 	'text': 'text only',
@@ -8,11 +8,11 @@
 } %}
 
 
-{% block title %}{{ task.name }} v{{ draft.version }} - Essay Overview ({{ helpers[mashup] }}){% endblock %} 
-{% block subheader %}Your Draft : Overview ({{ helpers[mashup] }}){% endblock %} 
+{% block title %}{{ task.name }} v{{ draft.version }} - Essay Overview ({{ helpers[mashup] }}){% endblock %}
+{% block subheader %}Your Draft : Overview ({{ helpers[mashup] }}){% endblock %}
 
 
-{% block bccontainer %}		
+{% block bccontainer %}
 	{% include "widgets/breadcrumb.task.twig" %}
 {% endblock %}
 
@@ -23,53 +23,53 @@
 {% block content %}
 
 <div class="row-fluid"><div class="span12">
-	
+
 	<div class="widget" role="application" aria-labelledby="app-group-title">
 		<div class="widget-header">
 			<h2 id="app-group-title">Your essay</h2>
 		</div>
 		<div class="widget-toolbar" role="toolbar" aria-controls="draft-container">
-			<div class="btn-toolbar form-inline">    
+			<div class="btn-toolbar form-inline">
 			<div class="btn-group">
-				<span class="group-label">Show: </span>		
-				<a class="btn  {{ mashup=='text' ? 'active disabled'}}" 
+				<span class="group-label">Show: </span>
+				<a class="btn  {{ mashup=='text' ? 'active disabled'}}"
 					rel="tooltip" data-placement="bottom"
-					title="Show only text and structure of essay" 
+					title="Show only text and structure of essay"
 					{{ not (mashup=='text') ? 'href='~urlFor('me.draft.show',{'draft':draft.id,'cmd':''}) }}>Text</a>
-				<a class="btn  {{ mashup=='keyword' ? 'active disabled'}}" 
+				<a class="btn  {{ mashup=='keyword' ? 'active disabled'}}"
 					rel="tooltip" data-placement="bottom"
-					title="Show key words and key phrases"  
+					title="Show key words and key phrases"
 					{{ not (mashup=='keyword') ? 'href='~urlFor('me.draft.showext',{'draft':draft.id,'cmd':'keyword'}) }}>Key Words</a>
-				<a class="btn  {{ mashup=='sentence' ? 'active disabled'}}" 
+				<a class="btn  {{ mashup=='sentence' ? 'active disabled'}}"
 					rel="tooltip" data-placement="bottom"
-					title="Show key sentences"  
+					title="Show key sentences"
 					{{ not (mashup=='sentence') ? 'href='~urlFor('me.draft.showext',{'draft':draft.id,'cmd':'sentence'}) }}>Key Sentences</a>
-				<a class="btn  {{ mashup=='all' ? 'active disabled'}}" 
+				<a class="btn  {{ mashup=='all' ? 'active disabled'}}"
 					rel="tooltip" data-placement="bottom"
-					title="Combine all elements in the essay"  
+					title="Combine all elements in the essay"
 					{{ not (mashup=='all') ? 'href='~urlFor('me.draft.showext',{'draft':draft.id,'cmd':'all'}) }}>All</a>
 			</div>
 			{% if mashup == 'all' %}
     		<div class="btn-group">
-		    	<button class="btn  " 
-		    		rel="tooltip" data-placement="bottom" 
-		    		title="Select elements to display on the essay" 
+		    	<button class="btn  "
+		    		rel="tooltip" data-placement="bottom"
+		    		title="Select elements to display on the essay"
 		    		data-target="#modal_mashup" data-toggle="modal">
 					More Options...</button>
 			</div>
 			{% endif  %}
         </div></div>
-		
-		
-		
+
+
+
 		<div id="task-container" class="widget-content assignment myessay openessay par-container" style="display: none;"><i class="icon-quote-left icon-4x pull-left icon-muted"></i>
 			<p>{{ task.assignment | raw | nl2br }}</p>
 		</div>
-        
+
 		<div id="draft-container" class="widget-content widget-essay myessay openessay">
-		
+
 		{% for par in parasenttok %}
-			
+
 			<div class="par-wrapper" {{ (par.partag)?"data-tag=#{ par.partag }":"" }}>
 				<div class="par-tag" {{ (par.partag)?"data-tag=#{ par.partag }":"" }}>
 					<span class="icon-stack" aria-hidden="true">
@@ -89,9 +89,9 @@
 				</div>
 			</div>
 		{% endfor %}
-		</div>        
-        
-		
+		</div>
+
+
 	</div>
 
 </div></div>
@@ -102,87 +102,87 @@
 		<h1 id="modal-title">Display Options</h1>
 	</div>
 	<div class="modal-body" >
-	
+
 	<p>Select the elements to show with the draft.</p>
-	
+
 	<form class="row-fluid" id="mashup-options">
 
 	{% if not(config.structure.show is defined and config.structure.show == false) %}
 	{% set cfg = config.structure %}
 	{% set dsb = (cfg.modify is sameas(false))?"disabled" %}
-	<div class="widget-content span3"><fieldset role="group" aria-labelledby="legend-struct"> 
+	<div class="widget-content span3"><fieldset role="group" aria-labelledby="legend-struct">
 		<legend id="legend-struct" role="description">Structure</legend>
-    	<label class="checkbox"> 
-			<input  type="checkbox" name="structure" value="#-s:t#" class="cStructure" {{ ('#-s:t#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}> 
+    	<label class="checkbox">
+			<input  type="checkbox" name="structure" value="#-s:t#" class="cStructure" {{ ('#-s:t#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Title
 		</label>
-		<label class="checkbox"> 
-			<input  type="checkbox" name="structure" value="#-s:h#" class="cStructure" {{ ('#-s:h#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>  
+		<label class="checkbox">
+			<input  type="checkbox" name="structure" value="#-s:h#" class="cStructure" {{ ('#-s:h#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Headings
 		</label>
-		<label class="checkbox"> 
-			<input  type="checkbox" name="structure" value="#+s:i#" class="cStructure" {{ ('#+s:i#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>  
+		<label class="checkbox">
+			<input  type="checkbox" name="structure" value="#+s:i#" class="cStructure" {{ ('#+s:i#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Introduction
 		</label>
-		<label class="checkbox"> 
-			<input  type="checkbox" name="structure" value="#+s#" class="cStructure" {{ ('#+s#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>  
+		<label class="checkbox">
+			<input  type="checkbox" name="structure" value="#+s#" class="cStructure" {{ ('#+s#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Body
 		</label>
-		<label class="checkbox"> 
-			<input type="checkbox" name="structure" value="#+s:c#" class="cStructure" {{ ('#+s:c#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>  
+		<label class="checkbox">
+			<input type="checkbox" name="structure" value="#+s:c#" class="cStructure" {{ ('#+s:c#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Conclusion
 		</label>
-		<label class="checkbox"> 
-			<input type="checkbox" name="structure" value="#-s:q#;#-s:n#;#-s:p#;#dummy#;#+s:p#" class="cStructure" {{ ('#-s:q#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>  
+		<label class="checkbox">
+			<input type="checkbox" name="structure" value="#-s:q#;#-s:n#;#-s:p#;#dummy#;#+s:p#" class="cStructure" {{ ('#-s:q#' is inOption(cfg.check))? "checked=\"checked\""}} {{ dsb }}>
 			Others
 		</label>
-									
+
 	</fieldset></div>
 	{% endif %}
-	
+
 	{% if not(config.sentence.show is defined and config.sentence.show == false) %}
 	<div class="widget-content span3"><fieldset role="group" aria-labelledby="legend-sent">
 		<legend id="legend-sent" role="description"> Sentences </legend>
 
-		<label class="checkbox"> 
-			<input  type="checkbox" name="sentence" value="show" class="cSentence" {{ dsb }}> 
+		<label class="checkbox">
+			<input  type="checkbox" name="sentence" value="show" class="cSentence" {{ dsb }}>
 			Show the key sentences
 		</label>
-	</fieldset></div> 
+	</fieldset></div>
 	{% endif %}
-	
+
 	{% if not(config.keyword.show is defined and config.keyword.show == false) %}
 	{% set cfg = config.keyword %}
 	<div class="widget-content span3"><fieldset role="group" aria-labelledby="legend-keyword">
 		<legend id="legend-keyword" role="description"> Key Words </legend>
-						
-							
+
+
 		{% for key,item in groups %}
-		<div class="controls controls-row">	
+		<div class="controls controls-row">
 			<label class="checkbox inline">
 				<input type="checkbox" name="keywords" value="{{ item.id }}" class="cKeyword"
 					{{ (item.id is inOption(cfg.check,false))? "checked=\"checked\""}}> {{ item.attr.name ? item.attr.name : "Default Group" }}
 			</label>
-		</div>	
+		</div>
 		{% endfor %}
 	</fieldset> </div>
 	{% endif %}
-	 
+
 	<div class="widget-content span3"> <fieldset role="group" aria-labelledby="legend-task">
 		<legend id="legend-task" role="description"> Assignment </legend>
 		<div class="controls controls-row">
 			<div class="controls">
-				<label class="checkbox inline"> 
-					<input type="checkbox" value="show" 
+				<label class="checkbox inline">
+					<input type="checkbox" value="show"
 							name="task" class="cTaskQuestion" checked="checked"> Show the question
 				</label>
 			</div>
-							
+
 		</div>
-	</fieldset></div> 
-	
+	</fieldset></div>
+
 	</form> {# end of form #}
-	
+
 	<div class="alert alert-success" id="modal-notification" aria-live="polite"></div>
 
 	</div>	{# end of modal body #}
@@ -200,8 +200,8 @@
 {% block injectCSS %}
 {{ parent() }}
 <link href="{{ app_base }}/assets/openessayist/css/hljs.css" rel="stylesheet">
-<style type="text/css">
 
+<style type="text/css">
 
 .btn-toolbar .title {
   display: block;
@@ -249,7 +249,7 @@ p.oe-par:before
 }
 
 .par-wrapper
-{	
+{
 	/*display: table-row;*/
 	border-bottom: 2px solid white;
     border-top: 2px solid white;
@@ -266,7 +266,7 @@ p.oe-par:before
     font-size: 11px;
     font-weight: bolder;
     min-width: 50px;
-   
+
 }
 
 /*.par-tag[data-tag='#+s:c#']:after
@@ -385,7 +385,7 @@ span.oe-snt {
 span.oe-snt[data-tag='#-s:t#']{
 	font-weight: bold;
 }
-        			
+
 span.oe-snt[data-tag='#-s:h#']{
 	font-weight: bold;
 }
@@ -395,7 +395,7 @@ span.oe-snt[data-rank].showmu:before {
 	background-color: #3A87AD;
 	border-radius: 9px 9px 9px 9px;
 	color: #FFFFFF;
-	
+
 	margin-right: 10px;
 	padding-left: 9px;
 	padding-right: 9px;
@@ -475,7 +475,7 @@ label.checkbox:before
     font-size: 10;
 }*/
 
-{% for key,item in groups[1:] %}		
+{% for key,item in groups[1:] %}
 .ngram.{{item.id}} .keyword {
 }
 
@@ -500,7 +500,7 @@ label.checkbox:before
 
 .popover-content .legend-title
 {
-	font-weight: bolder; 
+	font-weight: bolder;
 	display: table-cell;
 	width: 100%;
 }
@@ -524,17 +524,17 @@ label.checkbox:before
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/d3.js/colorbrewer.js"></script>
+<script src="{{ 'd3-colorbrewer' | javascript }}"></script>
 <script src="{{ app_base }}/assets/highlight.js/highlight.pack.js"></script>
-	
+
 <script id="tag-popover">
 $(document).ready(function() {
-	var sections = 
+	var sections =
 	{
 		'#dummy#':	{title:'Unrecognised', desc: 'The system could not decide what is the nature of this paragraph'},
-		'#+s:c#': 	{title:'Conclusion', desc: 'This paragraph is part of the conclusion of your essay.'}, 
-		'#+s:d_i#':	{title:'Discussion',desc: 'This paragraph is part of the discusssion of your essay.'}, 
-		'#+s#':		{title:'Discussion',desc: 'This paragraph is part of the discusssion of your essay.'}, 
+		'#+s:c#': 	{title:'Conclusion', desc: 'This paragraph is part of the conclusion of your essay.'},
+		'#+s:d_i#':	{title:'Discussion',desc: 'This paragraph is part of the discusssion of your essay.'},
+		'#+s#':		{title:'Discussion',desc: 'This paragraph is part of the discusssion of your essay.'},
 		'#+s:s#': 	{title:'Summary', desc: 'This paragraph is part of the summary.'},
 		'#+s:i#':	{title:'Introduction', desc: 'This paragraph is part of the introduction.'},
 		'#-s:t#':	{title:'Title', desc: ''},
@@ -542,12 +542,12 @@ $(document).ready(function() {
 		'#-s:h#':	{title:'Heading', desc: 'The system has identified this paragraph as being a heading.'},
 		'#-s:n#':	{title:'Numerics', desc: ''},
 		'#-s:q#':	{title:'Assignment',  desc: ''},
-		'#-s:p#':	{title:'Punctuation',desc: ''},				
-	};	
+		'#-s:p#':	{title:'Punctuation',desc: ''},
+	};
 
 	keys=[];
 	for (v in sections) keys.push(v);
-		
+
 	var tag_tooltip = null;
 	$(".par-wrapper .par-tag").each(function()
 	{
@@ -565,8 +565,8 @@ $(document).ready(function() {
 		html: true,
 		template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>',
 		trigger: "click hover", //"manual"
-		content: function(){ 
-			
+		content: function(){
+
 			return 	"<div class='legend-titlebar'><div data-tag='"+$(this).attr('data-tag')+"' class='par-tag'>"
 					+ "<span class='icon-stack'>"
   					+ "<i class='icon-circle-blank  icon-stack-base'></i>"
@@ -579,23 +579,23 @@ $(document).ready(function() {
 	;
 
 	/*$(".par-tagXX").tooltip({
-		title : function(){ 
+		title : function(){
 				return sections[$(this).attr('data-tag')].title;
 			},
 			container: "body",
 			placement: "right",
-			
+
 	});*/
-		
+
 });
-</script>	
+</script>
 
 {% if mashup in ['keyword','all'] %}
 	{% include "javascript/hljs.keywords.js.twig" %}
 
 <script id="tag-keywords">
 $(document).ready(function() {
-	
+
 	// initialise the code highlighting
 	$('.par-container').each(function(i, e) {
 		hljs.highlightBlock(e)
@@ -610,7 +610,7 @@ $(document).ready(function() {
 
 		$(classname).each(function(){
 			var cnt = $(this).text();
-			
+
 			//$(this).attr("tabindex","0");
 			if (cbox.checked)
 			{
@@ -626,9 +626,9 @@ $(document).ready(function() {
 				$(this).removeAttr("role");
 				$(this).removeAttr("aria-label");
 			}
-				
-		});	
-		
+
+		});
+
 		var indlabel = $.trim($(this).parent("label").text());
 		$("#modal-notification").html("The key words from the group <strong>" +  indlabel + "</strong> are now " + (cbox.checked? "visible with" : "hidden from") +
 		 " the text of your draft.");
@@ -636,8 +636,8 @@ $(document).ready(function() {
 
 	$('.cKeyword').prop('checked', true);
 	$('.cKeyword').trigger('change');
-	
-});	
+
+});
 </script>
 {% endif %}
 
@@ -670,8 +670,8 @@ $(document).ready(function() {
 				$(this).removeAttr("role");
 				$(this).removeAttr("aria-label");
 			}
-		});			
-		
+		});
+
 
 		$("#modal-notification").html("Key sentences are now " + (cbox.checked? "visible in" : "hidden from") +
 				 " the text of your draft.");
@@ -696,11 +696,11 @@ $(document).ready(function() {
 			$(classname).css({'display':'none'});
 		$("#modal-notification").html("The <strong>assignment question</strong> is now " + (cbox.checked? "visible with" : "hidden from") +
 		 " the text of your draft.");
-			
+
 	});
 
 
-	
+
 	$('.cStructure').change(function() {
 		var cbox = this;
 		var indicators = cbox.value.split(";");
@@ -716,9 +716,9 @@ $(document).ready(function() {
 		});
 		$("#modal-notification").html("The <strong>" + indlabel + "</strong> paragraphs are now " + (cbox.checked? "visible in" : "hidden from") +
 		 " the text of your draft.");
-		
+
 	});
-	
+
 
 	$('#modal-reset').click(function(){
 		var nb = $('#mashup-options input[type=checkbox]:not(:checked)').length;
@@ -731,12 +731,12 @@ $(document).ready(function() {
 		$('.cTaskQuestion').trigger('change');
 		$('.cStructure').trigger('change');
 		$('.cSentence').trigger('change');
-		
+
 	});
 
 	$('.cTaskQuestion').trigger('change');
 	$('.cStructure').trigger('change');
-	
+
 });
 </script>
 {% endif %}
@@ -748,7 +748,7 @@ $(document).ready(function() {
 
     $('#modal_mashup').on('show', function ()
 	{
-    	console.log("open");    
+    	console.log("open");
 		$("#modal-notification").html("");
 });
 
@@ -756,9 +756,9 @@ $(document).ready(function() {
 	$('#modal_mashup').on('hide', function ()
 	{
     	openEssayist.log4j("{{ constant('TutorController::ACTION_MASHUP_SELECT') }}",h);
-		console.log("clode");    
+		console.log("clode");
 	});
-	
+
 });
 
 </script>

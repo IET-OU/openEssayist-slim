@@ -1,7 +1,7 @@
 
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Admin / Feedback{% endblock %} 
+{% block title %}Admin / Feedback{% endblock %}
 
 {% block content %}
 <div class="row-fluid">
@@ -11,7 +11,7 @@
 			<h3>History</h3>
 		</div>
 		<div class="widget-content" id="activity-log">
-		 
+
 <table class="table table-condensed table-striped table-bordered" id="example">
 	<thead>
 		<tr>
@@ -34,7 +34,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		
+
 	</tbody>
 	<tfoot>
 		<tr>
@@ -47,9 +47,9 @@
 			<th >RES</th>
 		</tr>
 	</tfoot>
-</table>		 
-		 
-		</div> 
+</table>
+
+		</div>
 	</div></div>
 </div>
 
@@ -59,18 +59,20 @@
 
 {% block injectJS %}
 	{{ parent() }}
-<script src="{{ app_base }}/assets/jquery.dataTables/js/jquery.dataTables.js"></script>
+<script src="{{ 'datatables' | javascript }}"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.dataTableExt.js"></script>
 <script src="{{ app_base }}/assets/jquery.dataTables/js/plugin.paging.js"></script>
-<script src="{{ app_base }}/assets/jquery-ui-1.9.2.custom/js/jquery.blockUI.js"></script>
+<script src="{{ 'jquery-blockui' | javascript }}"></script>
+
 <script id="script-logtable">
+
 $(document).ready(function() {
 	//initialise the blockUI widget on AJAX calls
-	$.blockUI.defaults.baseZ = 1100; 
+	$.blockUI.defaults.baseZ = 1100;
 	$(document).ajaxStop($.unblockUI);
 
-	$.blockUI({ message: '<div class="ajax alert alert-info"><img src="{{ app_base }}/assets/openessayist/img/ajax-loader.gif" /> Loading Activity Logs ...</div>' }); 
-	
+	$.blockUI({ message: '<div class="ajax alert alert-info"><img src="{{ app_base }}/assets/openessayist/img/ajax-loader.gif" /> Loading Activity Logs ...</div>' });
+
 	var oTable = $('#example').dataTable( {
 		"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
 		"bPaginate": true,
@@ -95,12 +97,12 @@ $(document).ready(function() {
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
 			console.log(fnCallback);
 			/* Add some extra data to the sender */
-			$.getJSON( sSource, aoData, function (json) { 
+			$.getJSON( sSource, aoData, function (json) {
 				/* Do whatever additional processing you want on the callback, then tell DataTables */
-				json.items = $.grep(json.items,function (item,index) { 
-	                  //return item.id !=  "1"; 
-	                  return (item.user.match("^user") || item.user.match("^tutor")) && 
-	                  	(item.action.match("^ACTION.LOGIN") || 
+				json.items = $.grep(json.items,function (item,index) {
+	                  //return item.id !=  "1";
+	                  return (item.user.match("^user") || item.user.match("^tutor")) &&
+	                  	(item.action.match("^ACTION.LOGIN") ||
 	                  			(item.action.match("^POST") && item.RES.match("^/submit")
 	    	                  			))
 	                });
@@ -108,15 +110,15 @@ $(document).ready(function() {
 			} );
 		}
 	} );
-	
+
 });
 </script>
-{% endblock %} 
+{% endblock %}
 
 
 {% block injectCSS %}
 <style type="text/css">
-			
+
 
 table.table thead th .sorting,
 table.table thead th .sorting_asc,
@@ -129,14 +131,14 @@ table.table thead th .sorting_desc_disabled {
 
 table.table th.sorting:after,
 table.table th.sorting_asc:after,
-table.table th.sorting_desc:after 
+table.table th.sorting_desc:after
 { float: right;}
 table.table th.sorting:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_asc:after { font-family: FontAwesome; content: "   ";}
 table.table th.sorting_desc:after { font-family: FontAwesome; content: "   ";}
 
 table.table th.sorting_asc_disabled {  }
-table.table th.sorting_desc_disabled { }	
+table.table th.sorting_desc_disabled { }
 
 div.dataTables_paginate, div.dataTables_filter {
 	float: right;
@@ -154,8 +156,7 @@ td input.search_init
 {
 	margin-bottom: 0px;
 	font-weight: bolder;
-}	
+}
 </style>
 
-{% endblock %} 
-
+{% endblock %}

@@ -35,7 +35,7 @@ class VersionedAsset extends \Application {
     'jquery-blockui' => '{assets}/jquery-ui-1.9.2.custom/js/jquery.blockUI.js', // X 7;
     '_X_LOCAL_d3' => '{assets}/d3.js/d3.v3.min.js',
     'd3' => 'https://unpkg.com/d3@{ver}/d3.min.js', // X 10;
-    'd3-colorbrewer' => '{assets}/d3.js/colorbrewer.js' // X 10;
+    'd3-colorbrewer' => '{assets}/d3.js/colorbrewer.js', // X 10;
     // 'highcharts'
     'datatables' => '{assets}/jquery.dataTables/js/jquery.dataTables.min.js',
     '_X_CDN_datatables' => 'https://unpkg.com/datatables@1.10.13/media/js/jquery.dataTables.min.js',
