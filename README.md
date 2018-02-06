@@ -1,5 +1,6 @@
 
 [![Build status — Travis-CI][travis-icon]][travis]
+[![js-semistandard-style][semi-icon]][semi]
 
 # openEssayist-slim
 
@@ -9,11 +10,15 @@ Part of the [SafeSEA][] project.
 (Grants: _[Open University][ou-grant], [Oxford University][ox-grant]_.)
 (_Research [papers on ORO][oro-ss]._)
 
-Built on [Slim][].
+Built on [Slim PHP framework][slim].
 
 * GitHub: [SAFeSEA/openEssayist-slim][gh]
 * GitHub: [IET-OU/openEssayist-slim][gh-iet]
 * GitHub: [SAFeSEA/pyEssayAnalyser][gh-py]
+
+## Release notes
+
+* See: [changelog][]
 
 ## Redhat preparation
 
@@ -58,12 +63,18 @@ To check:
 * https://github.com/codeguy/Slim-Extras
 * http://silentworks.co.uk/blog/development/using-phpactiverecord-with-slim-framework.html
 
+---
+
+* Original developer: [vanch3d][].
 
 ---
 © 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
 
 [ou]: http://www.open.ac.uk/
 [iet]: https://iet.open.ac.uk/
+
+[vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
+[changelog]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/CHANGELOG.md
 
 [py]: https://github.com/SAFeSEA/pyEssayAnalyser
 [gh]: https://github.com/SAFeSEA/openEssayist-slim "Original"
@@ -74,6 +85,9 @@ To check:
 [travis-ss]:  https://travis-ci.org/SAFeSEA/openEssayist-slim "SafeSEA / openEssayist-slim"
 [travis-ss-icon]: https://api.travis-ci.org/SAFeSEA/openEssayist-slim.svg
     "Build status – Travis-CI (PHP)"
+[semi]: https://github.com/Flet/semistandard
+[semi-icon]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
+    "Javascript coding style — 'semistandard'"
 [slim]: https://docs.slimframework.com/ "Slim Framework v2 (PHP)"
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 
