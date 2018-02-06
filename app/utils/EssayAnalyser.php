@@ -43,6 +43,7 @@ class EssayAnalyser extends \Application
     $versionId = $post[ 'version' ];
     $counts = $post[ 'counts' ];
     $username = $user->username;
+    $logData = json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]);
 
     $post_data = [
         'text' 				=> $post["text"],
@@ -54,7 +55,7 @@ class EssayAnalyser extends \Application
         'rd_save_path'=> $this->getSavePath(),
     ];
 
-    $log->debug(__METHOD__ . ":start - $taskId,$versionId - " . date('c'));
+    $log->info(sprintf( '%s | [%s @ %s] | %s | %s | %s', 'ANALYSER.Start', $username, $req->getIp(), $req->getPath(), $logData, json_encode($counts) ));
 
     $times = (object) [ 'start' => time() ];
 
@@ -70,7 +71,8 @@ class EssayAnalyser extends \Application
 
     $times->duration = $times->end - $times->start;
 
-    $log->debug(__METHOD__ . ":end - $taskId,$versionId - seconds:" . $times->duration);
+    $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.End.OK', $username, $req->getIp(), $req->getPath(), json_encode([ 'duration' => $times->duration ]) ));
+    // Was: $log->debug(__METHOD__ . ":end - $taskId,$versionId - seconds:" . $times->duration);
 
     $post_data[ 'text' ] = substr( $post_data[ 'text' ], 0, 30 ) . ' [...]';
     self::_debug([ __METHOD__, 'POST', $post_data ]);
@@ -93,7 +95,7 @@ class EssayAnalyser extends \Application
       $draftId = $result->db_result->draft_id;
       self::_debug([ 'm' => __METHOD__, 'ok', 'u' => $url, 'taskId' => $taskId, 'draftVersion' => $versionId, 'result' => $result, 'duration_sec' => $times->duration, 'counts' => $counts ]);
 
-      $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Saved', $username, 'ip', $req->getPath(), json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]) ));
+      $log->info(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Saved', $username, $req->getIp(), $req->getPath(), $logData ));
 
       $result->status = 200;
       $result->redirect = true;
@@ -110,7 +112,7 @@ class EssayAnalyser extends \Application
       self::_debug([ __METHOD__, 'error', 500.1, $ret ]);
 
       // $log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_CREATE', $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
-      $log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Analyser', $username, 'ip', $req->getPath(), json_encode( $ret ) ));
+      $log->error(sprintf( '%s | [%s @ %s] | %s | %s', 'ANALYSER.Analyser', $username, $req->getIp(), $req->getPath(), json_encode( $ret ) ));
     }
 
     return $result;
@@ -122,14 +124,15 @@ class EssayAnalyser extends \Application
    * @param int $userId
    * @param array $post Post-data from the end-user.
    * @param object $times
-   * @param string $analysisJson
+   * @param string $analysisJsonStr
+   * @return object  StdClass, with bool 'result' and integer 'draft_id' members.
    */
-  protected function saveDraft( $taskId, $userId, $post, $times, $analysisJson )
+  protected function saveDraft( $taskId, $userId, $post, $times, $analysisJsonStr )
   {
     /* @var $draft Draft */
     $draft = \Model::factory('Draft')->create();
     $draft->type = 0;
-    $draft->analysis = $analysisJson;  // Was: $json;
+    $draft->analysis = $analysisJsonStr;  // Was: $json;
     $draft->task_id = $taskId;
     $draft->version = $post["version"];
     $draft->name = $post["name"];

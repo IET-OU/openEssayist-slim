@@ -33,7 +33,7 @@ $app = new \Slim\Slim(array(
     'log.writer' => new DateTimeFileWriter(array(
         'path' => __DIR__ . '/../.logs',
         // Was: 'path' => '../.logs',
-        'name_format' => 'y-m-d',
+        'name_format' => 'Y-m-d',   // 4-digit year! Was: 'y-m-d',
     	'message_format' => '%label% | %date% | %message%'
     ))
 ));
