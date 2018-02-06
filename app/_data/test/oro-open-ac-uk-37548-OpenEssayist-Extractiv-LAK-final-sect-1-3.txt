@@ -1,0 +1,146 @@
+
+1. INTRODUCTION
+
+Written discourse is a major class of data that learners
+produce in online environments, arguably the primary class
+of data that can give us insights into deeper learning and
+higher order qualities such as critical thinking,
+argumentation and mastery of complex ideas. These skills
+are indeed difficult to master as illustrated in the revision of
+Bloom’s Taxonomy of Educational Objectives (Pickard
+2007) and are a distinct requirement for assessment in
+Higher Education. Assessment is an important component of
+Learning and in fact (Rowntree 1987) argues that it is the
+main driver for learning and so the challenge is to provide
+an effective automated interactive feedback system that
+yields an acceptable level of support for university students
+writing essays. Effective feedback requires that students are
+assisted to manage their current essay-writing tasks and to
+support the development of their essay-writing skills
+through effective self-regulation. Our research involves
+using state-of-the-art techniques for analysing essays and
+developing a set of feedback models which will initiate a set
+of reflective dialogic practices. Our epistemological stance
+draws on the work of (Bakhtin 1986) where the
+interpretation of texts are dialogic and that “[…] all thought,
+including thought inside an individual head, is a dialogue
+between multiple voices” (Wegerif 2007, p. 17). Promoting
+this dialogic paradigm is our current route into prompting
+students’ self-reflection skills, which will address longstanding
+problems with essay writing.
+There are two main components to our automatic essay
+assessment system. These are (a) the learning analytics
+engine (EssayAnalyser) and (b) a web application
+(OpenEssayist) that generates feedback to students in order
+to help them reflect upon and improve their draft essays.
+The main pedagogical thrust of e-Assessment of free-text
+projects is how to provide meaningful “advice for action”
+(Whitelock 2011) in order to support students writing their
+summative assessments. It is the combination of incisive
+learning analytics and meaningful feedback to students
+which is central to the planning of our empirical studies.
+These will be carried out at the Open University (OU) by
+students who will be undertaking a Master’s Degree in Open
+and Distance Education. Students at the OU receive no
+support in the drafting of their essays and are returning to
+formal education after sometimes a 10-year break.
+
+2. e-ASSESSMENT OF FREE TEXT
+
+Although OpenEssayist will not attempt to attribute grades
+to student essays, the technologies behind the feedback that
+the system will give are concerned with similar issues to
+those addressed by automatic assessment systems. In fact,
+the bulk of work in the automated marking of free text has
+been concerned with essays. One of the earliest marking
+2
+systems which was put into commercial use is E-rater
+(Burstein et al. 2003). E-rater uses various vector-space
+measures of semantic similarity to determine whether an
+essay contains the appropriate conceptual content. It also
+carries out some shallow grammatical processing, and looks
+for simple rhetorical features (e.g., a paragraph containing a
+phrase like ‘in conclusion’ ought to go at the end of the
+essay). While of course it is always possible for a student to
+‘game’ such a system (Powers et al. 2002), in practice this
+does not happen, and E-rater is used routinely as a second
+marker in the essay component of the US Graduate
+Management Admissions Test (taken by all candidates for
+graduate courses in business-related subjects in the US and
+elsewhere) processing around 0.5 million essays a year.
+Other commercial essay marking systems include
+IntelliMetric (Rudner et al. 2006) and Pearson’s KAT
+engine, based on Landauer’s Intelligent Essay Assessor
+(Landauer et al. 2003). Both of these systems use a vectorspace
+technique for measuring semantic similarity to a gold
+standard essay, known as Latent Semantic Analysis (LSA).
+For the most part, these systems focus on assessment alone,
+rather than feedback. Some of the systems can be used in a
+mode where a draft essay is presented as if it were a final
+version, thus eliciting a kind of feedback, but the feedback
+offered is of a standardised kind which is not usually
+tailored either to the topic or to the individual student, and it
+typically concentrates on matters of form rather than of
+content. There are some products which focus on feedback:
+Summary Street (Franzke & Streeter 2006) is another
+Pearson product which offers feedback on student
+summaries of short articles or essays. The underlying
+technology is again LSA, as it is in Select-A-Kibitzer
+(Wiemer-Hastings & Graesser 2000), and again feedback
+tends to be generic. Products which offer individually
+customised feedback actually are only able to achieve this
+by using human editors (e.g., Apex1
+).
+Thus while automated assessment of free text can be thought
+of as reasonably well understood (although of course current
+systems are relatively crude compared to a human marker)
+the process of constructing individualised feedback
+automatically is much less so and is the research gap this
+work wishes to exploit.
+
+3. PROVIDING AUTOMATED FEEDBACK FOR e-LEARNING
+
+Research on feedback itself is extensive, for example with
+(Hattie & Timperley 2007) reporting on 12 previous metaanalyses
+which included information on feedback in
+classrooms and covered 196 studies. Despite the huge
+number of studies on feedback there is “no consistent
+pattern of results” (Shute 2008, p. 153). (Kluger & Denisi
+1996) argued that the only hope to make sense of the pattern
+of results was a comprehensive theory, and unfortunately a
+theory is still lacking. However, various analyses of research
+results give some guidance as to what – in general – works
+and we will take that as a starting point. For example,
+(Nelson & Schunn 2009) in addressing (human generated)
+feedback connected with essays written by undergraduates
+taking a history course, examined summarisation, the
+identification of problems, the provision of solutions,
+localisation, explanations, scope, praise, and mitigating
+
+1
+ Apex, http://www.apexwriters.com/free-essay-editing.jsp
+language as dimensions of feedback. By 'summarisation'
+they mean both the traditional notion of a short précis, but
+also some simpler representations such as a list of key topics
+in an essay. They found that providing summaries of either
+sort was useful feedback (as measured by improved
+performance on successive drafts).
+Problems can be either global (e.g., ‘you do not provide
+enough evidence for your arguments’) or local (e.g., ‘this
+sentence repeats information already given’). Identifying
+global problems and pointing out whereabouts in the essay a
+local problem occurs (localisation) were effective feedback
+strategies. Unexpectedly, providing solutions did not always
+lead to improvements: identifying incompleteness or
+providing hints was sometimes helpful, but directly
+correcting errors could lead to decreases in performance.
+The search for ways of generating and delivering effective
+feedback has been a strong theme throughout the history of
+technology-enhanced learning. Research on generating
+feedback from free text, however, has been a relatively
+minor strand.
+
+
+(http://oro.open.ac.uk/37548/)
+
+---
