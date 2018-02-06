@@ -1,16 +1,20 @@
-<?php
-namespace Slim\Extras\Middleware;
+<?php namespace IET_OU\OpenEssayist\Utils;
 
-use \Slim\Extras\Middleware\StrongAuth;
-
+// Was: namespace Slim\Extras\Middleware;
 
 /**
  * Redefinition of StrongAuth for admin role in user
+ *
+ * @package   OpenEssayist-slim
+ * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  * @author Nicolas Van Labeke (https://github.com/vanch3d)
  *
  * the configuration array for each 'security.urls' path contains an extra parameter, 'admin', to
  * restrict access to these routes to user that have admin rights
  */
+
+use Slim\Extras\Middleware\StrongAuth;
+
 class StrongAuthAdmin extends StrongAuth
 {
 
@@ -19,7 +23,7 @@ class StrongAuthAdmin extends StrongAuth
 		$req = $this->app->request();
 
 		// Authentication Initialised
-		switch ($this->config['auth.type']) {
+		switch ($this->config[ 'auth.type' ]) {
 			case 'form':
 				$this->formAuthAdmin($this->auth, $req);
 				break;
@@ -41,10 +45,8 @@ class StrongAuthAdmin extends StrongAuth
 		$app = $this->app;
 		$config = $this->config;
 		$this->app->hook('slim.before.router', function () use ($app, $auth, $req, $config) {
+
 			$secured_urls = isset($config['security.urls']) && is_array($config['security.urls']) ? $config['security.urls'] : array();
-
-
-
 
 			foreach ($secured_urls as $surl) {
 				$patternAsRegex = $surl['path'];
@@ -65,12 +67,10 @@ class StrongAuthAdmin extends StrongAuth
 
 						if (!$isactive)
 						{
-
 							$app->flashNow("error", "You need to sign the consent form to access these pages");
 							if (!$path) $app->redirect($app->request()->getRootUri() . $config['consent.url']);
 						}
 					}
-
 
 					if (!$auth->loggedIn()) {
 						// User is not logged in; redirect

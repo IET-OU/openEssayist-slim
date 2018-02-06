@@ -8,11 +8,12 @@
 
 require_once __DIR__ . '/../app/utils/autoload.php';
 
-use \Slim\Slim;
-use \Slim\Extras\Views\Twig as TwigView;
-use \Slim\Extras\Middleware\StrongAuth;
-use \Slim\Middleware\LoggerMiddleWare;
-use \Slim\Extras\Middleware\StrongAuthAdmin;
+use Slim\Slim;
+use Slim\Extras\Views\Twig as TwigView;
+use Slim\Extras\Middleware\StrongAuth;
+use Slim\Extras\Log\DateTimeFileWriter;
+use IET_OU\OpenEssayist\Utils\LoggerMiddleware; // Was: \Slim\Middleware\LoggerMiddleWare;
+use IET_OU\OpenEssayist\Utils\StrongAuthAdmin;  // Was: \Slim\Extras\Middleware\StrongAuthAdmin;
 
 IET_OU\OpenEssayist\Utils\DBConnection::dbconnect();
 
@@ -29,7 +30,7 @@ $app = new \Slim\Slim(array(
 	// Was: 'rd_save_path' => substr($_SERVER['SCRIPT_FILENAME'], 0, -21) .'public_html/assets/openessayist/img/rd/',
     'log.level' => \Slim\Log::DEBUG,
     'log.enabled' => true,
-    'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(array(
+    'log.writer' => new DateTimeFileWriter(array(
         'path' => __DIR__ . '/../.logs',
         // Was: 'path' => '../.logs',
         'name_format' => 'y-m-d',
