@@ -5,7 +5,7 @@
 ## [Version 3.0.0](https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta)
 
  * Date:  ~6 February 2018 _(Development: 10 Jan - 6 Feb.)_
- * Tag:   _3.0.0-beta_  (Describe: `v2.6-104-g9c0b3c5`)
+ * Tag:   _3.0.0-beta_  (Describe: `v2.6-108-g2ab1c9a`)
  * Notes: [Google Docs][]
  * Built on:  PHP 7.0 / Slim framework v 2.2.0 / MySQL
 
@@ -28,8 +28,8 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
 ### User-interface
 
- * Added configurable `maxlength` character limit to the draft-essay submission form - prevent analyser errors; server-load (Bug #30)
- * Made error messages to user more user-friendly - for example, prefixed them with "_Sorry. ..._".
+ * Added configurable `maxlength` character limit to the draft-essay submission form — prevent analyser errors; server-load (Bug #30)
+ * Made error messages to user more user-friendly — for example, prefixed them with "_Sorry. ..._".
 
 ### Database
 
@@ -37,18 +37,18 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Add analysis start/end time columns (Bug #25)
  * Prevent Web application from automatically creating database, tables, seeding test/example data (Bug #24)
  * New `app/cli.php` to create tables, seed with minimal/ configurable user, group and task data,
- * Configuration/ connection fixes to ensure data is sent/stored as `UTF-8` in database (Bug #26)
+ * Configuration/ connection fixes to ensure data is sent/stored as `UTF-8` in database (Bug #26).
 
 ### Javascript
 
  * Javascript moved from `base.html.twig` and `site.twig` templates to separate JS files (maintainability, performance),
  * Javascript moved from some `drafts/view.*.twig` templates to separate JS files,
- * Added `semistandard` linting to [Travis-CI][] for 'openessayist' Javascripts [QA]
- * Third-party Javascript/CSS versions documented in `package.json`,
+ * Added `semistandard` linting to [Travis-CI][] for 'openessayist' Javascripts — lots of fixes [QA]
+ * Third-party Javascript/CSS versions documented in [`package.json`][pkg],
  * Transferred more key 3rd-party Javascript libraries to CDN (performance),
- * Centralised versioning of 3rd-party Javascript - via `VersionedAsset` PHP class (Bug #33)
+ * Centralised versioning of 3rd-party Javascript — via `VersionedAsset` PHP class (Bug #33)
  * Upgraded jQuery from 1.9.1 to 2.2.4 _(can't upgrade to 3.x - Bootstrap bug?)_
- * Added Google Analytics,
+ * Added Google Analytics.
 
 ### Miscellaneous
 
@@ -56,7 +56,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Added _Nicolas Van Labeke_ (`vanch3d`) to `composer.json`
  * Removed legacy `composer.phar` binary from Git; removed `./openessayist.sql.zip` (2.6 MB)
  * Moved unused Javascript from Twig templates to separate JS file(s),
- * Added test data — sourced from [Project Gutenberg][pg] and [ORO][]
+ * Added test data — sourced from [Project Gutenberg][pg] and [ORO][].
 
 
 ---
@@ -92,6 +92,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
 [releases]: https://github.com/IET-OU/openEssayist-slim/releases
 [readme]: https://github.com/IET-OU/openEssayist-slim#readme
+[pkg]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/package.json#L12-L38 "package.json"
 [travis-ci]: https://travis-ci.org/IET-OU/openEssayist-slim "Travis-CI continuous integration"
 [Google Docs]: https://docs.google.com/document/d/1n6T2zJ1FMifHGEniYyU_V2d0F8WOHWb_JPRqEWCyR2Y/# "Release notes"
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"

@@ -17,9 +17,7 @@
     ],
     "prefer-stable": true,
     "minimum-stability": "dev",
-    "autoload": {
-      "X-classmap": [ "app/" ]
-    },
+    "autoload": { },
     "repositories": [
       { "type": "composer", "url": "https://embed.open.ac.uk/iet-satis/" }
     ],
@@ -47,8 +45,15 @@
     },
     "scripts": {
         "cli-help": "app/cli.php --help",
-        "redhat-install": "yum install php php-mcrypt php-zip patch httpd mod_fcgid # -y",
+        "redhat-install": "yum install php php-mcrypt php-zip patch httpd mod_fcgid # No -y",
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
+        "npm-install": "npm i",
+        "prepare": [
+          "composer copy-dotenv", "composer copy-conf", "composer mkdir", "composer symlink-data", "npm run symlink-js"
+        ],
+        "build": [
+          "npm run build", "npm run min", "npm run hash-js", "composer version,json"
+        ],
         "mkdir": [ "mkdir ./.cache", "mkdir ./.logs", "mkdir -p _user_data/images" ],
         "chown": [ "chown -R nginx:nginx ./.cache", "chown -R nginx:nginx ./.logs" ],
         "symlink-data":  [ "cd public_html; ln -s ../_user_data/images user-images" ],
@@ -59,7 +64,6 @@
         "_X_pip-install": "pip install git+https://github.com/google/mysql-tools.git@02d1854273#egg=mysql-tools",
         "_X_install-mysql-lint": "git clone --depth=4 https://github.com/google/mysql-tools",
         "mysql-lint": "PYTHONPATH=$PYTHONPATH:$(pwd)/mysql-tools/parser_lib; python mysql-tools/validate.py  FILE.sql",
-        "npm-install": "npm i db-linter # Markdown generator.",
         "version.json": [
           "(printf '{ \"v\": \"'; printf `git describe --long --dirty --always`; printf '\", \"t\": \"'; date | tr -d '\n'; printf '\" }') > public_html/version.json  # date -Is"
         ],

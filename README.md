@@ -32,16 +32,14 @@ composer redhat-install   # yum install php php-fpm php-mcrypt php-zip httpd mod
 ## Install .. Test
 
 ```sh
-composer copy-dotenv # OU only (edit: '.env')
-
+composer prepare    # Edit: 'app/config.php'
+                    # OU only - edit: '.env'
 composer install
-composer copy-conf   # Edit: 'app/config.php'
-composer copy-nginx  # Only on Redhat
-composer mkdir
+composer npm-install
+composer copy-nginx  # Only on Redhat 7.
 composer chown       # Only on Redhat 7.
-composer version.json
 
-npm run symlink-js
+composer build
 composer test
 ```
 

@@ -11,24 +11,16 @@ before_install:
   - npm -v
 
 install:
+  - composer prepare
   - composer install
-  - npm install
+  - composer npm-install
 
-before_script:
-  - composer copy-dotenv
-  - composer copy-conf
-  - composer mkdir
+before_script: composer build
   #- composer chown  # chown: invalid user: ‘nginx:nginx’
-  - composer symlink-data
-  - npm run symlink-js
-  - npm run build
-  - npm run min
-  - npm run hash-js
 
 script: composer test
 
 after_script:
-  - composer version.json
   - composer validate
   - ls -alh
   - ls -alh public_html/assets/
