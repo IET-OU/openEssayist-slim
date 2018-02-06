@@ -1,6 +1,6 @@
 [![Build status — Travis-CI][travis-icon]][travis]
 
-# OpenEssayist Changelog
+# OpenEssayist changelog
 
 ## [Version 3.0.0](https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta)
 
@@ -76,12 +76,22 @@ Below are the _headline_ items. More details are in [Google Docs][].
 ## Previous versions
 
 * v2.4, v2.3, v2.2, v2_user_testing - 15 May to 16 August 2013.
+* See:  [releases][]
+* Original developer:  [vanch3d][].
+
+← [README][]
 
 ---
+© 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
 
+[ou]: http://www.open.ac.uk/
+[iet]: https://iet.open.ac.uk/
+
+[releases]: https://github.com/IET-OU/openEssayist-slim/releases
 [readme]: https://github.com/IET-OU/openEssayist-slim#readme
-[travis-ci]: https://travis-ci.org/IET-OU/openEssayist-slim
+[travis-ci]: https://travis-ci.org/IET-OU/openEssayist-slim "Travis-CI continuous integration"
 [Google Docs]: https://docs.google.com/document/d/1n6T2zJ1FMifHGEniYyU_V2d0F8WOHWb_JPRqEWCyR2Y/# "Release notes"
+[vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
 
 [travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
 [travis-icon]: https://travis-ci.org/IET-OU/openEssayist-slim.svg

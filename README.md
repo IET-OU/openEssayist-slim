@@ -18,7 +18,7 @@ Built on [Slim PHP framework][slim].
 
 ## Release notes
 
-* See: [changelog][]
+* See: [CHANGELOG][]
 
 ## Redhat preparation
 
@@ -56,12 +56,12 @@ app/cli.php --create-tables
 
 ---
 
-To check:
+> To check:
 
 * https://github.com/silentworks/sharemyideas
 * https://github.com/Tieno/SlimPackage
 * https://github.com/codeguy/Slim-Extras
-* http://silentworks.co.uk/blog/development/using-phpactiverecord-with-slim-framework.html
+* [Using phpactiverecord with slim..](http://silentworks.co.uk/blog/development/using-phpactiverecord-with-slim-framework.html)
 
 ---
 
