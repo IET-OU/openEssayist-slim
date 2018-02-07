@@ -50,7 +50,7 @@
     "min": "uglifyjs openessayist-js/*core.js openessayist-js/*init.js openessayist-js/*ajax.js --comments /^!/ -o public_html/assets/app.min.js",
     "#- ug": "uglifyjs pub*/as*/openes*/*/*core.js pub*/as*/openes*/*/*init.js -b --comments /^!/ -o public_html/assets/app.js",
     "# ug": "uglifyjs public_html/assets/openessayist/js/openessayist.core.js",
-    "hash-js": "cd public_html/assets; ln -s app.js app.r$(git rev-parse --short HEAD).js",
+    "hash-js": "cd public_html/assets; ln -fs app.js app.r$(git rev-parse --short HEAD).js",
     "test": "semistandard public_html/assets/openessayist/js/open*.js",
     "fix": "semistandard --fix"
   }

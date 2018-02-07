@@ -52,7 +52,7 @@
           "composer copy-dotenv", "composer copy-conf", "composer mkdir", "composer symlink-data", "npm run symlink-js"
         ],
         "build": [
-          "npm run build", "npm run min", "npm run hash-js", "composer version,json"
+          "npm run build", "npm run min", "npm run hash-js", "composer version.json"
         ],
         "mkdir": [ "mkdir ./.cache", "mkdir ./.logs", "mkdir -p _user_data/images" ],
         "chown": [ "chown -R nginx:nginx ./.cache", "chown -R nginx:nginx ./.logs" ],
