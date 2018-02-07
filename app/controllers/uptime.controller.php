@@ -1,7 +1,8 @@
 <?php
 /**
- * Status / Uptime controller. OpenEssayist-slim.
+ * Status / Uptime controller - checks the backend service.
  *
+ * @package   OpenEssayist-slim
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  * @author    Nick Freear, 24-Jan-2018.
  */
@@ -10,11 +11,12 @@ class UptimeController extends Controller
 {
   const VERSION_JSON = __DIR__ . '/../../public_html/version.json';
 
-  public function backend()
+  /** @route "/status".
+   */
+  public function status()
 	{
 		$http_status = '500 Internal Server Error';
 		$response = $message = $raw = $success = null;
-		$homeUrl = $this->app->request()->getRootUri() . '/';
 
 		try {
 		  $response = Requests::get($this->getAnalyserUrl(), [ 'timeout' => 300, 'blocking' => true ]);
@@ -33,9 +35,6 @@ class UptimeController extends Controller
 			$message = $raw = $ex->getMessage();
 		}
 
-    /* $response->body = $response->raw = '[ ... ]';
-		var_dump( $response ); exit; */
-
 		if ($response) {
 			$success = $response->success; // $response->status_code === 200;
 			$http_status = $response->status_code;
@@ -48,6 +47,14 @@ class UptimeController extends Controller
 		  endif;
 	  }
 
+    $this->renderStatusPage( $success, $http_status, $message, $raw );
+  }
+
+  /** Render the status page.
+   */
+  protected function renderStatusPage( $success, $http_status, $message, $raw ) {
+    $baseUrl = $this->app->request()->getRootUri() . '/';
+
 		// $this->app->response->setStatus( $http_status );
 		header( 'HTTP/1.1 ' . $http_status );
 		self::_debug([ __METHOD__, 'http_status', $http_status, $raw, $this->getAnalyserUrl() ]);
@@ -57,12 +64,14 @@ class UptimeController extends Controller
 <!doctype html>
 <html class="<?= $success ? 'ok' : 'error' ?>" data-stat="<?= $http_status ?>" data-raw="<?= $raw ?>" lang="en">
 	<meta name="robots" content="noindex">
-	<title> OpenEssayist - status (uptime) </title>
-	<style> body { font: 1em sans-serif; margin: 3em auto; min-width: 21em; } p { text-align: center; } .error .m { color: #d00; } </style>
-	<p class="m"> <?= $message ?> </p>
+	<title> OpenEssayist — status (uptime) </title>
+	<style> body { font: 1em sans-serif; margin: 3em auto; max-width: 45em; } p { text-align: center; } .error .m { color: #d00; } .f { margin: 4em; padding: 1em; border-top: 1px solid #bbb; } </style>
+	<link href="<?= $baseUrl ?>assets/openessayist/img/favicon.ico" rel="shortcut icon">
 
-	<p> <a href="<?= $homeUrl ?>">openEssayist home</a> </p>
-	<p role="contentinfo"><small> <a href="http://www.open.ac.uk/">©The Open University</a> </small></p>
+	<p class="m"> <?= $message ?> <small>(<?= $http_status ?>)</small> </p>
+
+	<p> <a href="<?= $baseUrl ?>">openEssayist home</a> </p>
+	<p role="contentinfo" class="f"><small> <a href="http://www.open.ac.uk/">©The Open University</a> </small></p>
 
 	<?php self::printVersionData() ?>
 </html>

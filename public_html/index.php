@@ -199,7 +199,7 @@ $c->app->get('/group/task/:taskid', array($groupCtrl, 'editTask'))
 				->name('group.task.edit');
 $c->app->get('/group/task/new', array($groupCtrl, 'newTask'))->via('GET', 'POST')->name('group.task.new');
 
-$c->app->get('/status', [ $uptimeCtrl, 'backend' ])->name('uptime.backend');
+$c->app->get('/status', [ $uptimeCtrl, 'status' ])->name('uptime.status');
 // Was:  $c->app->get('/uptime', [ $uptimeCtrl, 'backend' ])->name('uptime.backend');
 
 $c->app->error(array($appController, 'error'));

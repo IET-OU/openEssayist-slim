@@ -4,8 +4,8 @@
 
 ## [Version 3.0.0](https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta)
 
- * Date:  ~6 February 2018 _(Development: 10 Jan - 6 Feb.)_
- * Tag:   _3.0.0-beta_  (Describe: `v2.6-108-g2ab1c9a`)
+ * Date:  ~ 7 February 2018 _(Development: 10 Jan - 6 Feb.)_
+ * Tag:   _3.0.0-beta_  (Describe: `v2.6-111-g71a6a5f`)
  * Notes: [Google Docs][]
  * Built on:  PHP 7.0 / Slim framework v 2.2.0 / MySQL
 
