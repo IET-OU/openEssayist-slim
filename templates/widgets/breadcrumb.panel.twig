@@ -1,4 +1,4 @@
-{% block bccontainer %} 
+{% block bccontainer %}
 
 {% if navsrc=='me.home' %}
 <li class="active"><span class="">Home</span></li>
@@ -13,7 +13,7 @@
 <li><a title="Go back to your homepage"
 		href="{{ urlFor('me.home') }}"><span class="">Home </span></a></li>
 
-<li class="active"><span class="">Assignments</span></li>
+<li class="active"><span class="">My assignments{# Was: 'Assignments' #}</span></li>
 
 {% else %}
 <li><a title="Go back to your homepage"
@@ -21,8 +21,6 @@
 
 <li class="active">
 		<a title="Go back to your assignments"
-			href="{{ urlFor('me.tasks') }}"><span class="">Assignments</span></a></li>
+			href="{{ urlFor('me.tasks') }}"><span class="">My assignments{# Was: 'Assignments' #}q</span></a></li>
 {% endif %}
 {% endblock %}
-
-

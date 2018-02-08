@@ -158,7 +158,7 @@ class LoginController extends Controller {
 
 		$group_id = $this->getValidGroupIdSams();
 
-		$sams = new IET_OU\SamsCAuth\SamsCAuth();
+		$sams = new IET_OU\SamsCAuth\SamsCAuth(SamsCAuth::AUTH_VISITOR_REGEX);
 		$result = $sams->authenticate();
 
 		if ($sams->hasIdentity()) {

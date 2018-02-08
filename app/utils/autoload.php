@@ -50,7 +50,7 @@ require_once __DIR__ . '/../models/users.model.php';
 
 // System's constants
 define('APPLICATION', 'openEssayist');
-define('VERSION', '2.7 beta');
+define('VERSION', '3.0 beta');
 define('EXT', '.twig');
 
 // End.

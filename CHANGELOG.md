@@ -11,6 +11,12 @@
 
 Below are the __headline__ items. More details are in [Google Docs][].
 
+### User-interface
+
+ * Added configurable `maxlength` character limit to the draft-essay submission form — prevent analyser errors; reduce server-load (Bug #30)
+ * Made error messages to user more user-friendly — for example, prefixed them with "_Sorry. ..._",
+ * _NO_ other new user-interface features/functions — apart from _SAMS authentication_ below.
+
 ### PHP
 
  * Added _OU-SAMS_-based authentication and account creation — via separate library (Bug #27)
@@ -25,11 +31,6 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Added missing logging; improved error-handling (debugging aid, analytics),
  * Added _status_ / _uptime_ controller — shows status of backend analyser service (as well as front),
  * Eased and documented installation and setup, via [README][], Composer `scripts`.
-
-### User-interface
-
- * Added configurable `maxlength` character limit to the draft-essay submission form — prevent analyser errors; server-load (Bug #30)
- * Made error messages to user more user-friendly — for example, prefixed them with "_Sorry. ..._".
 
 ### Database
 

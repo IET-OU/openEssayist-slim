@@ -299,7 +299,7 @@ class UserController extends Controller
 				catch (\Requests_Exception $e)
 				{
 					$result->status = 500;
-					$this->app->flashNow("error", "Sorry. Cannot connect to the analyser. Try again later.");
+					$this->app->flashNow("error", "Sorry. I cannot connect to the analyser. Try again later.");
 
 					self::_debug([ __METHOD__, 'Requests except', 500.2, $e->getMessage() ]);
 
@@ -308,7 +308,7 @@ class UserController extends Controller
 				catch (\PDOException $e)
 				{
 					$result->status = 500;
-					$this->app->flashNow("error", "Sorry. Problem with the database. Try again later.");
+					$this->app->flashNow("error", "Sorry. There was a problem with the database. Please try again later.");
 
 					self::_debug([ __METHOD__, 'PDO except', 500.3, $e->getMessage() ]);
 
@@ -317,7 +317,7 @@ class UserController extends Controller
 				catch (\Exception $ex)
 				{
 					$result->status = 500;
-					$this->app->flashNow("error", "Sorry, we have a problem. Try again later.");
+					$this->app->flashNow("error", "Sorry, we have a problem. Please try again later.");
 
 					self::_debug([ __METHOD__, 'except', 500.4, $ex->getMessage(), get_class( $ex ) ]);
 

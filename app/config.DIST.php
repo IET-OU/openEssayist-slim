@@ -45,7 +45,8 @@ $openessayist_config = [
 	'email' => $_oe_email_,
 	'analyser_url' => 'http://127.0.0.1:8062',
 	'rd_save_path' => __DIR__ . '/../_user_data/images/',
-	'draft_maxlength_chars' => 4000,  // 200, // TODO: increase, eg. ( 200 * 1000 )
+	'draft_maxlength_chars' => 30 * 1000, // Was: 4000, (set after Simon Cross briefing).
+	'_max_word_count_' => 5000,
 
 	// SAMS authentication - only enable for Open University.
 	'sams_enable' => false,
