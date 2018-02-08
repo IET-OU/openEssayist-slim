@@ -63,6 +63,8 @@ class LoginController extends Controller {
 
 				$user= $this->auth->getUser();
 
+				$this->recordVisit($user[ 'id' ]);
+
 				$useragent = $req->headers('USER_AGENT') ?: "";
 
 				$tmpl = '%action% | [%user% @ %IP%] | %message%';
@@ -170,12 +172,14 @@ class LoginController extends Controller {
 
 			if ($try_user) {
 				self::_debug([ __METHOD__, 'already exists' ]);
+				$this->recordVisit($try_user);
 				$this->loginRedirectSams($sams->getIdentity()->login);
 			} else {
 				// Use does not exist. Create. Login. Redirect ...
 
-				$this->createUserSams($sams->getIdentity(), $group_id);
+				$user = $this->createUserSams($sams->getIdentity(), $group_id);
 
+				$this->recordVisit($user);
 				$this->loginRedirectSams($sams->getIdentity()->login);
 			}
 		} else {
@@ -194,6 +198,9 @@ class LoginController extends Controller {
 		}
 	}
 
+	/**
+	 * @return object Users model object.
+	 */
 	protected function createUserSams($samsResult, $groupId = 1)
 	{
 		$log = $this->app->getLog();
@@ -220,9 +227,13 @@ class LoginController extends Controller {
 
 			$log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_CREATE', $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
 			self::_debug([ __METHOD__, 'ok', $result ]);
+
+			return $usr;
 		} catch (\Exception $ex) {
 			$log->error(sprintf('%s | [%s @ %s] | %s | %s', $ex->getMessage(), $usr->username, $usr->ip_address, $req->getPath(), json_encode([ 'user_agent' => $req->getUserAgent() ]) ));
 			self::_debug([ __METHOD__, 'error', $ex->getMessage() ]);
+
+			return null;
 		}
 	}
 
@@ -269,5 +280,23 @@ class LoginController extends Controller {
 		// return 'http://' . filter_input(INPUT_SERVER, 'HTTP_HOST') . filter_input(INPUT_SERVER, 'REQUEST_URI');
 	}
 
+  /**
+	 * Record each time a user sign in.
+	 * @param object|int $user_id  User model object, or user ID.
+	 */
+	protected function recordVisit($user_id)
+	{
+		$usr = is_object($user_id) ? $user_id : Model::factory('Users')->where('id', $user_id)->find_one();
 
+		$old_date = $usr->last_visit;
+		$old_count = $usr->visit_count;
+
+		$usr->last_visit = date( 'Y-m-d H:i:s' ); // No timezone.
+		$usr->visit_count++;
+
+		$result = $usr->save();
+
+		self::_debug([ __METHOD__, $result, $usr->username, $old_date, $old_count, $usr ]);
+		return $result;
+	}
 }

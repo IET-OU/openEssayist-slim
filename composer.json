@@ -40,7 +40,7 @@
     "suggest": {
         "ext-zip": "*",
         "ext-mycrypt": "*",
-        "iet-ou/sams-c-auth": "^1.0.0; ou-sams",
+        "iet-ou/sams-c-auth": "1.0.*-dev; ou-sams",
         "slim/extras": "dev-develop#5bceb36"
     },
     "scripts": {

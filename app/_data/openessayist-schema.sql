@@ -135,13 +135,16 @@ CREATE TABLE `users` (
   `isadmin` int(11) DEFAULT '0',
   `isgroup` int(11) DEFAULT '0',
   `isdemo` int(11) DEFAULT '0',
-  `auth_type` varchar(32) DEFAULT NULL COMMENT 'Examples, "ou-sams" ...',
-  `last_visit` datetime DEFAULT NULL COMMENT 'Added last visit date-time.',
+  `auth_type` varchar(32) DEFAULT NULL COMMENT 'Added. Examples, "ou-sams" ...',
+  `visit_count` int(11) DEFAULT '0' COMMENT 'Added. Track the number of successful logins.',
+  `last_visit` datetime DEFAULT NULL COMMENT 'Added. Last visit date-time.',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- SHOW CREATE TABLE `users`;
+-- ALTER TABLE `users` ADD column `visit_count` int(11) DEFAULT '0' COMMENT 'Added. Track the number of successful logins.';
 
 -- Dump completed on 2018-01-11 14:28:07
 
