@@ -1,7 +1,8 @@
 <?php
 /**
- * OpenEssayist-slim.
+ * Base / core application class.
  *
+ * @package   OpenEssayist-slim
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  * @author Nicolas Van Labeke (https://github.com/vanch3d)
  */
@@ -40,12 +41,7 @@ class Application {
 			$_db = ORM::get_db();
 		}
 		catch (\PDOException $ex) {
-			if (CLI) {
-				echo "Database warning. Database does not exist.\n";
-			} else {
-				echo "<title>Database error</title> <style>body{font:1em sans-serif}</style> <p>Database Error. <p>Database does not exist.</p> <small>";
-			}
-			echo $ex->getMessage() . PHP_EOL;
+			self::dberror( $ex, 'Database error. Database does not exist.', 'Database warning. Database does not exist.' );
 			return false;
 		}
 		return true;
@@ -59,12 +55,7 @@ class Application {
 					->find_one();
 		}
 		catch (\PDOException $ex) {
-			if (CLI) {
-				echo "Database warning. Table '$table' does NOT exist, or is NOT seeded.\n";
-			} else {
-				echo "<title>Database error</title> <style>body{font:1em sans-serif}</style> <p>Database Error. <p>Table '$table' does NOT exist, or is NOT seeded.</p> <small>";
-			}
-			echo $ex->getMessage();
+			self::dberror( $ex, "Database warning. Table '$table' does NOT exist, or is NOT seeded." );
 
 			// $this->app->flashKeep('error', 'Database error');
 			// $this->app->error();
@@ -158,6 +149,22 @@ class Application {
 		static $count = 0;
 		header(sprintf( 'X-app-%02d: %s', $count, json_encode( $obj )));
 		$count++;
+	}
+
+	protected static function dberror(\PDOException $ex, $message = 'Database error.', $cli_message = null) {
+		header( 'HTTP/1.1 503 Service Unavailable' );
+
+		if (defined( 'CLI' ) && CLI) {
+			fwrite( STDERR, ( $cli_message ? $cli_message : $message ) . PHP_EOL);
+			fwrite( STDERR, $ex->getMessage() );
+		} else {
+			?><!doctype html><title>Database error</title><style> body { font: 1em sans-serif; margin: 3em auto; text-align: center; } </style>
+			<p> <?= $message ?> </p>
+			<?php
+			echo $ex->getMessage();
+
+			// $this->app->error('error');
+		}
 	}
 
 	protected static $once = false;

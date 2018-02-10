@@ -43,7 +43,7 @@ class DBConnection extends \Application
     	// Was:  or die(print_r($dbh->errorInfo(), true));
 
     } catch (\PDOException $ex) {
-    	die("DB ERROR: ". $ex->getMessage());
+      die(self::dberror( $ex ));
     }
 
     $providerString = sprintf( 'mysql:host=%s;dbname=%s;charset=utf8', $host, $database );
