@@ -1,12 +1,12 @@
 {
     "name": "iet-ou/openessayist-slim",
     "description": "Web frontend to the essay analyser & summariser (pyEssayAnalyser). SafeSEA project. © 2013-2018 The Open University (IET). All rights reserved.",
-    "keywords": [ "SafeSEA", "EPSRC", "IET-OU", "OpenUniversity" ],
+    "keywords": [ "SafeSEA", "essay-analyser", "EPSRC", "IET-OU", "OpenUniversity" ],
     "homepage": "http://www.open.ac.uk/researchprojects/safesea/",
     "time": "2013-02-08",
     "license": "proprietary",
     "support": {
-        "source": "https://github.com/SAFeSEA/openEssayist-slim",
+        "source": "https://github.com/SAFeSEA/openEssayist-slim.git",
         "email": "openessayist-techsupport@open.ac.uk"
     },
     "authors": [
@@ -19,7 +19,7 @@
     "minimum-stability": "dev",
     "autoload": { },
     "repositories": [
-      { "type": "composer", "url": "https://embed.open.ac.uk/iet-satis/" }
+        { "type": "composer", "url": "https://embed.open.ac.uk/iet-satis/" }
     ],
     "require": {
         "php": ">=5.5.9",
@@ -29,7 +29,7 @@
         "twig/twig": "1.35.*",
         "j4mie/paris": "^1.5.6",
         "j4mie/idiorm": "^1.5.5",
-        "respect/validation": "dev-develop",
+        "respect/validation": "^1.1.15",
         "rmccue/requests": "^1.7.0",
         "nfreear/composer-suggest": "^1.2"
     },
@@ -41,11 +41,12 @@
         "ext-zip": "*",
         "ext-mycrypt": "*",
         "iet-ou/sams-c-auth": "1.0.*-dev; ou-sams",
+        "respect/validation": "dev-develop#06224c04369e",
         "slim/extras": "dev-develop#5bceb36"
     },
     "scripts": {
         "cli-help": "app/cli.php --help",
-        "redhat-install": "yum install php php-mcrypt php-zip patch httpd mod_fcgid # No -y",
+        "redhat-install": "yum install php php-mcrypt php-zip patch nodejs httpd mod_fcgid # No -y",
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
         "npm-install": "npm i",
         "prepare": [
@@ -58,7 +59,8 @@
         "chown": [ "chown -R nginx:nginx ./.cache", "chown -R nginx:nginx ./.logs" ],
         "symlink-data":  [ "cd public_html; ln -s ../_user_data/images user-images" ],
         "_X_NO_patch": "patch -ub --verbose vendor/slim/extras/Slim/Extras/Views/Twig.php app/_data/vendor-slim-extras-Views-Twig-php--render-function.diff",
-        "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk",
+        "copy-apache": "cp -n app/_data/openessayist.open.ac.uk-apache.conf /etc/httpd/conf.d/openessayist.open.ac.uk",
+        "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk # Legacy.",
         "copy-conf": "cp -n app/config.DIST.php app/config.php",
         "copy-dotenv": "cp -n .env.DIST .env",
         "_X_pip-install": "pip install git+https://github.com/google/mysql-tools.git@02d1854273#egg=mysql-tools",

@@ -1,11 +1,12 @@
 <?php
 /**
- * OpenEssayist-slim.
+ * Login controller.
  *
+ * @package   OpenEssayist-slim
  * @copyright © 2013-2018 The Open University. (Institute of Educational Technology)
  */
 
-use Respect\Validation\Validator as v;
+use Respect\Validation\Validator; // as v;
 use IET_OU\SamsCAuth\SamsCAuth;
 
 /**
@@ -98,7 +99,7 @@ class LoginController extends Controller {
 
 		/*if ($this->app->request()->isPost()) {
 			try {
-				$usernameValidator = v::alnum()
+				$usernameValidator = Validator::alnum()
 				->noWhitespace()
 				->notEmpty();
 				//->length(4,22);
@@ -106,7 +107,7 @@ class LoginController extends Controller {
 				$usernameValidator->check($this->post('username'));
 
 				try {
-					v::alnum()
+					Validator::alnum()
 					->notEmpty()
 					//->length(3,11)
 					->check($this->post('password'));
@@ -281,7 +282,7 @@ class LoginController extends Controller {
 	}
 
   /**
-	 * Record each time a user sign in.
+	 * Record each time a user signs in.
 	 * @param object|int $user_id  User model object, or user ID.
 	 */
 	protected function recordVisit($user_id)

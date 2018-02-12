@@ -17,6 +17,7 @@ extras/documentation
 *.sql.zip
 composer.phar
 
+.gitattributes
 .editorconfig
 node_modules/
 package-lock.json

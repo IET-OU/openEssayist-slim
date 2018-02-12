@@ -6,9 +6,7 @@ php: 7.0
 git:
   depth: 5
 
-before_install:
-  - nvm install v8.1
-  - npm -v
+before_install: nvm install v8.1
 
 install:
   - composer prepare
@@ -24,6 +22,6 @@ after_script:
   - composer validate
   - ls -alh
   - ls -alh public_html/assets/
-  - git status
+  #- git status
 
 # End.

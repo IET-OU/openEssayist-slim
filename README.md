@@ -8,7 +8,7 @@ Web frontend to the essay analyser and summariser — [pyEssayAnalyser][py].
 
 Part of the [SafeSEA][] project.
 (Grants: _[Open University][ou-grant], [Oxford University][ox-grant]_.)
-(_Research [papers on ORO][oro-ss]._)
+(_Research [papers on ORO][oro-ss]. [YouTube demo][yt-demo]_)
 
 Built on [Slim PHP framework][slim].
 
@@ -45,7 +45,7 @@ composer test
 
 ## Database
 
-To create and seed the MySQL database [tables][db], start typing:
+To create and seed the [MySQL database tables][db], start typing:
 
 ```sh
 composer cli-help
@@ -91,6 +91,8 @@ app/cli.php --create-tables
 
 [safesea]: http://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."
+[yt-demo]: https://youtu.be/7a3ATQPjpiM# "openEssayist Software Tool Demonstration, @ietou on YouTube"
+[yt-intro]: https://youtu.be/a9l0ts1tgK4# "Introduction to openEssayist - Professor Denise Whitelock, @ietou on YouTube"
 [oro-ss]: http://oro.open.ac.uk/cgi/search/archive/advanced?project_details_project_name=SafeSEA "'SafeSEA' on ORO (10 results)"
 [oro-oe]: http://oro.open.ac.uk/cgi/search/archive/simple?meta=OpenEssayist& "'OpenEssayist' on ORO (8 results)"
 [ou-grant]: http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/J005959/1
