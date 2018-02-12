@@ -2,9 +2,17 @@
 
 # OpenEssayist changelog
 
-## [Version 3.0.0](https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta)
+## [Version 3.0.1][v3.0.1-beta]
 
- * Date:  ~ 7 February 2018 _(Development: 10 Jan - 6 Feb.)_
+ * Date:  _~ 14 February 2018_,
+ * Add database column `users.visit_count`; record user's login (Bug #35),
+ * Fix for user-roles in SAMS authentication,
+ * Fix user-interface texts in templates (_My assignments_, _Feedback_),
+ * Fix handling of database connection errors.
+
+## [Version 3.0.0][v3.0.0-beta]
+
+ * Date:  7 February 2018 _(Development: 10 Jan - 6 Feb.)_
  * Tag:   _3.0.0-beta_  (Describe: `v2.6-111-g71a6a5f`)
  * Notes: [Google Docs][]
  * Built on:  PHP 7.0 / Slim framework v 2.2.0 / MySQL
@@ -13,9 +21,10 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
 ### User-interface
 
- * Added configurable `maxlength` character limit to the draft-essay submission form — prevent analyser errors; reduce server-load (Bug #30)
+ * Added configurable `maxlength` character limit to the draft-essay
+ submission form — prevent analyser errors; reduce server-load (Bug #30)
  * Made error messages to user more user-friendly — for example, prefixed them with "_Sorry. ..._",
- * _NO_ other new user-interface features/functions — apart from _SAMS authentication_ below.
+ * _NO other new user-interface features/functions — apart from SAMS authentication below._
 
 ### PHP
 
@@ -25,7 +34,8 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Configuration — make `rd_save_path`, `analyser_url` etc. configurable (Bug #23)
  * Added [Travis-CI][] continuous integration, with PHP linting [QA] (maintainability) (Bug #20)
  * Moved core _EssayAnalyser_ wrapper code to separate class (maintainability) (Bug #32)
- * Moved a lot of `require` and `Twig` configuration from front controller (`index.php`) to separate PHP files (maintainability) (Bug #31)
+ * Moved a lot of `require` and `Twig` configuration from front controller
+ (`index.php`) to separate PHP files (maintainability) (Bug #31)
  * Moved database connection code from `app/config.php` to separate class (Bug #31)
  * Broke model classes into separate files (find-ability),
  * Added missing logging; improved error-handling (debugging aid, analytics),
@@ -57,7 +67,8 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Added _Nicolas Van Labeke_ (`vanch3d`) to `composer.json`
  * Removed legacy `composer.phar` binary from Git; removed `./openessayist.sql.zip` (2.6 MB)
  * Moved unused Javascript from Twig templates to separate JS file(s),
- * Added test data — sourced from [Project Gutenberg][pg] and [ORO][].
+ * Added test data — sourced from [Project Gutenberg][pg] and [ORO][],
+ * Documentation, changelog (Bug #34).
 
 
 ---
@@ -65,7 +76,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
  * Date:   24 February 2014.
  * Tag:    _v2.7_ ("_v2.7 beta_")
- * Commit: [IET-OU/openEssayist-slim `7a3d3861`](https://github.com/IET-OU/openEssayist-slim/commit/7a3d3861e7cdb834962e82902c4d2f4e3f0d50b9)
+ * Commit: [IET-OU/openEssayist-slim `7a3d3861`][v2.7-co]
 
 > version 2.7 - ready for Phase II Evaluation
 
@@ -73,7 +84,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
  * Date:   27 September 2013.
  * Tag:    _v2.6_
- * Commit: [IET-OU/openEssayist-slim `e6f00deb`](https://github.com/IET-OU/openEssayist-slim/commit/e6f00debfaf948d966f443cf8b0a24947e6c6f81)
+ * Commit: [IET-OU/openEssayist-slim `e6f00deb`][v2.6-co]
 
 > version 2.6 - ready for September evaluation
 
@@ -90,6 +101,12 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
 [ou]: http://www.open.ac.uk/
 [iet]: https://iet.open.ac.uk/
+
+[v3.0.1-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.1-beta
+[v3.0.0-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta
+[v3.0-co]: https://github.com/IET-OU/openEssayist-slim/commit/e8aa09d4a9f809741fd927b68a92e231e0317f52
+[v2.7-co]: https://github.com/IET-OU/openEssayist-slim/commit/7a3d3861e7cdb834962e82902c4d2f4e3f0d50b9
+[v2.6-co]: https://github.com/IET-OU/openEssayist-slim/commit/e6f00debfaf948d966f443cf8b0a24947e6c6f81
 
 [releases]: https://github.com/IET-OU/openEssayist-slim/releases
 [readme]: https://github.com/IET-OU/openEssayist-slim#readme

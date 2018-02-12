@@ -65,7 +65,8 @@ class UptimeController extends Controller
 <html class="<?= $success ? 'ok' : 'error' ?>" data-stat="<?= $http_status ?>" data-raw="<?= $raw ?>" lang="en">
 	<meta name="robots" content="noindex">
 	<title> OpenEssayist — status (uptime) </title>
-	<style> body { background: #fefefe; font: 1em sans-serif; margin: 3em auto; max-width: 45em; min-width: 20em; text-align: center; } .error .m { color: #d00; } .f { margin: 4em; padding: 1em; border-top: 1px solid #bbb; } </style>
+	<style> body { background: #fefefe; font: 1em sans-serif; margin: 3em auto; max-width: 45em; min-width: 20em; text-align: center; }
+  .m{ padding:1em; border:1px solid; } .error .m{ background:#fee; color:#d00; } .ok .m{ background:#dfd; border-color:#bdb; color:#050; } .f{ margin:4em; padding:1em; border-top:1px solid #bbb; } </style>
 	<link href="<?= $baseUrl ?>assets/openessayist/img/favicon.ico" rel="shortcut icon">
 
 	<p class="m"> <?= $message ?> <small>(<?= $http_status ?>)</small> </p>
