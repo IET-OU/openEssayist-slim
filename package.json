@@ -4,7 +4,7 @@
   "private": true,
   "name": "iet-ou-openessayist-slim",
   "description": "(See - 'composer.json') | © The Open University.",
-  "version": "3.0.0-dev",
+  "version": "3.0.1-beta",
   "license": "UNLICENSED",
   "repository": "https://github.com/IET-OU/openEssayist-slim",
 

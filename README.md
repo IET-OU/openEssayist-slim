@@ -68,7 +68,7 @@ app/cli.php --create-tables
 ---
 © 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
 
-[ou]: http://www.open.ac.uk/
+[ou]: http://www.open.ac.uk/ "Copyright © 2013-2018 The Open University (IET)."
 [iet]: https://iet.open.ac.uk/
 
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
@@ -86,7 +86,7 @@ app/cli.php --create-tables
 [semi]: https://github.com/Flet/semistandard
 [semi-icon]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
     "Javascript coding style — 'semistandard'"
-[slim]: https://docs.slimframework.com/ "Slim Framework v2 (PHP)"
+[slim]: https://docs.slimframework.com/ "Slim PHP Framework v2"
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 
 [safesea]: http://www.open.ac.uk/researchprojects/safesea/

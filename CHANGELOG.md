@@ -1,19 +1,21 @@
+
 [![Build status — Travis-CI][travis-icon]][travis]
 
 # OpenEssayist changelog
 
 ## [Version 3.0.1][v3.0.1-beta]
 
- * Date:  _~ 14 February 2018_,
+ * _Date:  ~ 14 February 2018_,
  * Add database column `users.visit_count`; record user's login (Bug #35),
+ * Set `maxlength` to _30,000_ characters in [`app/config.php`][cfg],
  * Fix for user-roles in SAMS authentication,
- * Fix user-interface texts in templates (_My assignments_, _Feedback_),
+ * Fix user-interface texts in templates ('_My assignments_', '_Feedback_'),
  * Fix handling of database connection errors.
 
 ## [Version 3.0.0][v3.0.0-beta]
 
  * Date:  7 February 2018 _(Development: 10 Jan - 6 Feb.)_
- * Tag:   _3.0.0-beta_  (Describe: `v2.6-111-g71a6a5f`)
+ * Tag:   [3.0.0-beta][v3.0-co]  (Describe: `v2.6-111-g71a6a5f`)
  * Notes: [Google Docs][]
  * Built on:  PHP 7.0 / Slim framework v 2.2.0 / MySQL
 
@@ -30,7 +32,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
  * Added _OU-SAMS_-based authentication and account creation — via separate library (Bug #27)
  * Fix PHP dependencies - upgrade from `dev-master` to released versions, in `composer.json` and `composer.lock` (Bug #20)
- * Configuration — rename `app/config.php` to `app/config.DIST.php`,
+ * Configuration — rename `app/config.php` to [`app/config.DIST.php`][cfg],
  * Configuration — make `rd_save_path`, `analyser_url` etc. configurable (Bug #23)
  * Added [Travis-CI][] continuous integration, with PHP linting [QA] (maintainability) (Bug #20)
  * Moved core _EssayAnalyser_ wrapper code to separate class (maintainability) (Bug #32)
@@ -99,22 +101,25 @@ Below are the __headline__ items. More details are in [Google Docs][].
 ---
 © 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
 
-[ou]: http://www.open.ac.uk/
+[ou]: http://www.open.ac.uk/ "Copyright © 2013-2018 The Open University (IET)."
 [iet]: https://iet.open.ac.uk/
 
 [v3.0.1-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.1-beta
 [v3.0.0-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta
 [v3.0-co]: https://github.com/IET-OU/openEssayist-slim/commit/e8aa09d4a9f809741fd927b68a92e231e0317f52
+    "Version 3.0.0 (Beta), 7 February 2018 (e8aa09d)"
 [v2.7-co]: https://github.com/IET-OU/openEssayist-slim/commit/7a3d3861e7cdb834962e82902c4d2f4e3f0d50b9
 [v2.6-co]: https://github.com/IET-OU/openEssayist-slim/commit/e6f00debfaf948d966f443cf8b0a24947e6c6f81
 
 [releases]: https://github.com/IET-OU/openEssayist-slim/releases
 [readme]: https://github.com/IET-OU/openEssayist-slim#readme
 [pkg]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/package.json#L12-L38 "package.json"
+[cfg]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L45-L60 "'app/config.php' template"
 [travis-ci]: https://travis-ci.org/IET-OU/openEssayist-slim "Travis-CI continuous integration"
-[Google Docs]: https://docs.google.com/document/d/1n6T2zJ1FMifHGEniYyU_V2d0F8WOHWb_JPRqEWCyR2Y/# "Release notes"
+[Google Docs]: https://docs.google.com/document/d/1n6T2zJ1FMifHGEniYyU_V2d0F8WOHWb_JPRqEWCyR2Y/#
+    "Release notes, on Google Docs."
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
-[oro]: http://oro.open.ac.uk/cgi/search/simple?meta=OpenEssayist&
+[oro]: http://oro.open.ac.uk/cgi/search/simple?meta=OpenEssayist "Search 'OpenEssayist' on ORO"
 [pg]: https://www.gutenberg.org/
 
 [travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
