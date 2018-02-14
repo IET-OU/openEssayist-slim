@@ -43,7 +43,7 @@ class EssayAnalyser extends \Application
     $versionId = $post[ 'version' ];
     $counts = $post[ 'counts' ];
     $username = $user->username;
-    $logData = json_encode([ 'task' => $taskId, 'ver' => $versionId, 'draft' => $draftId ]);
+    $logData = json_encode([ 'task' => $taskId, 'ver' => $versionId, 'group' => $post[ 'module' ] /*, 'draft' => $draftId*/ ]);
 
     $post_data = [
         'text' 				=> $post["text"],
