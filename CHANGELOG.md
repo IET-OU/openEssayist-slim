@@ -5,12 +5,13 @@
 
 ## [Version 3.0.1][v3.0.1-beta]
 
- * _Date:  ~ 14 February 2018_,
+ * _Date:  ~ 16 February 2018_,
  * Add database column `users.visit_count`; record user's login (Bug #35),
  * Set `maxlength` to _30,000_ characters in [`app/config.php`][cfg],
  * Fix for user-roles in SAMS authentication,
  * Fix user-interface texts in templates ('_My assignments_', '_Feedback_'),
- * Fix handling of database connection errors.
+ * Fix handling of database connection errors,
+ * Add automated accessibility testing — `pa11y-ci` (Bug #36).
 
 ## [Version 3.0.0][v3.0.0-beta]
 

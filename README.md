@@ -1,6 +1,7 @@
 
 [![Build status — Travis-CI][travis-icon]][travis]
 [![js-semistandard-style][semi-icon]][semi]
+[![Accessibility testing][pa11y-icon]][pa11y-ci]
 
 # openEssayist-slim
 
@@ -86,6 +87,9 @@ app/cli.php --create-tables
 [semi]: https://github.com/Flet/semistandard
 [semi-icon]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
     "Javascript coding style — 'semistandard'"
+[pa11y-ci]: https://github.com/pa11y/pa11y-ci
+    "Automated accessibility testing - via 'pa11y-ci' (work-in-progress)"
+[pa11y-icon]: https://img.shields.io/badge/accessibility-pa11y--ci-blue.svg
 [slim]: https://docs.slimframework.com/ "Slim PHP Framework v2"
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 
