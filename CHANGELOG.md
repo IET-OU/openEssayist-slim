@@ -3,15 +3,17 @@
 
 # OpenEssayist changelog
 
+← [README][]
+
 ## [Version 3.0.1][v3.0.1-beta]
 
- * _Date:  ~ 16 February 2018_,
+ * _Date:  ~ 19 February 2018_,
  * Add database column `users.visit_count`; record user's login (Bug #35),
  * Set `maxlength` to _30,000_ characters in [`app/config.php`][cfg],
  * Fix for user-roles in SAMS authentication,
  * Fix user-interface texts in templates ('_My assignments_', '_Feedback_'),
  * Fix handling of database connection errors,
- * Add automated accessibility testing — `pa11y-ci` (Bug #36).
+ * Add automated accessibility testing — [pa11y-ci][] (Bug #36).
 
 ## [Version 3.0.0][v3.0.0-beta]
 
@@ -27,7 +29,7 @@ Below are the __headline__ items. More details are in [Google Docs][].
  * Added configurable `maxlength` character limit to the draft-essay
  submission form — prevent analyser errors; reduce server-load (Bug #30)
  * Made error messages to user more user-friendly — for example, prefixed them with "_Sorry. ..._",
- * _NO other new user-interface features/functions — apart from SAMS authentication below._
+ * _(No other new user-interface features/functions — apart from SAMS authentication below.)_
 
 ### PHP
 
@@ -91,9 +93,25 @@ Below are the __headline__ items. More details are in [Google Docs][].
 
 > version 2.6 - ready for September evaluation
 
+## [Version 2.4](https://github.com/IET-OU/openEssayist-slim/releases/tag/v2.4)
+
+ * Date:   16 August 2013.
+
+> version 2.4 - August User Testing
+
+_[...]_
+
+## [Version 2](https://github.com/IET-OU/openEssayist-slim/releases/tag/v2_user_testing)
+
+ * Date:   15 May 2013.
+ * Tag:    _v2_user_testing_
+
+> Version 2 of openEssayist, ready for user testing
+
+---
 ## Previous versions
 
-* v2.4, v2.3, v2.2, v2_user_testing — 15 May to 16 August 2013.
+* v2_user_testing, v2.2, v2.3 — 15 May to 30 July 2013.
 * See:  [releases][]
 * Original developer:  [vanch3d][].
 
@@ -122,6 +140,9 @@ Below are the __headline__ items. More details are in [Google Docs][].
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
 [oro]: http://oro.open.ac.uk/cgi/search/simple?meta=OpenEssayist "Search 'OpenEssayist' on ORO"
 [pg]: https://www.gutenberg.org/
+[pa11y-ci]: https://github.com/pa11y/pa11y-ci "Automated accessibility testing - via 'pa11y-ci'"
 
 [travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
 [travis-icon]: https://travis-ci.org/IET-OU/openEssayist-slim.svg
+
+[End]: //.

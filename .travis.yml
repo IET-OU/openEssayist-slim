@@ -1,3 +1,4 @@
+# Travis-CI ~ PHP + Node.JS.
 
 language: php
 
@@ -21,7 +22,7 @@ script: composer test
 after_script:
   - composer validate
   - ls -alh
-  - ls -alh public_html/assets/
+  #- ls -alh public_html/assets/
   - npm run pa11y
   #- git status
 

@@ -31,6 +31,7 @@ mysql-tools/
 
 auth.json
 .env
+.pa11yci*
 
 app/utils/OpenEssayistAssets.php
 templates/asset-versions.twig
