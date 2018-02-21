@@ -31,9 +31,11 @@
         "j4mie/idiorm": "^1.5.5",
         "respect/validation": "^1.1.15",
         "rmccue/requests": "^1.7.0",
+        "zendframework/zend-stdlib": "^3.1.0",
         "nfreear/composer-suggest": "^1.2"
     },
     "require-dev": {
+        "asm89/twig-lint": "^1.0.2",
         "clio/clio": "^0.1.8",
         "jakub-onderka/php-parallel-lint": "^0.9.2"
     },
@@ -41,6 +43,7 @@
         "ext-zip": "*",
         "ext-mycrypt": "*",
         "iet-ou/sams-c-auth": "1.0.*-dev; ou-sams",
+        "zendframework/zend-authentication": "^2.5.3",
         "respect/validation": "dev-develop#06224c04369e",
         "slim/extras": "dev-develop#5bceb36"
     },
@@ -71,6 +74,7 @@
         ],
         "test": [
           "parallel-lint --exclude vendor --exclude .cache .",
+          "twig-lint lint templates/",
           "npm test"
         ]
     },
