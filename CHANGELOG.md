@@ -5,6 +5,13 @@
 
 ← [README][]
 
+## Version 3.0.1
+
+ * _Date:  ~ March 2018_
+ * Fix to 'control' the `task.code` field — make it readonly — _admin editor_ (Bug #37)
+ * Fix, make the `task.wordcount` field required — _admin editor_;
+ * Added [twig-lint][] to the Travis-CI test;
+
 ## [Version 3.0.1][v3.0.1-beta]
 
  * _Date:  ~ 19 February 2018_,
@@ -141,6 +148,7 @@ _[...]_
 [oro]: http://oro.open.ac.uk/cgi/search/simple?meta=OpenEssayist "Search 'OpenEssayist' on ORO"
 [pg]: https://www.gutenberg.org/
 [pa11y-ci]: https://github.com/pa11y/pa11y-ci "Automated accessibility testing - via 'pa11y-ci'"
+[twig-lint]: https://packagist.org/packages/asm89/twig-lint "Standalone linter for Twig templates."
 
 [travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
 [travis-icon]: https://travis-ci.org/IET-OU/openEssayist-slim.svg

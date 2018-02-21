@@ -21,14 +21,14 @@
 		 <div class="control-group">
 			<label class="control-label" for="name">Name</label>
 			<div class="controls">
-				<input type="text" id="name" name="name" placeholder="name" value="{{ task.name }}" required maxlength="50" />
+				<input type="text" id="name" name="name" placeholder="name" value="{{ task.name }}" required maxlength="36" />
 			</div>
 		</div>
 		 <div class="control-group">
 			<label class="control-label" for="name">Internal Code</label>
 			<div class="controls">
 				<input type="text" id="code" name="code" placeholder="code" value="{{ task.code | default('TMA01') }}"
-				  readonly required pattern="{{ 'task_code_regex' | config }}" maxlength="15" title="One of 'TMA01' or 'ICS'." />
+				  readonly required pattern="{{ 'task_code_regex' | config }}" maxlength="12" title="One of 'TMA01' or 'ICS'." />
 			</div>
 		</div>
 		<div class="control-group">
@@ -51,7 +51,7 @@
 			<label class="control-label" for="wordcount">Word Limit</label>
 			<div class="controls">
 				<input type="number" id="wordcount" name="wordcount" placeholder="number of words" value="{{ task.wordcount | default(0) }}"
-					required pattern="^\d+$" title="Number of words, example:  5000" maxlength="10" step="100" min="0" max="100000" />
+					required pattern="^\d+$" title="Number of words, example:  5000" maxlength="6" step="100" min="0" max="30000" />
 			</div>
 		</div>
 		 <div class="control-group">
