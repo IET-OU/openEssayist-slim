@@ -1,8 +1,8 @@
-{% extends "site.twig" %} 
+{% extends "site.twig" %}
 
-{% block title %}Admin / Task {% endblock %} 
+{% block title %}Admin / Task {% endblock %}
 
-{% block breadcrumb %}{% endblock %} 
+{% block breadcrumb %}{% endblock %}
 
 {% block content %}
 
@@ -11,29 +11,30 @@
 
 	<div class="widget">
 		<div class="widget-header">
-			
+
 			<h3>{{ task.name }}</h3>
 		</div>
-					
+
 		<div class="widget-content">
-		
+
 		<form name="post_task" method="post" class="form-horizontal">
 		 <div class="control-group">
 			<label class="control-label" for="name">Name</label>
 			<div class="controls">
-				<input type="text" id="name" name="name" placeholder="name" value="{{ task.name }}">
+				<input type="text" id="name" name="name" placeholder="name" value="{{ task.name }}" required maxlength="50" />
 			</div>
 		</div>
 		 <div class="control-group">
 			<label class="control-label" for="name">Internal Code</label>
 			<div class="controls">
-				<input type="text" id="code" name="code" placeholder="code" value="{{ task.code }}">
+				<input type="text" id="code" name="code" placeholder="code" value="{{ task.code | default('TMA01') }}"
+				  readonly required pattern="{{ 'task_code_regex' | config }}" maxlength="15" title="One of 'TMA01' or 'ICS'." />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="assignment">Assignment</label>
 			<div class="controls">
-				<textarea style="max-width: 90%; width: 90%; resize: vertical;" rows="15" name="assignment" id="assignment" placeholder="description">{{ task.assignment }}</textarea> 
+				<textarea style="max-width: 90%; width: 90%; resize: vertical;" rows="15" name="assignment" id="assignment" placeholder="description">{{ task.assignment }}</textarea>
 			</div>
 		</div>
 		<div class="control-group">
@@ -58,7 +59,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<button class="btn btn-primary" type="submit" name="action" value="Submit">Save</button> 
+			<button class="btn btn-primary" type="submit" name="action" value="Submit">Save</button>
 		</div>
 		</form>
 		</div>
@@ -66,7 +67,7 @@
 </div>
 </div>
 
-{% endblock %} 
+{% endblock %}
 
 {% block injectCSS %}
 	{{ parent() }}
@@ -83,4 +84,4 @@
 		$('#dp3').datepicker();
 	});
 	</script>
-{% endblock %} 
+{% endblock %}

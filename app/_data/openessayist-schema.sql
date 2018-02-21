@@ -64,7 +64,7 @@ CREATE TABLE `feedback` (
 CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(120) DEFAULT NULL,
-  `code` varchar(120) DEFAULT NULL,
+  `code` varchar(120) DEFAULT NULL COMMENT='Must by one of "H810" or "VCS" (relates to Python backend data-files).',
   `url` varchar(255) DEFAULT NULL,
   `email` varchar(220) DEFAULT NULL,
   `description` text,
@@ -107,13 +107,13 @@ CREATE TABLE `note` (
 CREATE TABLE `task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(120) DEFAULT NULL,
-  `code` varchar(120) DEFAULT NULL,
+  `code` varchar(120) DEFAULT NULL COMMENT 'Must be one of "TMA01" or "ICS" (relates to Python backend data-files).',
   `assignment` text,
   `deadline` date DEFAULT NULL,
   `wordcount` int(11) DEFAULT '0',
   `isopen` int(11) DEFAULT '0',
   `group_id` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Add a creation date.',
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Added. Creation date.',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

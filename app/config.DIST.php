@@ -47,6 +47,8 @@ $openessayist_config = [
 	'rd_save_path' => __DIR__ . '/../_user_data/images/',
 	'draft_maxlength_chars' => 30 * 1000, // Was: 4000, (set after Simon Cross briefing).
 	'_max_word_count_' => 5000,
+	'task_code_regex' => '^(TMA01|ICS)$',  // Regex for use in Javascript & PHP.
+	'group_code_regex'=> '^(H810|VCS)$',
 
 	// SAMS authentication - only enable for Open University.
 	'sams_enable' => false,
