@@ -42,14 +42,16 @@
 		 	<div class="controls">
 			<div class="input-append  date" id="dp3" data-date="{{ task.deadline }}" data-date-format="yyyy-mm-dd">
 				<input class="" id="date" name="date" type="text" value="{{ task.deadline }}" >
-				<span class="add-on"><i class="icon-calendar"></i></span>
+				<span class="add-on" role="button" tabindex="0" aria-label="Date picker" title="Date picker"
+					><i class="icon-calendar"></i></span>
 			  </div>
 		 	</div>
 		</div>
 		 <div class="control-group">
 			<label class="control-label" for="wordcount">Word Limit</label>
 			<div class="controls">
-				<input type="text" id="wordcount" name="wordcount" placeholder="number of words" value="{{ task.wordcount }}">
+				<input type="number" id="wordcount" name="wordcount" placeholder="number of words" value="{{ task.wordcount | default(0) }}"
+					required pattern="^\d+$" title="Number of words, example:  5000" maxlength="10" step="100" min="0" max="100000" />
 			</div>
 		</div>
 		 <div class="control-group">
