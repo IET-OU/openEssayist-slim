@@ -5,12 +5,13 @@
 
 ← [README][]
 
-## Version 3.0.1
+## Version 3.0.2
 
- * _Date:  ~ March 2018_
- * Fix to 'control' the `task.code` field — make it readonly — _admin editor_ (Bug #37)
- * Fix, make the `task.wordcount` field required — _admin editor_;
- * Added [twig-lint][] to the Travis-CI test;
+ * _Date:  ~ March-April 2018 ~ to be confirmed (TBC)!_
+ * Fix to 'control' the `task.code` field — make it readonly in the Twig/HTML template — _admin editor_ (Bug #37)
+ * Fix, make the `task.wordcount` field `required` — _admin editor_;
+ * Add [twig-lint][] to the Travis-CI test;
+ * Add _Authentication_ section to [README][];
 
 ## [Version 3.0.1][v3.0.1-beta]
 

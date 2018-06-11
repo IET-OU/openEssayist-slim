@@ -1,5 +1,6 @@
 
 [![Build status — Travis-CI][travis-icon]][travis]
+[![changelog][release-icon]][changelog]
 [![js-semistandard-style][semi-icon]][semi]
 [![Accessibility testing][pa11y-icon]][pa11y-ci]
 
@@ -16,6 +17,11 @@ Built on [Slim PHP framework][slim].
 * GitHub: [SAFeSEA/openEssayist-slim][gh]
 * GitHub: [IET-OU/openEssayist-slim][gh-iet]
 * GitHub: [SAFeSEA/pyEssayAnalyser][gh-py]
+
+## Authentication
+
+Newer OpenEssayist servers can optionally use [OU-SAMS][] authentication,
+with a pre-defined list of [admin OUCUs][admin].
 
 ## Release notes
 
@@ -85,13 +91,16 @@ app/cli.php --create-tables
 [travis-ss-icon]: https://api.travis-ci.org/SAFeSEA/openEssayist-slim.svg
     "Build status – Travis-CI (PHP)"
 [semi]: https://github.com/Flet/semistandard
-[semi-icon]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
+[semi-icon]: https://img.shields.io/badge/code_style-semistandard-brightgreen.svg?_style=flat-square
     "Javascript coding style — 'semistandard'"
 [pa11y-ci]: https://github.com/pa11y/pa11y-ci
     "Automated accessibility testing - via 'pa11y-ci' (work-in-progress)"
 [pa11y-icon]: https://img.shields.io/badge/accessibility-pa11y--ci-blue.svg
+[release-icon]: https://img.shields.io/github/release/IET-OU/openEssayist-slim.svg "Changelog: latest GitHub release"
 [slim]: https://docs.slimframework.com/ "Slim PHP Framework v2"
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
+[ou-sams]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/composer.json#L45 "Composer: use the 'iet-ou/sams-c-auth' library"
+[admin]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L58 "Configuration: 'admin_oucu_list' => [ .. ]"
 
 [safesea]: http://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."
