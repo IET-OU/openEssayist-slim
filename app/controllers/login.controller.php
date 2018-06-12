@@ -218,7 +218,7 @@ class LoginController extends Controller {
 		$usr->group_id = $groupId;
 		$usr->active = true;
 		$usr->isadmin = in_array( $samsResult->login, $admin_oucu_list );
-		$usr->isgroup = false;
+		$usr->isgroup = in_array( $samsResult->login, $admin_oucu_list );
 		$usr->isdemo = false;
 		$usr->auth_type = 'ousams';
 
