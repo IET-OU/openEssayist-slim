@@ -160,7 +160,6 @@ div.ngram.small {
 }
 .brand.openessayist {
   font-family: 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: bold;
 }
 .navbar .brand.openessayist:hover,
 .navbar .brand.openessayist:focus {
@@ -233,6 +232,9 @@ footer p {
   color: #777777;
   margin-bottom: 0;
   float: left;
+}
+footer .attr .p {
+    margin: 0 1rem;
 }
 footer-links {
   margin: 10px 0;
