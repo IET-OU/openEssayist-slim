@@ -72,10 +72,14 @@ app/cli.php --create-tables
 
 * Original developer: [vanch3d][].
 
----
-© 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
+## GDPR
 
-[ou]: http://www.open.ac.uk/ "Copyright © 2013-2018 The Open University (IET)."
+Details of GDPR / privacy fixes can be found in [Bug #38][].
+
+---
+© 2013-2019 [The Open University][ou]. ([Institute of Educational Technology][iet])
+
+[ou]: https://www.open.ac.uk/ "Copyright © 2013-2019 The Open University (IET)."
 [iet]: https://iet.open.ac.uk/
 
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
@@ -102,15 +106,17 @@ app/cli.php --create-tables
 [ou-sams]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/composer.json#L45 "Composer: use the 'iet-ou/sams-c-auth' library"
 [admin]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L58 "Configuration: 'admin_oucu_list' => [ .. ]"
 
-[safesea]: http://www.open.ac.uk/researchprojects/safesea/
+[safesea]: https://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."
 [yt-demo]: https://youtu.be/7a3ATQPjpiM# "openEssayist Software Tool Demonstration, @ietou on YouTube"
 [yt-intro]: https://youtu.be/a9l0ts1tgK4# "Introduction to openEssayist - Professor Denise Whitelock, @ietou on YouTube"
-[oro-ss]: http://oro.open.ac.uk/cgi/search/archive/advanced?project_details_project_name=SafeSEA "'SafeSEA' on ORO (10 results)"
-[oro-oe]: http://oro.open.ac.uk/cgi/search/archive/simple?meta=OpenEssayist& "'OpenEssayist' on ORO (8 results)"
+[oro-ss]: https://oro.open.ac.uk/cgi/search/archive/advanced?project_details_project_name=SafeSEA "'SafeSEA' on ORO (10 results)"
+[oro-oe]: https://oro.open.ac.uk/cgi/search/archive/simple?meta=OpenEssayist& "'OpenEssayist' on ORO (8 results)"
 [ou-grant]: http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/J005959/1
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA) (Open University, 2012-2014) [EPSRC grant: EP/J005959/1]"
 [ox-grant]: http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/J005231/1
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA) (Oxford University, 2012-2014) [EPSRC grant: EP/J005231/1]"
+
+[Bug #38]: https://github.com/SAFeSEA/openEssayist-slim/issues/38 "GDPR/privacy"
 
 [End]: //.
