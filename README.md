@@ -59,6 +59,21 @@ composer cli-help
 app/cli.php --create-tables
 ```
 
+## Auto-assign student to group
+
+See [groups][] configuration.
+
+```sh
+sudo vi app/config.php +78
+sudo app/cli.php --seed-groups
+```
+
+Then use:
+
+```
+https://my-openessayist.open.ac.uk/samslogin?group={NAME}
+```
+
 ---
 
 > To check:
@@ -77,9 +92,10 @@ app/cli.php --create-tables
 Details of GDPR / privacy fixes can be found in [Bug #38][].
 
 ---
-© 2013-2019 [The Open University][ou]. ([Institute of Educational Technology][iet])
+[©][c] 2013-2019 [The Open University][ou]. ([Institute of Educational Technology][iet])
 
-[ou]: https://www.open.ac.uk/ "Copyright © 2013-2019 The Open University (IET)."
+[c]: https://www.open.ac.uk/copyright "Copyright © 2013-2019 The Open University (IET). All rights reserved."
+[ou]: https://www.open.ac.uk/
 [iet]: https://iet.open.ac.uk/
 
 [vanch3d]: https://github.com/vanch3d "Original developer: Nicolas Van Labeke (vanch3d)"
@@ -105,6 +121,7 @@ Details of GDPR / privacy fixes can be found in [Bug #38][].
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 [ou-sams]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/composer.json#L45 "Composer: use the 'iet-ou/sams-c-auth' library"
 [admin]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L58 "Configuration: 'admin_oucu_list' => [ .. ]"
+[groups]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L78 "Configuration: 'groups' => [ .. ]"
 
 [safesea]: https://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."
