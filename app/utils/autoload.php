@@ -48,6 +48,9 @@ require_once __DIR__ . '/../models/Note.php';
 require_once __DIR__ . '/../models/Task.php';
 require_once __DIR__ . '/../models/users.model.php';
 
+// Routes.
+require_once __DIR__ . '/../utils/routes.php';
+
 // System's constants
 define('APPLICATION', 'openEssayist');
 define('VERSION', '3.0 beta');
