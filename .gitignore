@@ -10,6 +10,7 @@ extras/documentation
 /vendor
 /.cache
 /.logs
+/_user_data
 
 .DS_Store
 *BAK*

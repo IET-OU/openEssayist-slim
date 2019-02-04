@@ -11,14 +11,14 @@
 function defineRoutes( $c )
 {
   // Create the controllers
-  $loginController = new LoginController();
-  $appController = new HomeController();
-  $adminCtrl = new AdminController();
-  $userCtrl = new UserController();
-  $demoCtrl = new DemoController();
-  $tutorCtrl = new TutorController();
-  $groupCtrl = new GroupController();
-  $uptimeCtrl = new UptimeController();
+  $loginController = new \LoginController();
+  $appController = new \HomeController();
+  $adminCtrl = new \AdminController();
+  $userCtrl = new \UserController();
+  $demoCtrl = new \DemoController();
+  $tutorCtrl = new \TutorController();
+  $groupCtrl = new \GroupController();
+  $uptimeCtrl = new \UptimeController();
 
   // Define the routes
 

@@ -92,7 +92,7 @@ $app->add(new LoggerMiddleWare());
 // Create the openEssayist application core
 $coreWebApp = new Application($app);
 
-\IET_OU\OpenEssayist\Utils::defineRoutes($coreWebApp);
+\IET_OU\OpenEssayist\Utils\defineRoutes($coreWebApp);
 
 // Run the application.
 $coreWebApp->run();
