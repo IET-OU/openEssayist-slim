@@ -61,14 +61,14 @@ app/cli.php --create-tables
 
 ## Auto-assign student to group
 
-See [groups][] configuration.
+Edit the [groups][] PHP `object` (`array`) in the `app/config.php` configuration file, then run `app/cli.php`:
 
 ```sh
 sudo vi app/config.php +78
 sudo app/cli.php --seed-groups
 ```
 
-Then use:
+The student then uses a link of this form, to add themselves to the group on their first visit:
 
 ```
 https://my-openessayist.open.ac.uk/samslogin?group={NAME}
@@ -89,7 +89,7 @@ https://my-openessayist.open.ac.uk/samslogin?group={NAME}
 
 ## GDPR
 
-Details of GDPR / privacy fixes can be found in [Bug #38][].
+Details of GDPR / privacy fixes can be found in [Bug #1][] (Was [Bug #38][]).
 
 ---
 [©][c] 2013-2019 [The Open University][ou]. ([Institute of Educational Technology][iet])
@@ -134,6 +134,7 @@ Details of GDPR / privacy fixes can be found in [Bug #38][].
 [ox-grant]: http://gow.epsrc.ac.uk/NGBOViewGrant.aspx?GrantRef=EP/J005231/1
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA) (Oxford University, 2012-2014) [EPSRC grant: EP/J005231/1]"
 
-[Bug #38]: https://github.com/SAFeSEA/openEssayist-slim/issues/38 "GDPR/privacy"
+[Bug #38]: https://github.com/SAFeSEA/openEssayist-slim/issues/38 "GDPR/privacy (SafeSEA)"
+[bug #1]: https://github.com/IET-OU/openEssayist-slim/issues/1 "GDPR/privacy"
 
 [End]: //.

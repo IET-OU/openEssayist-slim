@@ -27,7 +27,7 @@ class HomeController extends Controller
 		$this->render('pages/about');
 	}
 
-	public function privacy()
+	public function gdprPrivacyPolicy()
 	{
 		$this->render('pages/privacy');
 	}

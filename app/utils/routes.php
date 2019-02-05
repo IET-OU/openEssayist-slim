@@ -24,7 +24,7 @@ function defineRoutes( $c )
 
   $c->app->get('/', array($appController, 'index'))->name('home');
   $c->app->get('/about', array($appController, 'about'))->name('about');
-  // $c->app->get('/privacy', array($appController, 'privacy'))->name('privacy');
+  $c->app->get('/privacy', array($appController, 'gdprPrivacyPolicy'))->name('GDPR.Privacy');
 
   // $c->app->get('/config', array($appController, 'testConfig'))->name('config');
   $c->app->get('/login', array($loginController, 'index'))->via('GET', 'POST')->name('login');
