@@ -98,6 +98,15 @@ class TwigApp
     $this->twig->addFilter(new \Twig_SimpleFilter('stylesheet', function ($key) {
       return $this->resource->getStylesheetUrl( $key );
     }));
+
+    /**
+     * TWIG filter to get an absolute site URL. USAGE: {{ '' | url }}
+     * @return string
+     */
+    $this->twig->addFilter(new \Twig_SimpleFilter('url', function ($path = '') {
+      return filter_var('https://' . $_SERVER[ 'SERVER_NAME' ] . $path, FILTER_SANITIZE_URL);
+      // return 'https://' . filter_input(INPUT_SERVER, 'SERVER_NAME' ) . $path;
+    }));
   }
 
   protected function createTestFunctions()

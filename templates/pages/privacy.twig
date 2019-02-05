@@ -1,0 +1,144 @@
+{# <!doctype html> #}
+
+{# GDPR/privacy #}
+
+{# Source :~ https://docs.google.com/document/d/10fBvfLFlG1_zRdfHTHPBQH0P0fDHmIt5SBIU6L6t4JQ/ #}
+
+{% extends "site.twig" %}
+
+{% block title %}Privacy notice{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+
+<div class="privacy-policy">
+
+<h1> OpenEssayist Privacy notice </h1>
+
+{# <h2 id="part-0"> 0. Scope </h2> #}
+
+<p id="part-0"> OpenEssayist is a web-based research tool to allow students
+  to analyse their essays before they submit them as part of an OU course.
+  This notice sets out what we do with your personal data when you use OpenEssayist as a registered student
+  (<a href="{{ '' | url }}">{{ '' | url }}</a>) (the "website").
+</p>
+
+<h2 id="part-1"> 1. Who we are </h2>
+
+<p> The Open University is the data controller in relation to the processing activities described below.
+  This means that the Open University decides why and how your personal information is processed.
+  Where this document refers to “we”, “our” or “us” below, unless it mentions otherwise, it’s referring to the Open University.
+</p>
+
+<h2 id="part-2"> 2. Legal notice </h2>
+
+<p> We will at all times only collect and process your personal information in accordance
+	with all applicable data protection legislation, including the General Data Protection Regulation (GDPR),
+	and the Privacy and Electronic Communications (EC Directive) Regulations 2003.
+</p>
+
+<h2 id="part-3"> 3. What information do we collect about you, and how do we collect it? </h2>
+
+<h3> 3.1. Information that you give to us </h3>
+
+<p> When you login to OpenEssayist we collect the following personal data:
+full-name,
+<abbr title="Open University computer username">OUCU</abbr>,
+essay documents. </p>
+
+<h3> 3.2. Information that we collect automatically </h3>
+
+<p> We use a third-party service (e.g. Google Analytics) to automatically collect analytics and usage data,
+  including IP addresses and browser information, and set cookies, to enable us to improve the OpenEssayist website.
+</p>
+
+<h2 id="part-4"> 4. How do we use your personal information? </h2>
+
+<p> The sole PhD student who uses OpenEssayist, accesses and analyses student data as part of their research.
+  This is in our legitimate interest.
+</p>
+
+<h2 id="part-5"> 5. Who do we share your information with? </h2>
+
+<p> ... </p>
+
+<p> We use third party service providers to automatically collect analytics data on the OpenEssayist website. </p>
+
+<h2 id="part-6"> 6. Do we transfer information outside the EEA? </h2>
+
+<p> Information you provide to us is stored on our secure servers, or on our cloud based systems which are located within the EEA. </p>
+
+<h2 id="part-7"> 7. How long do we keep your personal information for? </h2>
+
+<p> The OpenEssayist web-site and service will be switched off on <time datetime="2019-12-31">31st December 2019</time>.
+	All web-site data will be deleted shortly thereafter.
+</p>
+
+<h2 id="part-8"> 8. Your rights </h2>
+
+<p> You have a number of rights in relation to your personal information, which apply in certain circumstances.
+  In order to exercise any of these rights, please contact us using the details in section 9 of this document.
+</p>
+
+<p> You have the right </p>
+<ul>
+  <li> To access your personal information that we process </li>
+  <li> To rectify inaccuracies in the personal information that we hold about you. </li>
+</ul>
+
+<p> In some circumstances, you also have the right </p>
+<ul>
+  <li> To have your details removed from systems that we use to process your personal data </li>
+  <li> To restrict the processing of your personal data in certain ways </li>
+  <li> To obtain a copy of your personal data in a structured electronic data file </li>
+  <li> To object to certain processing of your personal data by us </li>
+  <li> To request that we stop sending you direct marketing communications. </li>
+</ul>
+
+<p> If you are concerned about the way we have processed your personal information,
+  you can complain to the Information Commissioner’s Office (ICO).
+	Please visit the ICO’s website <a href="https://ico.org.uk/">www.ico.org.uk</a> for further details.
+</p>
+
+<h2 id="part-9"> 9. Contact us </h2>
+
+<p> Please direct any queries about this document or about the way we process
+	your personal information to our Data Protection Officer using the contact details below.
+</p>
+
+<ul>
+  <li> Email:  <a href="mailto:data-protection@open.ac.uk?subject=Privacy+request+OpenEssayist+%20{{ '' | url }}">data-protection@open.ac.uk</a> </li>
+  <li> Telephone:  <a href="tel:+44-1908-653994">+44 (0)1908 653994</a> </li>
+  <li> By post:  <address>The Data Protection Officer, PO Box 497, The Open University, Walton Hall, Milton Keynes MK7 6AT.</address> </li>
+</ul>
+
+<h2 id="part-10"> 10. Changes to the Privacy policy </h2>
+
+<p> This privacy notice may be updated from time to time. </p>
+
+<p id="revised" class="revised"> Last revised:  <time datetime="2019-02-04">4th February 2019</time>. </p>
+
+</div>
+{% endblock %}
+
+
+{% block injectCSS %}
+	{{ parent() }}
+<style>
+  address {
+	  display: inline-block;
+	}
+	a[ href ^= tel ],
+	time[ datetime ],
+	abbr[ title ] {
+	  cursor: help;
+		border-bottom: 1px dotted gray;
+		padding-bottom: 1px;
+		text-decoration: none;
+	}
+	.revised {
+	  font-style: italic;
+		margin: 3rem 0 0;
+	}
+</style>
+{% endblock %}

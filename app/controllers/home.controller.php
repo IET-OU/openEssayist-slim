@@ -27,6 +27,11 @@ class HomeController extends Controller
 		$this->render('pages/about');
 	}
 
+	public function privacy()
+	{
+		$this->render('pages/privacy');
+	}
+
 	public function error(Exception $e)
 	{
 		$log = $this->app->getLog();
