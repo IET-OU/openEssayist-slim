@@ -70,7 +70,7 @@ essay documents. </p>
 
 <h2 id="part-7"> 7. How long do we keep your personal information for? </h2>
 
-<p> The OpenEssayist web-site and service will be switched off on <time datetime="2019-12-31">31st December 2019</time>.
+<p> The OpenEssayist web-site and service will be switched off on <time datetime="2019-10-31">31st October 2019</time>.
 	All web-site data will be deleted shortly thereafter.
 </p>
 
@@ -125,8 +125,13 @@ essay documents. </p>
 {% block injectCSS %}
 	{{ parent() }}
 <style>
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.1rem; }
+
   address {
 	  display: inline-block;
+    margin-bottom: .3rem;
 	}
 	a[ href ^= tel ],
 	time[ datetime ],
@@ -138,7 +143,7 @@ essay documents. </p>
 	}
 	.revised {
 	  font-style: italic;
-		margin: 3rem 0 0;
+		margin: 2rem 0;
 	}
 </style>
 {% endblock %}
