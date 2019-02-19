@@ -5,11 +5,23 @@
 
 ← [README][]
 
-## Version 3.0.2
+## [Latest][]
 
- * _Date:  ~ March-April 2018 ~ to be confirmed (TBC)!_
+ * _Date:  ~ 26-Oct-2018 ~ 12-Feb-2019 ~ to be confirmed!_
+ * GDPR — privacy policy — `templates/pages/privacy.twig` ([Bug #1][] / Bug #38)
+ * GDPR — only store student OUCU in database, not full-name ([Bug #1][])
+ * GDPR — update `IET-OU/sams-c-auth` PHP library, and only allow registered students (and staff) to access, _not visitors / "prospects"_ ([Bug #1][])
+ * Fix — remove non-brand-compliant OpenEssayist logo;
+ * Add HTTP Basic Auth to apache/nginx configurations (_approval server_) — `app/_data/*.conf`;
+ * Move route definitions to separate file — `app/utils/routes.php`;
+ * Add '_Auto-assign student to group_' and '_GDPR_' section(s) to [README][];
+
+## [Version 3.0.2][v3.0.2]
+
+ * _Date:  ~ 12 June 2018_
  * Fix to 'control' the `task.code` field — make it readonly in the Twig/HTML template — _admin editor_ (Bug #37)
  * Fix, make the `task.wordcount` field `required` — _admin editor_;
+ * Fix/set `isgroup` flag in `Login..::createUserSams()` (Bug #35)
  * Add [twig-lint][] to the Travis-CI test;
  * Add _Authentication_ section to [README][];
 
@@ -126,11 +138,14 @@ _[...]_
 ← [README][]
 
 ---
-© 2013-2018 [The Open University][ou]. ([Institute of Educational Technology][iet])
+[©][c] [The Open University][ou]. ([Institute of Educational Technology][iet])
 
-[ou]: http://www.open.ac.uk/ "Copyright © 2013-2018 The Open University (IET)."
+[c]: https://www.open.ac.uk/copyright "Copyright © 2013-2019 The Open University (IET). All rights reserved."
+[ou]: https://www.open.ac.uk/
 [iet]: https://iet.open.ac.uk/
 
+[latest]: https://github.com/IET-OU/openEssayist-slim/commits/3.x
+[v3.0.2]: https://github.com/IET-OU/openEssayist-slim/commit/47c37c6027779c15890f51d01f3a1c87541af8a8 "12-June-2018 (47c37c60)"
 [v3.0.1-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.1-beta
 [v3.0.0-beta]: https://github.com/IET-OU/openEssayist-slim/releases/tag/3.0.0-beta
 [v3.0-co]: https://github.com/IET-OU/openEssayist-slim/commit/e8aa09d4a9f809741fd927b68a92e231e0317f52
@@ -153,5 +168,6 @@ _[...]_
 
 [travis]: https://travis-ci.org/IET-OU/openEssayist-slim "IET-OU / openEsasyist-slim"
 [travis-icon]: https://travis-ci.org/IET-OU/openEssayist-slim.svg
+[bug #1]: https://github.com/IET-OU/openEssayist-slim/issues/1 "GDPR/privacy"
 
 [End]: //.

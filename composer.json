@@ -1,6 +1,6 @@
 {
     "name": "iet-ou/openessayist-slim",
-    "description": "Web frontend to the essay analyser & summariser (pyEssayAnalyser). SafeSEA project. © 2013-2018 The Open University (IET). All rights reserved.",
+    "description": "Web frontend to the essay analyser & summariser (pyEssayAnalyser). | © The Open University (IET).",
     "keywords": [ "SafeSEA", "essay-analyser", "EPSRC", "IET-OU", "OpenUniversity" ],
     "homepage": "http://www.open.ac.uk/researchprojects/safesea/",
     "time": "2013-02-08",
@@ -13,7 +13,7 @@
         { "name": "Nicolas Van Labeke (vanch3d)", "role": "Original developer", "homepage": "http://nvl.calques3d.org/" },
         { "name": "Richard Lovelock" },
         { "name": "Nick Freear" },
-        { "name": "LTI-LTT team / Institute of Educational Technology", "homepage": "https://iet.open.ac.uk/" }
+        { "name": "LTT team / Institute of Educational Technology", "homepage": "https://iet.open.ac.uk" }
     ],
     "prefer-stable": true,
     "minimum-stability": "dev",
@@ -22,7 +22,7 @@
         { "type": "composer", "url": "https://embed.open.ac.uk/iet-satis/" }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "slim/slim": "2.2.*",
         "slim/extras": "^2.0.3",
         "slim/strong": "dev-develop#1af2dc2f49f14521",
@@ -32,18 +32,18 @@
         "respect/validation": "^1.1.15",
         "rmccue/requests": "^1.7.0",
         "zendframework/zend-stdlib": "^3.1.0",
-        "nfreear/composer-suggest": "^1.2"
+        "iet-ou/sams-c-auth": "^1.1.0"
     },
     "require-dev": {
         "asm89/twig-lint": "^1.0.2",
         "clio/clio": "^0.1.8",
-        "jakub-onderka/php-parallel-lint": "^0.9.2"
+        "jakub-onderka/php-parallel-lint": "^1.0.0 || ^0.9.2"
     },
     "suggest": {
         "ext-zip": "*",
         "ext-mycrypt": "*",
         "iet-ou/sams-c-auth": "1.0.*-dev; ou-sams",
-        "zendframework/zend-authentication": "^2.5.3",
+        "nfreear/composer-suggest": "^1.2",
         "respect/validation": "dev-develop#06224c04369e",
         "slim/extras": "dev-develop#5bceb36"
     },
@@ -79,7 +79,7 @@
         ]
     },
     "extra": {
-        "//": [
+        "#": [
             "https://github.com/SAFeSEA/openEssayist-slim/commit/5f0a7c374c",
             "https://github.com/SAFeSEA/pyEssayAnalyser"
         ]

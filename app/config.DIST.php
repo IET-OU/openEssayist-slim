@@ -55,6 +55,9 @@ $openessayist_config = [
 	'sams_redirect' => true,
 	'sams_password' => '** EDIT ME **',
 	'sams_group_id' => 1,  // Set a default.
+	// See :~ https://github.com/IET-OU/sams-c-auth/blob/master/src/SamsCAuth.php#L29
+	// NOT:  /^(...|visitor)$/
+	'sams_auth_regex' => '/^(staff|tutor|student)$/',
 	// Accounts in this admin list have the "isadmin" and "isgroup" flags set on their account.
 	'admin_oucu_list' => [ 'abc123', '** EDIT ME **' ],
 	'analyser_version' => __DIR__ . '/../../openessayist-python/version.json',

@@ -155,14 +155,27 @@ class LoginController extends Controller {
 	*/
 	public function samsLogin()
 	{
+		$log = $this->app->getLog();
+		$req = $this->app->request();
+
 		$this->checkSamsAuthEnabled();
 
 		$this->handleAlreadyLoggedIn();
 
 		$group_id = $this->getValidGroupIdSams();
 
-		$sams = new IET_OU\SamsCAuth\SamsCAuth(SamsCAuth::AUTH_VISITOR_REGEX);
+		$auth_regex = self::config( 'sams_auth_regex' );
+
+		$sams = new IET_OU\SamsCAuth\SamsCAuth( $auth_regex ); // Was: SamsCAuth::AUTH_VISITOR_REGEX;
 		$result = $sams->authenticate();
+
+		self::_debug([ __METHOD__, 'authenticate', $result->isValid(), $auth_regex ]);
+
+		if ($result->isValid()) {
+			$log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_AUTH', $result->getIdentity()->login, $req->getIp(), $req->getPath(), null ));
+		} else {
+			$log->error(sprintf('%s | [%s @ %s] | %s | %s | %s', 'ERROR.SAMS_AUTH', null, $req->getIp(), null, $req->getUserAgent(), json_encode($result->getMessages()) ));
+		}
 
 		if ($sams->hasIdentity()) {
 			$try_login = $sams->getIdentity()->login;
@@ -211,7 +224,7 @@ class LoginController extends Controller {
 		$usr = Model::factory('Users')->create();
 
 		$usr->username = $samsResult->login;
-		$usr->name = $samsResult->name;  // Display name.
+		// Was: $usr->name = $samsResult->name;  // Display name.
 		$usr->password = Strong\Strong::getInstance()->getProvider()->hashPassword(Application::config( 'sams_password' ));
 		$usr->email = $samsResult->email;
 		$usr->ip_address = $this->app->request()->getIp();
@@ -270,6 +283,12 @@ class LoginController extends Controller {
 	{
 		$is_logged_in = isset($_SESSION[ 'auth_user' ]);
 		if ($is_logged_in) {
+			$user = $_SESSION[ 'auth_user' ];
+			$log = $this->app->getLog();
+			$req = $this->app->request();
+
+			$log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_REDIRECT', $user->username, $req->getIp(), $req->getPath(), $req->getUserAgent() ));
+
 			self::_debug([ __METHOD__, 'logged in', $_SESSION[ 'auth_user' ] ]);
 			$this->redirect('me.home');
 		}
