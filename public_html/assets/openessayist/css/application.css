@@ -14,7 +14,6 @@
 /* a {
     color: #0000ee;
     text-decoration: none;
-
 }
  .breadcrumb a, .footer a {
    color: #00547D;
@@ -23,7 +22,8 @@
   color: #494949;
 }
 .navbar .brand {
-  color: #494949;
+  color: #333; /* Was: #494949 */;
+  font-weight: 400;
 }
 .alert,
 .alert h4 {
