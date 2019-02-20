@@ -1,5 +1,9 @@
 # Travis-CI ~ PHP + Node.JS.
 
+# Disable for now, as install fails if private 'IET-OU/sams-c-auth' is directly required!
+branches:
+  except: 3.x
+
 language: php
 
 php: 7.0

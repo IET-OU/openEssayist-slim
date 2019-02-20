@@ -1,5 +1,6 @@
 
 app/config.php
+config/app.php
 
 INSTALL.txt
 LICENSE.txt

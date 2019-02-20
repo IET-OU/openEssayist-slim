@@ -53,7 +53,7 @@
         "redhat-check": "yum install php* 2>/dev/null | grep 'already installed'",
         "npm-install": "npm i",
         "prepare": [
-          "composer copy-dotenv", "composer copy-conf", "composer mkdir", "composer symlink-data", "npm run symlink-js"
+          "@copy-dotenv", "@copy-conf", "@mkdir", "@symlink-data", "npm run symlink-js"
         ],
         "build": [
           "npm run build", "npm run min", "npm run hash-js", "composer version.json"
@@ -64,7 +64,7 @@
         "_X_NO_patch": "patch -ub --verbose vendor/slim/extras/Slim/Extras/Views/Twig.php app/_data/vendor-slim-extras-Views-Twig-php--render-function.diff",
         "copy-apache": "cp -n app/_data/openessayist.open.ac.uk-apache.conf /etc/httpd/conf.d/openessayist.open.ac.uk",
         "copy-nginx": "cp -n app/_data/openessayist.open.ac.uk-nginx.conf /etc/nginx/sites-available/openessayist.open.ac.uk # Legacy.",
-        "copy-conf": "cp -n app/config.DIST.php app/config.php",
+        "copy-conf": "cp -n config/app.DIST.php config/app.php",
         "copy-dotenv": "cp -n .env.DIST .env",
         "_X_pip-install": "pip install git+https://github.com/google/mysql-tools.git@02d1854273#egg=mysql-tools",
         "_X_install-mysql-lint": "git clone --depth=4 https://github.com/google/mysql-tools",
@@ -77,6 +77,10 @@
           "twig-lint lint templates/",
           "npm test"
         ]
+    },
+    "scripts-descriptions": {
+      "cli-help": "App: display help for the OpenEssayist commandline database tool.",
+      "prepare": "App: copy OpenEssayist configuration files; create cache/log directories."
     },
     "extra": {
         "#": [

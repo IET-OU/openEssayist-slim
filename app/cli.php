@@ -94,7 +94,7 @@ if (oeApp::arg( '--seed-groups' )) {
   foreach ($groups as $group) {
     $gp = Model::factory('Group')->create();
     $gp->name = $group->name;
-    $gp->code = $group->code;
+    $gp->code = isset($group->code) ? $group->code : 'H810'; // Must be 'H810', or 'VSO'.
     $gp->description = $group->description;
 
     try {
@@ -117,12 +117,12 @@ if (oeApp::arg( '--seed-tasks' )) {
   foreach ($tasks as $task) {
     $tk = Model::factory('Task')->create();
     $tk->name = $task->name;
-    $tk->code = $task->code;
+    $tk->code = isset($task->code) ? $task->code : 'TMA01'; // Must be 'TMA01 or ICS'.
     $tk->assignment = $task->assignment;
     $tk->deadline = date( 'Y-m-d', strtotime( '+1 month' )); // MySQL DATE.
     $tk->wordcount = 2000;
     $tk->isopen = true;
-    $tk->group_id = 1;
+    $tk->group_id = isset($task->group_id) ? $task->group_id : 1;
 
     try {
       $tk->save();

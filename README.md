@@ -120,8 +120,8 @@ Details of GDPR / privacy fixes can be found in [Bug #1][] (Was [Bug #38][]).
 [slim]: https://docs.slimframework.com/ "Slim PHP Framework v2"
 [db]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/_data/openessayist-schema.sql#L24 "SQL database schema"
 [ou-sams]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/composer.json#L45 "Composer: use the 'iet-ou/sams-c-auth' library"
-[admin]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L58 "Configuration: 'admin_oucu_list' => [ .. ]"
-[groups]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/app/config.DIST.php#L78 "Configuration: 'groups' => [ .. ]"
+[admin]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/config/app.DIST.php#L62 "Configuration: 'admin_oucu_list' => [ .. ]"
+[groups]: https://github.com/IET-OU/openEssayist-slim/blob/3.x/config/app.DIST.php#L82 "Configuration: 'groups' => [ .. ]"
 
 [safesea]: https://www.open.ac.uk/researchprojects/safesea/
   "Supportive Automated Feedback for Short Essay Answers (SAFeSEA)."

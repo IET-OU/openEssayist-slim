@@ -14,6 +14,7 @@
  * Fix — remove non-brand-compliant OpenEssayist logo;
  * Add HTTP Basic Auth to apache/nginx configurations (_approval server_) — `app/_data/*.conf`;
  * Move route definitions to separate file — `app/utils/routes.php`;
+ * Move `app/config.php` to `config/app.php` — Laravel convention;
  * Add '_Auto-assign student to group_' and '_GDPR_' section(s) to [README][];
 
 ## [Version 3.0.2][v3.0.2]
