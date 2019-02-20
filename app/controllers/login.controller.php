@@ -284,12 +284,12 @@ class LoginController extends Controller {
 		$is_logged_in = isset($_SESSION[ 'auth_user' ]);
 		if ($is_logged_in) {
 			$user = $_SESSION[ 'auth_user' ];
-			$log = $this->app->getLog();
-			$req = $this->app->request();
+			// $log = $this->app->getLog();
+			// $req = $this->app->request();
 
-			$log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_REDIRECT', $user->username, $req->getIp(), $req->getPath(), $req->getUserAgent() ));
+			// $log->info(sprintf('%s | [%s @ %s] | %s | %s', 'ACTION.SAMS_REDIRECT', $user->username, $req->getIp(), $req->getPath(), $req->getUserAgent() ));
 
-			self::_debug([ __METHOD__, 'logged in', $_SESSION[ 'auth_user' ] ]);
+			self::_debug([ __METHOD__, 'logged in. Redirect (SAMS)', $user ]);
 			$this->redirect('me.home');
 		}
 	}
